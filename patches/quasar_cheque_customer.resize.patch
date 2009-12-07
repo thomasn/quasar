@@ -1,0 +1,12 @@
+Add a stretch factor for the customer cheque screen to fix resizing issues.
+--- quasar-1.4.7_GPL.orig/gui/cheque_customer.cpp	2007-03-08 10:43:41.000000000 +0200
++++ quasar-1.4.7_GPL/gui/cheque_customer.cpp	2007-03-08 10:43:50.000000000 +0200
+@@ -200,7 +200,7 @@
+     totalGrid->addWidget(allocLabel, 0, 3, AlignRight | AlignVCenter);
+     totalGrid->addWidget(_alloc, 0, 4);
+ 
+-    vbox2->addWidget(_table);
++    vbox2->addWidget(_table, 1);
+     vbox2->addWidget(totals);
+ 
+     QGridLayout* grid = new QGridLayout(_frame);

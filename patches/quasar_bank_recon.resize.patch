@@ -1,0 +1,39 @@
+This patch attempts to fix some resizing issues in the reconciliation screen.
+
+* It removes the maximum height on the two listboxes.
+* It sets appropriate stretch factors to prevent the label rows from resizing.
+* It removes unneeded Alignment flags.
+--- quasar-1.4.7_GPL.orig/gui/reconcile_master.cpp	2005-01-30 06:25:31.000000000 +0200
++++ quasar-1.4.7_GPL/gui/reconcile_master.cpp	2007-03-08 01:37:16.000000000 +0200
+@@ -120,13 +120,13 @@
+     _deposits->addTextColumn(tr("Payee"), 20);
+     _deposits->addTextColumn(tr("Memo"), 20);
+     _deposits->addMoneyColumn(tr("Amount"));
+-    _deposits->setMaximumHeight(100);
+     connect(_deposits, SIGNAL(selectionChanged()), SLOT(recalculate()));
+ 
+     QGridLayout* depsGrid = new QGridLayout(deps);
+     depsGrid->setMargin(3);
+     depsGrid->setSpacing(3);
+-    depsGrid->addWidget(depositLabel, 0, 0, AlignLeft | AlignVCenter);
++    depsGrid->setRowStretch(1, 1);
++    depsGrid->addWidget(depositLabel, 0, 0);
+     depsGrid->addWidget(_deposits, 1, 0);
+ 
+     QLabel* chequeLabel = new QLabel(tr("Cheques and Payments:"), chqs);
+@@ -139,13 +139,13 @@
+     _cheques->addTextColumn(tr("Payee"), 20);
+     _cheques->addTextColumn(tr("Memo"), 20);
+     _cheques->addMoneyColumn(tr("Amount"));
+-    _cheques->setMaximumHeight(100);
+     connect(_cheques, SIGNAL(selectionChanged()), SLOT(recalculate()));
+ 
+     QGridLayout* chqsGrid = new QGridLayout(chqs);
+     chqsGrid->setMargin(3);
+     chqsGrid->setSpacing(3);
+-    chqsGrid->addWidget(chequeLabel, 0, 0, AlignLeft | AlignVCenter);
++    chqsGrid->setRowStretch(1, 1);
++    chqsGrid->addWidget(chequeLabel, 0, 0);
+     chqsGrid->addWidget(_cheques, 1, 0);
+ 
+     int countWidth = fontMetrics().width("9999");

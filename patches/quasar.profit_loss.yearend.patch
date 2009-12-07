@@ -1,0 +1,83 @@
+--- quasar-1.4.7_GPL/data/reports/profit_loss.xml.orig	2005-02-12 05:04:34.000000000 +0200
++++ quasar-1.4.7_GPL/data/reports/profit_loss.xml	2007-03-08 00:17:47.000000000 +0200
+@@ -168,7 +168,7 @@
+ 
+ 		set new_amount [expr [lindex $row 6] - $amount]
+ 
+-		set row [lreplace $row 6 6 $row_amount]
++		set row [lreplace $row 6 6 $new_amount]
+ 		set rows [lreplace $rows $i $i $row]
+ 		set found 1
+ 		break
+@@ -183,7 +183,7 @@
+ 	set header_ids ""
+ 	set header_types ""
+ 	set header_names ""
+-	set header_total 0
++	set header_totals ""
+ 	set indent_amt 0
+ 
+ 	# Remove all data rows with zero amounts
+@@ -240,6 +240,7 @@
+ 		set header_id [lindex $header_ids end]
+ 		set header_type [lindex $header_types end]
+ 		set header_name [lindex $header_names end]
++		set header_total [lindex $header_totals end]
+ 
+ 		if { $parent_id == $header_id } {
+ 		    break
+@@ -256,11 +257,7 @@
+ 		set header_ids [lreplace $header_ids end end]
+ 		set header_types [lreplace $header_types end end]
+ 		set header_names [lreplace $header_names end end]
+-	    }
+-
+-	    # When no more headers, zero out total
+-	    if { [llength $header_ids] == 0 } {
+-	        set header_total 0
++		set header_totals [lreplace $header_totals end end]
+ 	    }
+ 
+ 	    if { $header == "Y" } {
+@@ -270,8 +267,9 @@
+ 
+ 		# Add to headers
+ 		lappend header_ids $account_id
+-		lappend header_names $name
+ 		lappend header_types $type
++		lappend header_names $name
++		lappend header_totals 0
+ 		incr indent_amt $indent_by
+ 	    } else {
+ 		# Add up how many are found of certain types
+@@ -282,9 +280,11 @@
+ 		# Add to total by type
+ 		set totals($type) [expr $totals($type) + $amount]
+ 
+-		# Add to header total if in any headers
+-		if { [llength $header_ids] != 0 } {
+-		    set header_total [expr $header_total + $amount]
++		# Add to header totals
++		for { set j 0 } { $j < [llength $header_totals] } {incr j } {
++		    set header_total [lindex $header_totals $j]
++		    set new_total [expr $header_total + $amount]
++		    set header_totals [lreplace $header_totals $j $j $new_total]
+ 		}
+ 
+ 		# Set indent amount for row
+@@ -300,6 +300,7 @@
+ 	    set header_id [lindex $header_ids end]
+ 	    set header_type [lindex $header_types end]
+ 	    set header_name [lindex $header_names end]
++	    set header_total [lindex $header_totals end]
+ 
+ 	    incr indent_amt -$indent_by
+ 
+@@ -311,6 +312,7 @@
+ 	    set header_ids [lreplace $header_ids end end]
+ 	    set header_types [lreplace $header_types end end]
+ 	    set header_names [lreplace $header_names end end]
++	    set header_totals [lreplace $header_totals end end]
+ 	}
+     ]]></initialize>
+     <next><![CDATA[

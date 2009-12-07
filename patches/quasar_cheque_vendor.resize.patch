@@ -1,0 +1,12 @@
+Add a stretch factor so that the vendor cheque screen resizes in a more appropriate way.
+--- quasar-1.4.7_GPL.orig/gui/cheque_vendor.cpp	2005-03-14 01:13:45.000000000 +0200
++++ quasar-1.4.7_GPL/gui/cheque_vendor.cpp	2007-03-08 10:49:39.000000000 +0200
+@@ -227,7 +227,7 @@
+     totalGrid->addWidget(totalLabel, 1, 5, AlignRight | AlignVCenter);
+     totalGrid->addWidget(_total, 1, 6);
+ 
+-    vbox2->addWidget(_table);
++    vbox2->addWidget(_table, 1);
+     vbox2->addWidget(totals);
+ 
+     QGridLayout* grid = new QGridLayout(_frame);

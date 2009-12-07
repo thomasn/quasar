@@ -1,0 +1,42 @@
+--- quasar-1.4.5_GPL.orig/db_driver/db_driver.pro.in	2005-04-18 23:12:35.000000000 +0200
++++ quasar-1.4.5_GPL/db_driver/db_driver.pro.in	2005-04-19 00:27:34.000000000 +0200
+@@ -10,6 +10,11 @@
+ INCLUDEPATH	+= ../utility;.
+ DEPENDPATH	= $$INCLUDEPATH
+ 
++linux-g++ {
++QMAKE_CFLAGS	+= -fPIC
++QMAKE_CXXFLAGS	+= -fPIC
++}
++
+ HEADERS=db_driver.h conn.h stmt.h sql_stmt.h
+ SOURCES=db_driver.cpp conn.cpp stmt.cpp sql_stmt.cpp
+ TRANSLATIONS=messages.ts
+--- quasar-1.4.5_GPL.orig/utility/utility.pro.in	2005-04-18 23:12:35.000000000 +0200
++++ quasar-1.4.5_GPL/utility/utility.pro.in	2005-04-19 00:27:50.000000000 +0200
+@@ -10,6 +10,11 @@
+ INCLUDEPATH	+= .
+ DEPENDPATH	= $$INCLUDEPATH
+ 
++linux-g++ {
++QMAKE_CFLAGS	+= -fPIC
++QMAKE_CXXFLAGS	+= -fPIC
++}
++
+ HEADERS=config_file.h date_time.h date_valcon.h fixed.h id.h \
+ 	label_item.h integer_valcon.h money_valcon.h number_valcon.h \
+ 	percent_valcon.h plu.h price.h price_valcon.h recv_xmodem.h \
+--- quasar-1.4.5_GPL.orig/widget/widget.pro.in	2005-04-18 23:12:35.000000000 +0200
++++ quasar-1.4.5_GPL/widget/widget.pro.in	2005-04-19 00:28:00.000000000 +0200
+@@ -10,6 +10,11 @@
+ INCLUDEPATH	+= ../utility;.
+ DEPENDPATH	= $$INCLUDEPATH
+ 
++linux-g++ {
++QMAKE_CFLAGS	+= -fPIC
++QMAKE_CXXFLAGS	+= -fPIC
++}
++
+ HEADERS=arrow_line.h calendar.h cell_editor.h check_box.h combo_box.h \
+ 	connect_dialog.h data_lookup.h date_edit.h date_popup.h date_range.h \
+ 	double_edit.h id_edit.h integer_edit.h item_edit.h line_edit.h \

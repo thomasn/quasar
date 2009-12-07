@@ -1,0 +1,191 @@
+diff -u -r1.105 receive_master.cpp
+--- gui/receive_master.cpp	8 Jun 2005 07:32:25 -0000	1.92
++++ gui/receive_master.cpp	6 Jul 2005 07:53:43 -0000
+@@ -1969,14 +1969,13 @@
+ 	    TaxLine& line = _tax_info[j];
+ 	    if (line.tax_id == tax_id) {
+ 		found = true;
++		_tax_info[j].taxable += taxable;
++		_tax_info[j].amount += tax_amt;
+ 		break;
+ 	    }
+ 	}
+ 
+-	if (found) {
+-	    _tax_info[i].taxable += taxable;
+-	    _tax_info[i].amount += tax_amt;
+-	} else {
++	if (!found) {
+ 	    TaxLine line(tax_id, taxable, tax_amt);
+ 	    _tax_info.push_back(line);
+ 	}
+@@ -1995,14 +1994,13 @@
+ 	    TaxLine& line = _tax_info[j];
+ 	    if (line.tax_id == tax_id) {
+ 		found = true;
++		_tax_info[j].inc_taxable += taxable;
++		_tax_info[j].inc_amount += tax_amt;
+ 		break;
+ 	    }
+ 	}
+ 
+-	if (found) {
+-	    _tax_info[i].inc_taxable += taxable;
+-	    _tax_info[i].inc_amount += tax_amt;
+-	} else {
++	if (!found) {
+ 	    TaxLine line(tax_id, 0.0, 0.0, taxable, tax_amt);
+ 	    _tax_info.push_back(line);
+ 	}
+diff -u -r1.105 invoice_master.cpp
+--- gui/invoice_master.cpp	13 May 2005 22:36:10 -0000	1.105
++++ gui/invoice_master.cpp	6 Jul 2005 07:54:04 -0000
+@@ -2314,19 +2314,18 @@
+ 	Id tax_id = ids[i];
+ 	fixed tax_amt = amts[i];
+ 
+-	int found = -1;
++	bool found = false;
+ 	for (unsigned int j = 0; j < _tax_info.size(); ++j) {
+ 	    TaxLine& line = _tax_info[j];
+ 	    if (line.tax_id == tax_id) {
+-		found = j;
++		found = true;
++		_tax_info[j].taxable += taxable;
++		_tax_info[j].amount += tax_amt;
+ 		break;
+ 	    }
+ 	}
+ 
+-	if (found != -1) {
+-	    _tax_info[found].taxable += taxable;
+-	    _tax_info[found].amount += tax_amt;
+-	} else {
++	if (!found) {
+ 	    TaxLine line(tax_id, taxable, tax_amt);
+ 	    _tax_info.push_back(line);
+ 	}
+@@ -2340,19 +2339,18 @@
+ 	Id tax_id = ids[i];
+ 	fixed tax_amt = amts[i];
+ 
+-	int found = -1;
++	bool found = false;
+ 	for (unsigned int j = 0; j < _tax_info.size(); ++j) {
+ 	    TaxLine& line = _tax_info[j];
+ 	    if (line.tax_id == tax_id) {
+-		found = j;
++		found = true;
++		_tax_info[j].inc_taxable += taxable;
++		_tax_info[j].inc_amount += tax_amt;
+ 		break;
+ 	    }
+ 	}
+ 
+-	if (found != -1) {
+-	    _tax_info[found].inc_taxable += taxable;
+-	    _tax_info[found].inc_amount += tax_amt;
+-	} else {
++	if (!found) {
+ 	    TaxLine line(tax_id, 0.0, 0.0, taxable, tax_amt);
+ 	    _tax_info.push_back(line);
+ 	}
+diff -u -r1.68 order_master.cpp
+--- gui/order_master.cpp	13 May 2005 22:26:22 -0000	1.68
++++ gui/order_master.cpp	6 Jul 2005 07:54:30 -0000
+@@ -1795,14 +1795,13 @@
+ 	    OrderTax& line = _tax_info[j];
+ 	    if (line.tax_id == tax_id) {
+ 		found = true;
++		_tax_info[j].taxable += taxable;
++		_tax_info[j].amount += tax_amt;
+ 		break;
+ 	    }
+ 	}
+ 
+-	if (found) {
+-	    _tax_info[i].taxable += taxable;
+-	    _tax_info[i].amount += tax_amt;
+-	} else {
++	if (!found) {
+ 	    OrderTax line(tax_id, taxable, tax_amt);
+ 	    _tax_info.push_back(line);
+ 	}
+@@ -1821,14 +1820,13 @@
+ 	    OrderTax& line = _tax_info[j];
+ 	    if (line.tax_id == tax_id) {
+ 		found = true;
++		_tax_info[j].inc_taxable += taxable;
++		_tax_info[j].inc_amount += tax_amt;
+ 		break;
+ 	    }
+ 	}
+ 
+-	if (found) {
+-	    _tax_info[i].inc_taxable += taxable;
+-	    _tax_info[i].inc_amount += tax_amt;
+-	} else {
++	if (!found) {
+ 	    OrderTax line(tax_id, 0.0, 0.0, taxable, tax_amt);
+ 	    _tax_info.push_back(line);
+ 	}
+diff -u -r1.27 quote_master.cpp
+--- gui/quote_master.cpp	13 May 2005 22:18:47 -0000	1.27
++++ gui/quote_master.cpp	6 Jul 2005 07:54:48 -0000
+@@ -1804,14 +1804,13 @@
+ 	    TaxLine& line = _tax_info[j];
+ 	    if (line.tax_id == tax_id) {
+ 		found = true;
++		_tax_info[j].taxable += taxable;
++		_tax_info[j].amount += tax_amt;
+ 		break;
+ 	    }
+ 	}
+ 
+-	if (found) {
+-	    _tax_info[i].taxable += taxable;
+-	    _tax_info[i].amount += tax_amt;
+-	} else {
++	if (!found) {
+ 	    TaxLine line(tax_id, taxable, tax_amt);
+ 	    _tax_info.push_back(line);
+ 	}
+@@ -1830,14 +1829,13 @@
+ 	    TaxLine& line = _tax_info[j];
+ 	    if (line.tax_id == tax_id) {
+ 		found = true;
++		_tax_info[j].inc_taxable += taxable;
++		_tax_info[j].inc_amount += tax_amt;
+ 		break;
+ 	    }
+ 	}
+ 
+-	if (found) {
+-	    _tax_info[i].inc_taxable += taxable;
+-	    _tax_info[i].inc_amount += tax_amt;
+-	} else {
++	if (!found) {
+ 	    TaxLine line(tax_id, 0.0, 0.0, taxable, tax_amt);
+ 	    _tax_info.push_back(line);
+ 	}
+diff -u -r1.14 payout_master.cpp
+--- gui/payout_master.cpp	13 May 2005 22:21:37 -0000	1.14
++++ gui/payout_master.cpp	6 Jul 2005 07:54:53 -0000
+@@ -578,14 +578,13 @@
+ 	    TaxLine& line = _tax_info[j];
+ 	    if (line.tax_id == tax_id) {
+ 		found = true;
++		_tax_info[j].taxable += taxable;
++		_tax_info[j].amount += tax_amt;
+ 		break;
+ 	    }
+ 	}
+ 
+-	if (found) {
+-	    _tax_info[i].taxable += taxable;
+-	    _tax_info[i].amount += tax_amt;
+-	} else {
++	if (!found) {
+ 	    TaxLine line(tax_id, taxable, tax_amt);
+ 	    _tax_info.push_back(line);
+ 	}

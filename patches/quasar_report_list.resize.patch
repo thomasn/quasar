@@ -1,0 +1,12 @@
+Stretch factor for the report list window.  The list of reports now takes up
+all the space, even when resizing.
+--- quasar-1.4.7_GPL.orig/gui/report_list.cpp	2005-02-17 11:55:55.000000000 +0200
++++ quasar-1.4.7_GPL/gui/report_list.cpp	2007-03-08 10:54:24.000000000 +0200
+@@ -49,6 +49,7 @@
+     QVBox* frame = new QVBox(this);
+     QSplitter* split = new QSplitter(frame);
+     QFrame* buttons = new QFrame(frame);
++    frame->setStretchFactor(split, 1);
+ 
+     _module = new ListView(split);
+     _module->addTextColumn(tr("Module"), 20);

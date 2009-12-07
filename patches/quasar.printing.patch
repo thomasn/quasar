@@ -1,0 +1,206 @@
+diff -Nrau quasar-1.4.5_GPL.orig/gui/grid.cpp quasar-1.4.5_GPL/gui/grid.cpp
+--- quasar-1.4.5_GPL.orig/gui/grid.cpp	2005-02-17 11:55:03.000000000 +0200
++++ quasar-1.4.5_GPL/gui/grid.cpp	2005-05-29 15:56:01.000000000 +0200
+@@ -633,16 +633,16 @@
+     printer->setColorMode(QPrinter::Color);
+     printer->setFullPage(true);
+ 
+-    if (config.preferA4)
+-	printer->setPageSize(QPrinter::A4);
++    if (config.defaultPageSize >= 0)
++	printer->setPageSize((QPrinter::PageSize)config.defaultPageSize);
+     else
+ 	printer->setPageSize(QPrinter::Letter);
+ 
+     if (!printer->setup(parent))
+ 	return false;
+ 
+-    if (printer->pageSize() == QPrinter::A4) {
+-	config.preferA4 = true;
++    if (printer->pageSize() != (config.defaultPageSize >= 0 ? config.defaultPageSize : QPrinter::Letter)) {
++	config.defaultPageSize = printer->pageSize();
+ 	config.save(true);
+     }
+ 
+@@ -676,8 +676,8 @@
+ 	printer->setColorMode(QPrinter::Color);
+ 	printer->setFullPage(true);
+ 
+-	if (config.preferA4)
+-	    printer->setPageSize(QPrinter::A4);
++	if (config.defaultPageSize >= 0)
++	    printer->setPageSize((QPrinter::PageSize)config.defaultPageSize);
+ 	else
+ 	    printer->setPageSize(QPrinter::Letter);
+ 
+@@ -687,8 +687,8 @@
+ 	    return false;
+ 	}
+ 
+-	if (printer->pageSize() == QPrinter::A4) {
+-	    config.preferA4 = true;
++	if (printer->pageSize() != (config.defaultPageSize >= 0 ? config.defaultPageSize : QPrinter::Letter)) {
++	    config.defaultPageSize = printer->pageSize();
+ 	    config.save(true);
+ 	}
+ 
+diff -Nrau quasar-1.4.5_GPL.orig/gui/mailing_labels.cpp quasar-1.4.5_GPL/gui/mailing_labels.cpp
+--- quasar-1.4.5_GPL.orig/gui/mailing_labels.cpp	2005-02-17 11:55:03.000000000 +0200
++++ quasar-1.4.5_GPL/gui/mailing_labels.cpp	2005-05-29 15:04:25.000000000 +0200
+@@ -370,16 +370,16 @@
+     printer.setFullPage(true);
+     printer.setColorMode(QPrinter::Color);
+ 
+-    if (config.preferA4)
+-	printer.setPageSize(QPrinter::A4);
++    if (config.defaultPageSize >= 0)
++	printer.setPageSize((QPrinter::PageSize)config.defaultPageSize);
+     else
+ 	printer.setPageSize(QPrinter::Letter);
+ 
+     if (!printer.setup(this))
+ 	return;
+ 
+-    if (printer.pageSize() == QPrinter::A4) {
+-	config.preferA4 = true;
++    if (printer.pageSize() != (config.defaultPageSize >= 0 ? config.defaultPageSize : QPrinter::Letter)) {
++	config.defaultPageSize = printer.pageSize();
+ 	config.save(true);
+     }
+ 
+diff -Nrau quasar-1.4.5_GPL.orig/repgen/report_output.cpp quasar-1.4.5_GPL/repgen/report_output.cpp
+--- quasar-1.4.5_GPL.orig/repgen/report_output.cpp	2005-02-17 11:55:03.000000000 +0200
++++ quasar-1.4.5_GPL/repgen/report_output.cpp	2005-05-29 14:58:30.000000000 +0200
+@@ -150,29 +150,67 @@
+     printer.setMinMax(1, pages.size());
+     printer.setColorMode(QPrinter::Color);
+ 
+-    // Handle Letter to A4 conversion
++    // Handle page size conversions.
+     QPrinter::PageSize size = getSize(pageWidth, pageHeight);
+-    if (size == QPrinter::Letter && config.preferA4)
+-	size = QPrinter::A4;
++    if (config.defaultPageSize >= 0)
++	size = (QPrinter::PageSize)config.defaultPageSize;
+     printer.setPageSize(size);
+ 
++    if(config.defaultColorMode >= 0)
++	printer.setColorMode((QPrinter::ColorMode)config.defaultColorMode);
++    QPrinter::ColorMode colormode = printer.colorMode();
++    
+     // Set orientation
+     if (portrait)
+ 	printer.setOrientation(QPrinter::Portrait);
+     else
+ 	printer.setOrientation(QPrinter::Landscape);
+ 
++    // Set the default printer/location
++    QString printDestination = config.defaultPrintDestination;
+     if (!printerName.isEmpty())
+-	printer.setPrinterName(printerName);
+-    if (doSetup)
++	printDestination = printerName;
++    if (!printDestination.isEmpty()) {
++	if(printDestination.startsWith("file://")) {
++	    printer.setOutputToFile(true);
++	    printer.setOutputFileName(printDestination.mid(strlen("file://")));
++	} else if(printDestination.startsWith("printer://")) {
++	    printer.setOutputToFile(false);
++	    printer.setPrinterName(printDestination.mid(strlen("printer://")));
++	} else {
++	    printer.setOutputToFile(false);
++	    printer.setPrinterName(printDestination);
++	    printDestination = "printer://" + printDestination;
++	}
++    }
++    
++    if (doSetup) {
+ 	if (!printer.setup(parent)) return;
+ 
+-    // Check if prefer A4
+-    if (size == QPrinter::Letter && printer.pageSize() == QPrinter::A4) {
+-	config.preferA4 = true;
+-	config.save(true);
+-    }
++	bool should_save = false;
++
++	if (colormode != printer.colorMode()) {
++	    config.defaultColorMode = printer.colorMode();
++	    should_save = true;
++	}
+ 
++	if (size != printer.pageSize()) {
++	    config.defaultPageSize = printer.pageSize();
++	    should_save = true;
++	}
++
++	QString new_printDestination = printer.outputToFile() ?
++	    "file://" + printer.outputFileName() :
++	    "printer://" + printer.printerName();
++	if (new_printDestination != printDestination) {
++	    config.defaultPrintDestination = new_printDestination;
++	    should_save = true;
++	}
++
++	if (should_save) 
++	    config.save(true);
++    }
++    
+     // Set zoom based on report page size vrs printer page size
+     double zoom = 1.0;
+     int printerWidth, printerHeight;
+diff -Nrau quasar-1.4.5_GPL.orig/utility/user_config.cpp quasar-1.4.5_GPL/utility/user_config.cpp
+--- quasar-1.4.5_GPL.orig/utility/user_config.cpp	2005-04-12 09:36:25.000000000 +0200
++++ quasar-1.4.5_GPL/utility/user_config.cpp	2005-05-29 14:13:17.000000000 +0200
+@@ -58,7 +58,10 @@
+     defaultUserName = "admin";
+     smtpPort = 25;
+     handheldDevice = "";
+-    preferA4 = false;
++	defaultPageSize = -1;
++	defaultColorMode = -1;
++	defaultPrintDestination = "";
++//    preferA4 = false;
+ }
+ 
+ bool
+@@ -94,7 +97,10 @@
+     addNode(doc, "smtpHost", smtpHost);
+     addNode(doc, "smtpPort", QString::number(smtpPort));
+     addNode(doc, "handheldDevice", handheldDevice);
+-    addNode(doc, "preferA4", preferA4 ? "Yes" : "No");
++	addNode(doc, "pageSize", QString::number(defaultPageSize));
++	addNode(doc, "colorMode", QString::number(defaultColorMode));
++	addNode(doc, "printDestination", defaultPrintDestination);
++//    addNode(doc, "preferA4", preferA4 ? "Yes" : "No");
+ 
+     QFile file(filePath());
+     if (!file.open(IO_WriteOnly))
+@@ -158,7 +164,10 @@
+ 	else if (tag == "smtpHost") smtpHost = text;
+ 	else if (tag == "smtpPort") smtpPort = text.toInt();
+ 	else if (tag == "handheldDevice") handheldDevice = text;
+-	else if (tag == "preferA4") preferA4 = flag;
++	else if (tag == "pageSize") defaultPageSize = text.toInt();
++	else if (tag == "colorMode") defaultColorMode = text.toInt();
++	else if (tag == "printDestination") defaultPrintDestination = text;
++//	else if (tag == "preferA4") preferA4 = flag;
+ 	else qWarning("Warning: unknown user.cfg tag: " + tag);
+     }
+ 
+diff -Nrau quasar-1.4.5_GPL.orig/utility/user_config.h quasar-1.4.5_GPL/utility/user_config.h
+--- quasar-1.4.5_GPL.orig/utility/user_config.h	2005-02-24 04:56:14.000000000 +0200
++++ quasar-1.4.5_GPL/utility/user_config.h	2005-05-29 14:11:38.000000000 +0200
+@@ -59,7 +59,11 @@
+     QString smtpHost;
+     int smtpPort;
+     QString handheldDevice;
+-    bool preferA4;
++
++	// Printer Configuration
++	int defaultPageSize; // enum QPrinter::PageSize
++	int defaultColorMode; // enum QPrinter::ColorMode
++	QString defaultPrintDestination;
+ 
+     // Load/save config in XML format
+     bool load(bool showErrors=true);

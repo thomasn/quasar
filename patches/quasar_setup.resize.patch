@@ -1,0 +1,14 @@
+In the quasar_setup program we want the central widget to properly expand to the full
+window size.  It's not often we use this program and there is no real need to resize,
+but I like getting these things "right".
+--- quasar-1.4.7_GPL.orig/quasar_setup/setup_main_window.cpp	2005-03-04 00:09:50.000000000 +0200
++++ quasar-1.4.7_GPL/quasar_setup/setup_main_window.cpp	2007-03-08 01:11:54.000000000 +0200
+@@ -40,6 +40,8 @@
+     : QMainWindow(0, "SetupMainWindow", WType_TopLevel | WDestructiveClose)
+ {
+     setCaption(tr("Quasar Setup"));
++    setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding, 0, 0, sizePolicy().hasHeightForWidth()));
++
+     menuBar();
+ 
+     QPopupMenu* file = new QPopupMenu(this);

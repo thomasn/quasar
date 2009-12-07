@@ -1,0 +1,33 @@
+Index: utility/price.cpp
+===================================================================
+RCS file: /lci/cvspublic/Quasar/utility/price.cpp,v
+retrieving revision 1.6
+diff -u -r1.6 price.cpp
+--- utility/price.cpp	13 Mar 2005 23:14:19 -0000	1.6
++++ utility/price.cpp	19 Jun 2005 19:15:05 -0000
+@@ -187,7 +187,7 @@
+ bool
+ Price::fromString(const QString& text)
+ {
+-    QString simpleText = text.simplifyWhiteSpace();
++    QString simpleText = text.stripWhiteSpace();
+     NumberValcon numberValcon;
+     MoneyValcon moneyValcon;
+ 
+Index: widget/number_edit.cpp
+===================================================================
+RCS file: /lci/cvspublic/Quasar/widget/number_edit.cpp,v
+retrieving revision 1.20
+diff -u -r1.20 number_edit.cpp
+--- widget/number_edit.cpp	3 Feb 2004 00:56:02 -0000	1.20
++++ widget/number_edit.cpp	19 Jun 2005 19:15:05 -0000
+@@ -50,7 +50,8 @@
+ NumberEdit::value()
+ {
+     Variant value;
+-    QString txt = text().simplifyWhiteSpace();
++
++    QString txt = text().stripWhiteSpace();
+     if (txt == "")
+ 	return value;
+ 

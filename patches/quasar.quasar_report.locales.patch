@@ -1,0 +1,22 @@
+--- quasar-1.4.7_GPL/quasar_report/quasar_report.cpp.orig	2006-02-04 08:49:24.000000000 +0200
++++ quasar-1.4.7_GPL/quasar_report/quasar_report.cpp	2006-02-04 08:06:23.000000000 +0200
+@@ -10,6 +10,7 @@
+ #include "param_type_factory.h"
+ #include "company.h"
+ #include "store.h"
++#include "user_config.h"
+ 
+ extern void quasarTclInit(ReportInterp* i, void* arg);
+ 
+@@ -95,6 +96,11 @@
+     if (username.isEmpty())
+ 	qFatal("Error: you must specify a username");
+ 
++	// Load user config and set locale	
++    UserConfig config;
++    config.load(false);
++    QuasarClient::setLocale(config.locale);
++	
+     // Connect to server
+     QuasarClient client;
+     client.serverConnect(hostname, port);

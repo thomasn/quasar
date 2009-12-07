@@ -1,0 +1,25 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+depend() {
+	after postgresql
+	after firebird
+}
+
+start() {
+	ebegin "Starting quasard"
+#	start-stop-daemon --start --quiet \
+	start-stop-daemon --start --quiet --chuid quasar \
+		--pidfile=/var/run/quasar.pid --make-pidfile \
+		--exec /usr/sbin/quasard \
+		--background -- >/dev/null 2>&1
+	eend $?
+}
+
+stop () {
+	ebegin "Stopping quasard"
+	start-stop-daemon --stop --quiet \
+		--pidfile=/var/run/quasar.pid
+	eend $?
+}
