@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Subdepartment Sales"
+	module="Sales"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="150"
+	bottomMargin="150">
+
+  <initialize><![CDATA[
+	proc percent { value1 value2 } {
+	    if { $value2 == "" || $value2 == 0 } {
+		return 0
+	    }
+	    return [expr round($value1 * 10000.0 / $value2) / 100.0]
+	}
+
+	proc margin { price cost } {
+	    return [percent [expr $price - $cost] $price]
+	}
+
+	set total_profit ""
+
+	proc get_total_profit { } {
+	    global total_profit param
+
+	    if { $total_profit != "" } {
+		return $total_profit
+	    }
+
+	    set total_profit 0
+	    set query "select sum(sold_price - sold_cost) from item_change
+		    join item on item_change.item_id = item.item_id where
+		    change_date >= '$param(from)' and change_date <=
+		    '$param(to)'"
+	    if { $param(dept_id) != "" } {
+		append query " and item.dept_id = '$param(dept_id)'"
+	    }
+	    if { $param(store_id) != "" } {
+		append query " and store_id = '$param(store_id)'"
+	    }
+	    select $query {
+		set total_profit $column(1)
+	    }
+	}
+
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+  ]]></initialize>
+
+  <dataSource type="Query">
+    <code><![CDATA[
+	set where ""
+	if { $param(dept_id) != "" } {
+	    append where "and subdept.dept_id = '$param(dept_id)' "
+	}
+	if { $param(store_id) != "" } {
+	    append where "and store_id = '$param(store_id)' "
+	}
+
+	return "select subdept.number,subdept.name,sum(item_change.sold_qty),
+	sum(item_change.sold_cost),sum(item_change.sold_price)
+	from (item_change join item on item_change.item_id = item.item_id)
+	join subdept on item.subdept_id = subdept.subdept_id where
+	item_change.change_date >= '$param(from)' and item_change.change_date
+	<= '$param(to)' $where group by subdept.number,subdept.name
+	order by subdept.number"
+    ]]></code>
+    <column>number</column>
+    <column>name</column>
+    <column>sold</column>
+    <column>cost</column>
+    <column>price</column>
+  </dataSource>
+
+  <parameter
+	name="from"
+	description="Enter the from date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="to"
+	description="Enter the to date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="dept_id"
+	description="Enter the department:"
+	manditory="false"
+	type="lookup"
+	dataType="dept"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <variable
+	name="profit"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<calcExpr>$column(price) - $column(cost)</calcExpr>
+  </variable>
+
+  <variable
+	name="total_sold"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<sum>$column(sold)</sum>
+  </variable>
+
+  <variable
+	name="total_cost"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<sum>$column(cost)</sum>
+  </variable>
+
+  <variable
+	name="total_price"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<sum>$column(price)</sum>
+  </variable>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Subdepartment Sales</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(dept_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup dept dept_id $param(dept_id) name] Department"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"From $param(from) to $param(to)"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="400"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Subdept</text>
+    </text>
+    <text
+	x="400"
+	y="0"
+	width="1000"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Name</text>
+    </text>
+    <text
+	x="1400"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Qty</text>
+    </text>
+    <text
+	x="2000"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Sales</text>
+    </text>
+    <text
+	x="2600"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Cost</text>
+    </text>
+    <text
+	x="3200"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Profit</text>
+    </text>
+    <text
+	x="3800"
+	y="0"
+	width="500"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Margin</text>
+    </text>
+    <text
+	x="4300"
+	y="0"
+	width="500"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Percent</text>
+    </text>
+  </pageHeader>
+
+  <detail height="130">
+    <text
+	x="0"
+	y="0"
+	width="400"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(number)</var>
+    </text>
+    <text
+	x="400"
+	y="0"
+	width="1000"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(name)</var>
+    </text>
+    <text
+	format="number"
+	x="1400"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(sold)</var>
+    </text>
+    <text
+	format="money"
+	x="2000"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(price)</var>
+    </text>
+    <text
+	format="money"
+	x="2600"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(cost)</var>
+    </text>
+    <text
+	format="money"
+	x="3200"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<font name="Times" size="10"/>
+	<var>var(profit)</var>
+    </text>
+    <text
+	format="percent"
+	x="3800"
+	y="0"
+	width="500"
+	height="125"
+	halign="Right">
+	<font name="Times" size="10"/>
+	<code>margin $column(price) $column(cost)</code>
+    </text>
+    <text
+	format="percent"
+	x="4300"
+	y="0"
+	width="500"
+	height="125"
+	halign="Right">
+	<font name="Times" size="10"/>
+	<code>percent $var(profit) [get_total_profit]</code>
+    </text>
+  </detail>
+
+  <summary height="250">
+    <printWhen>$sys(row_number) != 1</printWhen>
+    <text
+	x="400"
+	y="0"
+	width="1000"
+	height="250">
+	<font name="Times" isBold="true" size="12"/>
+	<expr>"Total:"</expr>
+    </text>
+
+    <line x="1420" y="2" width="580">
+	<pen width="3"/>
+    </line>
+    <text
+ 	format="number"
+	x="1400"
+	y="0"
+	width="600"
+	height="250"
+	halign="Right">
+	<font name="Times" isBold="true" size="10"/>
+	<var>var(total_sold)</var>
+    </text>
+
+    <line x="2020" y="2" width="580">
+	<pen width="3"/>
+    </line>
+    <text
+  	format="money"
+	x="2000"
+	y="0"
+	width="600"
+	height="250"
+	halign="Right">
+	<font name="Times" isBold="true" size="10"/>
+	<var>var(total_price)</var>
+    </text>
+
+    <line x="2620" y="2" width="580">
+	<pen width="3"/>
+    </line>
+    <text
+  	format="money"
+	x="2600"
+	y="0"
+	width="600"
+	height="250"
+	halign="Right">
+	<font name="Times" isBold="true" size="10"/>
+	<var>var(total_cost)</var>
+    </text>
+
+    <line x="3220" y="2" width="580">
+	<pen width="3"/>
+    </line>
+    <text
+  	format="money"
+	x="3200"
+	y="0"
+	width="600"
+	height="250"
+	halign="Right">
+	<font name="Times" isBold="true" size="10"/>
+	<expr>$var(total_price) - $var(total_cost)</expr>
+    </text>
+
+    <line x="3820" y="2" width="480">
+	<pen width="3"/>
+    </line>
+    <text
+  	format="percent"
+	x="3800"
+	y="0"
+	width="500"
+	height="250"
+	halign="Right">
+	<font name="Times" isBold="true" size="10"/>
+	<code>margin $var(total_price) $var(total_cost)</code>
+    </text>
+  </summary>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

@@ -1,0 +1,156 @@
+<html>
+<head>
+<TITLE>Account Master</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png">
+<td><a href="index.html">Table of Contents</a>
+<td><a href="commands.html">Quasar Commands</a>
+<td><a href="menu_ledger.html"><b>Up: </b>Ledger</a>
+<td><a href="account_list.html"><b>Previous: </b>Chart of Accounts</a>
+<td><a href="general_master.html"><b>Next: </b>Journal Entry</a>
+</tr> 
+</tbody></table>
+
+<hr>
+
+<h1>Account Master</h1>
+
+<img src="images/account_master.png"><br>
+<br>
+<h2>Name</h2>
+
+<p>The name of the account.</p>
+
+<h2>Type</h2>
+
+<p>Select the type of account. This data is required by Quasar to refine
+selections and to assist in the printing of financial statements.<br>
+<br>
+<img src="images/account_master_type.png">
+<img src="images/account_master_type2.png"><br>  
+<dl>
+<dd>
+<ul>
+<li> <b>Bank</b> - Identifies the account as a bank account. 
+<li> <b>Accounts Receivable</b> - Identifies the account as being a
+receivable account. Receivable accounts are used for providing
+customers with a line of credit. Multiple receivable accounts may be
+defined. For example, you may wish to seperate regular receivables
+from government or comercial receivables. 
+<li> <b>Other Current Assets</b> - Identifies the account as being a current
+asset other than a bank type account or a receivable type account. A
+prepaid bill is an example of a current asset.
+<li> <b>Fixed Asset</b> -  Identifies the account as being a fixed
+asset. Fixed assets include such things a buildings and land.
+<li> <b>Other Asset</b> - Identifies the account as being an asset other than
+a current asset or a fixed asset.
+<li> <b>Accounts Payable</b> - Identifies the account as being a payable
+account. A payable account is used for the purchase of
+products. Multiple payable accounts may be defined. 
+<li> <b>Credit Card</b> - Identifies the account as being a credit card
+account (for company credit cards).
+<li> <b>Other Current Liability</b> - Identifies the account as being a
+current liability other than a payable account or a credit card
+account. Federal tax payable is an example of a liability account.
+<li> <b>Long Term Liability</b> - Identifies the account as being a long term
+liability. A mortgage is an example of a long term liability.
+<li> <b>Equity</b> - Identifies the account as being an equity
+account. The share holder capital in a company.
+<li> <b>Income</b> - Identifies the account as being a standard income
+account. Sales accounts are all income account.
+<li> <b>Cost of Goods Sold</b> - Identifies the account as a cost of goods
+sold account. When a product is sold the inventory is reduced by the
+cost of the goods sold. The cost of goods sold accounts keep track of
+your total cost of sales.
+<li> <b>Expense</b> - Identifies the account as being a standard
+expense account. Expense accounts are for all expenses such a fuel,
+power, water, rent and staff costs.
+<li> <b>Other Income</b> - Identifies the account as being a non-standard
+income account.
+<li> <b>Other Expense</b> - Identifies the account as being a non-standard
+expense account.
+</ul>
+</dl>
+
+<h2>Header</h2>
+
+<p>Toggle on or off. Toggle on is the account is a header type account. A header account is a parent of active accounts within a group. The sample below
+is an excerpt from the account list and shows an example of two parent
+accounts where "Repairs and Maintenance" and "Staff Expenses" are parent accounts for the active accounts grouped below them.</P>
+<br>
+<img src="images/account_master_header.png"><br>
+<br>
+
+<h2>Number</h2>
+
+<p>The account number. This is an optional attribute.
+
+<h2>Parent</h2>
+
+<p>The parent or header account for an active account. Accounts are may be attached to a parent or header account as a method of grouping accounts for financial reporting.
+
+<h2>Groups</h2>
+
+<p>
+Quasar provides the ability to link profit and loss type accounts
+to one or more groups for the purpose of printing profit and loss
+statements. Using Quasar you can:
+
+<dl>
+<dd>
+<ul>
+<li>  print consolidated financial statements
+<li>  print financial statements by store
+<li>  print profit and loss statements by group
+</ul>
+</dl>
+<br>
+<img src="images/account_master_group.png"><br>
+<br>
+
+<h3>Group Name</h3>
+
+<p>
+If required you can link an account to one or more groups. When a
+profit and loss statement is printed by "Group" only the accounts
+within the group will be displayed. For example, a company with two
+storess has a service department and a sales department in each
+store. While Quasar automatically provides the ability to produce
+financial statements by store, the management may also wish to view the
+overall profit and loss for either service or sales. To do so they can link the
+service department accounts to a group called "Service" and they can link
+the sales department accounts to a group called "Sales".
+
+<h2>Last Reconciled</h2>
+
+<p>Quasar Accounting displays the date that the account was last reconciled. 
+
+<h2>Next Cheque#</h2>
+
+<p>The next cheque number that will be defaulted by Quasar for this account.
+
+<h2>Inactive</h2> 
+
+<p>Toggle on or off. Toggle on to set the account to be inactive. Quasar Accounting will not all an account with a balance to be set to inactive. Toggle on to re-activate an account. </p>
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a>
+<td><a href="commands.html">Quasar Commands</a>
+<td><a href="menu_ledger.html"><b>Up: </b>Ledger</a>
+<td><a href="account_list.html"><b>Previous: </b>Chart of Accounts</a>
+<td><a href="general_master.html"><b>Next: </b>Journal Entry</a>
+</tr>
+</table>
+
+
+</body>
+</html>

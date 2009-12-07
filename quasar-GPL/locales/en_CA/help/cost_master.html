@@ -1,0 +1,176 @@
+<html>
+<head>
+<TITLE>Cost Master</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png"></td>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="setup_inventory.html"><b>Up: </b>Setup Inventory</a></td>
+<td><a href="price_master.html"><b>Previous: </b>Price Master</a></td>
+<td><a href="adjust_reason_list.html"><b>Next: </b>Adjustment Reason
+List</a></td>  
+</tr>
+</tbody></table>
+
+<hr>
+
+<h1>Cost Master</h1>
+<img src="images/cost_master.png"><br>
+<br>
+
+<p> The cost master file is used to link costs to items. Quasar
+provides multiple cost types and multiple ways to link costs to
+items. You may establish multiple costs for one item. In that case,
+Quasar reviews all the available costs for a specific vendor and
+assigns them the lowest cost available at the time.
+
+<h2>Item Selection</h2>
+
+<p> A cost can be linked to an individual item, a group of items, a
+sub-department and a specific item size.
+
+<h3>Item</h3>
+
+<p> Toggle on or off. Toggle on to enter a specific item to which the
+cost will be linked.
+
+<h3>Item Group</h3>
+
+<p> Toggle on or off. Toggle on to enter an item group. All items
+linked to the group will be linked to the cost.
+
+<h3>Sub-department</h3> 
+
+<p> Toggle on or off. Toggle on to enter a specific sub-department. All
+items linked to the sub-department will be linked to the cost.
+
+<h3>Size</h3>
+
+<p> Enter the size of the item(s) that the cost will be linked to.
+
+<h2>Card Selection</h2>
+
+<p> A cost by default is linked to all vendors. This default may be
+changed and the cost may be linked to a specific vendor or a
+specific group of vendors.
+
+<h3>Card</h3> 
+
+<p> Toggle on or off. Toggle on to link a cost to a specific
+vendor. 
+
+<h3>Card Group</h3>
+
+<p> Toggle on or off. Toggle on to link a cost to a specific group of
+customers. 
+
+<h2>Store</h2>
+
+<p> If the cost is valid only in a specific store, enter that
+store. If blank the cost will be valid in all stores.
+
+<h2>Promotion?</h2>
+
+<p> Toggle on or off. Toggle on if the cost is a promotional cost.
+
+<h2>Discountable?</h2>
+
+<p> Toggle on or off. Toggle on if the cost  may be further discounted
+at the point of purchase.
+
+<h2>Start Date</h2>
+
+<p> Use this attribute in conjunction with the "Stop Date" to define
+a range of dates within which the cost will be valid.  If a date is
+entered the cost will be valid on or after the date entered. If left
+blank the cost will be valid up until the stop date.
+
+<h2>Stop Date</h2>
+
+<p> Use this attribute in conjunction with the "Start Date" to define
+a range of dates within which the cost will be valid. If a date is
+entered the cost will be valid before or on the date entered. If left
+blank the cost will be valid indefinitely
+
+<h2>Day of Week</h2>
+
+<p> The day(s) of the week that a cost is valid may be defined
+individually. The day mask format is in this order: Monday, Tuesday,
+Wednesday, Thursday, Friday, Saturday, Sunday. Therefore if you set
+the day mask to be "NNNNNYY" then the cost would be valid only on
+Saturday and Sunday.
+
+<h2>Minimum Qty</h2>
+
+<p> The cost may be valid only after a minimum qty of the item(s)
+have been purchased. For example the regular cost on an item is
+10.00 each. But if you buy twelve of them the cost would be 9.00
+each. Enter the minimum quantity of units that you must buy to
+receive this cost. If zero, the cost is valid for any quantity.
+
+<h2>Qty Limit</h2>
+
+<p> You may limit the quantity of items that may be sold at a special
+cost. For example, the regular cost of an item may be $10.00 each. You can
+put this item on special for $6.00 and limit the quantity that a
+customer may purchase on a single invoice to 2.
+
+<h2>Cost  Method</h2>
+
+<p> Quasar has multiple costing methods. 
+
+<h3>Cost</h3>
+
+<p> Toggle on or off. Toggle on to enter a single cost and/or at/for
+costing. A single cost is simply one item for a single cost. For
+example if you enter ".50" then the cost of each unit of sale will be
+$0.50. . At/For costing is a quantity for a cost. For
+example, if you enter "3/1.00" the cost will be three items for
+$1.00. You may also enter a combination like ".50 3/1.00". In this
+case you would pay $0.50 each or $1.00 for combinations of three.
+
+<h3>Percent Off</h3>
+
+<p>Toggle on or off. Toggle on to enter a percentage off discount. For
+example, if "10%" is entered here and the cost of an item is $1.00
+then the cost charged  will be (1.00 - 0.10) $0.90.
+
+<h3>Dollar Off</h3>
+
+<p> Toggle on or off. Toggle on to enter a specific dollar discount to
+take off of an item. For example, if you enter "$1.00" here and the
+regular cost of the item is $10.00, then you will be charged
+(10.00 - 1.00) $9.00 for the item.
+
+ </p>
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="setup_inventory.html"><b>Up: </b>Setup Inventory</a></td>
+<td><a href="price_master.html"><b>Previous: </b>Price Master</a></td>
+<td><a href="adjust_reason_list.html"><b>Next: </b>Adjustment Reason
+List</a></td>  
+</tr>
+</table>
+
+<br>
+
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+include (../project.def)
+
+TEMPLATE	= app
+TARGET		= quasar_setup
+VERSION		= 1.4
+CONFIG		+= qt
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../bin
+INCLUDEPATH	+= ../utility;../db_driver;../business;../database;../widget;.
+DEPENDPATH	= $$INCLUDEPATH
+
+# Linux setup
+linux-g++ {
+LIBS		 = -lquasar_db -lquasar_obj -lquasar_driver \
+                   -lquasar_widget -lquasar_util $$TCL_LIB $$ICU_LIBS
+TARGETDEPS	 = ../lib/libquasar_db.a ../lib/libquasar_driver.a \
+		   ../lib/libquasar_obj.a ../lib/libquasar_widget.a \
+                   ../lib/libquasar_util.a
+}
+
+# Windows setup
+win32 {
+INCLUDEPATH	+= ../zlib
+LIBS		= ..\lib\quasar_db.lib ..\lib\quasar_obj.lib \
+		  ..\lib\quasar_driver.lib ..\lib\quasar_util.lib \
+		  ..\lib\quasar_widget.lib
+TARGETDEPS	= ..\lib\quasar_db.lib ..\lib\quasar_obj.lib \
+		  ..\lib\quasar_driver.lib ..\lib\quasar_util.lib \
+		  ..\lib\quasar_widget.lib
+RC_FILE		= QuasarSetup.rc
+}
+
+HEADERS=setup_main_window.h import_screen.h backup_screen.h restore_screen.h \
+	new_company.h config_tab.h company_config_tab.h client_config_tab.h \
+        driver_config_tab.h server_config_tab.h update_screen.h
+SOURCES=quasar_setup.cpp setup_main_window.cpp import_screen.cpp \
+	backup_screen.cpp restore_screen.cpp new_company.cpp config_tab.cpp \
+        company_config_tab.cpp client_config_tab.cpp driver_config_tab.cpp \
+        server_config_tab.cpp update_screen.cpp
+
+TRANSLATIONS=messages.ts

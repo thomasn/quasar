@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Count Verify"
+	module="Inventory"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+  ]]></initialize>
+
+  <parameter
+	name="count_id"
+	description="Enter the count number:"
+	manditory="true"
+	type="lookup"
+	dataType="count"/>
+
+  <dataSource type="Query">
+    <expr>
+	"select pcount_item.number,item.description,pcount_item.size_name,
+		pcount_item.quantity from pcount_item join item on
+		pcount_item.item_id = item.item_id where pcount_item.count_id =
+		'$param(count_id)' order by seq_num"
+    </expr>
+    <column>item_number</column>
+    <column>description</column>
+    <column>size</column>
+    <column>counted</column>
+  </dataSource>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Count Verify</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"Count #[lookup pcount count_id $param(count_id) number]"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>[lookup pcount count_id $param(count_id) description] != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup pcount count_id $param(count_id) description]"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>[lookup pcount count_id $param(count_id) location_id] != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"Location: [lookup location location_id [lookup pcount count_id $param(count_id) location_id] name]"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>[lookup pcount count_id $param(count_id) employee_id] != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"Employee: [lookup card card_id [lookup pcount count_id $param(count_id) employee_id] name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="300"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>#</text>
+    </text>
+    <text
+	x="300"
+	y="0"
+	width="800"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Item</text>
+    </text>
+    <text
+	x="1100"
+	y="0"
+	width="2100"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Description</text>
+    </text>
+    <text
+	x="3200"
+	y="0"
+	width="400"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Size</text>
+    </text>
+    <text
+	x="3600"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Counted</text>
+    </text>
+    <text
+	x="4200"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Verify</text>
+    </text>
+  </pageHeader>
+
+  <detail height="125">
+    <rectangle x="0" y="0" width="4800" height="125">
+	<printWhen>$sys(row_number) % 2 == 0</printWhen>
+	<pen style="NoPen"/>
+	<brush color="#F4F4F4"/>
+    </rectangle>
+    <text
+	x="0"
+	y="0"
+	width="300"
+	height="125">
+	<font name="Times" size="10"/>
+	<var>sys(row_number)</var>
+    </text>
+    <text
+	x="300"
+	y="0"
+	width="800"
+	height="125">
+	<font name="Times" size="10"/>
+	<var>column(item_number)</var>
+    </text>
+    <text
+	x="1100"
+	y="0"
+	width="2100"
+	height="125">
+	<font name="Times" size="10"/>
+	<var>column(description)</var>
+    </text>
+    <text
+	x="3200"
+	y="0"
+	width="400"
+	height="125">
+	<font name="Times" size="10"/>
+	<var>column(size)</var>
+    </text>
+    <text
+	format="number"
+	x="3600"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(counted)</var>
+    </text>
+    <line x="4320" y="120" width="480"/>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

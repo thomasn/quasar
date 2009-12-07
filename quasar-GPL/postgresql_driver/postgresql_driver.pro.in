@@ -1,0 +1,30 @@
+include (../project.def)
+
+TEMPLATE	= lib
+TARGET		= postgresql_driver
+CONFIG		+= qt plugin
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../drivers
+INCLUDEPATH	+= ../utility;../db_driver;../widget;.;@POSTGRESQL_INC_DIR@
+DEPENDPATH	= $$INCLUDEPATH
+
+# Linux setup
+linux-g++ {
+LIBS		= -lquasar_driver -lquasar_widget -lquasar_util
+TARGETDEPS	= ../lib/libquasar_driver.a ../lib/libquasar_widget.a \
+		  ../lib/libquasar_util.a
+}
+
+# Windows setup
+win32 {
+LIBS		= ..\lib\quasar_driver.lib ..\lib\quasar_widget.lib \
+		  ..\lib\quasar_util.lib
+TARGETDEPS	= ..\lib\quasar_driver.lib ..\lib\quasar_widget.lib \
+		  ..\lib\quasar_util.lib
+}
+
+HEADERS=postgresql_driver.h postgresql_config.h postgresql_config_dialog.h
+SOURCES=postgresql_driver.cpp postgresql_config.cpp \
+	postgresql_config_dialog.cpp
+TRANSLATIONS=messages.ts

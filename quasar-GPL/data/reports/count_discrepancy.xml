@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Count Discrepancy"
+	module="Inventory"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <parameter
+	name="inc_zero"
+	description="Include zero discrepancy items?"
+	manditory="true"
+	type="bool"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store:"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <dataSource type="Code">
+    <initialize><![CDATA[
+	set item_ids ""
+
+	# Build where clause depending on params
+	set where ""
+	if { $param(store_id) != "" } {
+	    set where "where store_id = '$param(store_id)'"
+	}
+
+	set query "select pcount_item.item_id,item_plu.number,item.description,
+		   item.sell_size,item_size.qty,pcount_item.size_qty,
+		   pcount_item.quantity from (((pcount join pcount_item on
+		   pcount.inactive_on is null and pcount.count_id =
+		   pcount_item.count_id) join item on pcount_item.item_id =
+		   item.item_id) join item_plu on pcount_item.item_id =
+		   item_plu.item_id and item_plu.seq_num = 0) join
+		   item_size on pcount_item.item_id = item_size.item_id and
+		   item_size.name = item.sell_size $where order by
+		   pcount.number,pcount_item.seq_num"
+	select $query {
+	    set item_id $column(1)
+	    set number $column(2)
+	    set desc $column(3)
+	    set size $column(4)
+	    set size_qty $column(5)
+	    set count_size_qty $column(6)
+	    set count_qty $column(7)
+
+	    set qty [expr $count_size_qty * $count_qty]
+
+	    if { [info exists item_nums($item_id)] } {
+		set item_qtys($item_id) [expr $item_qtys($item_id) + $qty]
+	    } else {
+		lappend item_ids $item_id
+	        set item_nums($item_id) $number
+		set item_descs($item_id) $desc
+		set item_sizes($item_id) $size
+		set item_size_qtys($item_id) $size_qty
+		set item_qtys($item_id) $qty
+		set item_onhands($item_id) 0
+	    }
+	}
+
+	# Get on hand values
+	set query "select item_id,sum(on_hand) from item_change $where 
+		group by item_id"
+	select $query {
+	    set item_id $column(1)
+	    set on_hand $column(2)
+
+	    set item_onhands($item_id) $on_hand
+	}
+
+	set rows ""
+	foreach item_id $item_ids {
+	    set number $item_nums($item_id)
+	    set desc $item_descs($item_id)
+	    set size $item_sizes($item_id)
+	    set size_qty $item_size_qtys($item_id)
+	    set counted $item_qtys($item_id)
+	    set on_hand $item_onhands($item_id)
+
+	    if { $size_qty != 0 } {
+		set counted [expr $counted * 1.0 / $size_qty]
+		set on_hand [expr $on_hand * 1.0 / $size_qty]
+	    }
+
+	    if { $counted != $on_hand || $param(inc_zero) == "yes" } {
+		lappend rows [list $item_id $number $desc $size $size_qty \
+		    $counted $on_hand]
+	    }
+	}
+    ]]></initialize>
+    <next><![CDATA[
+	$current_row < [llength $rows]
+    ]]></next>
+    <get>
+	return [lindex [lindex $rows $current_row] $index]
+    </get>
+    <column>item_id</column>
+    <column>number</column>
+    <column>desc</column>
+    <column>size</column>
+    <column>size_qty</column>
+    <column>counted</column>
+    <column>on_hand</column>
+  </dataSource>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Count Discrepancy</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Item Number</text>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="1700"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Description</text>
+    </text>
+    <text
+	x="2500"
+	y="0"
+	width="500"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Size</text>
+    </text>
+    <text
+	x="3000"
+	y="0"
+	width="600"
+	height="125"
+	halign="right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Counted</text>
+    </text>
+    <text
+	x="3600"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>On Hand</text>
+    </text>
+    <text
+	x="4200"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Discrepancy</text>
+    </text>
+  </pageHeader>
+
+  <detail height="125">
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(number)</var>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="1700"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(desc)</var>
+    </text>
+    <text
+	x="2500"
+	y="0"
+	width="500"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(size)</var>
+    </text>
+    <text
+	x="3000"
+	y="0"
+	width="600"
+	height="125"
+	format="number"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<var>column(counted)</var>
+    </text>
+    <text
+	x="3600"
+	y="0"
+	width="600"
+	height="125"
+	format="number"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<var>column(on_hand)</var>
+    </text>
+    <text
+	x="4200"
+	y="0"
+	width="600"
+	height="125"
+	format="number"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<expr>$column(counted) - $column(on_hand)</expr>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

@@ -1,0 +1,19 @@
+Release Notes for Quasar 1.4.7:
+-------------------------------
+
+Quasar 1.4.7 is a bug fix release for the handheld send/receive function:
+
+	- fixed the receiving of data from the handheld to not use Xon/Xoff
+	  flow control since the YModem protocol can have Ctrl-S and Ctrl-Q
+	  character in the stream.  Using hardware flow control which allowed
+	  bumping the baud from 9600 to 38400 so transmission should be a lot
+	  faster now.
+
+	- fixed a bug in the auto order by sales history where it was
+	  including an extra day of sales in the calculations.
+
+	- fixed a problem when compiling using gcc 4 (Fedora Core 4 for
+	  example)
+
+	- setup the xinetd and inetd services to run quasar_clientd with
+	  a group of "quasar".

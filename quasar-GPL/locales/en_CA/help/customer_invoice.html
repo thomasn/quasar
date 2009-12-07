@@ -1,0 +1,422 @@
+<html>
+<head>
+<TITLE>Customer Invoice</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png">
+<td><a href="index.html">Table of Contents</a>
+<td><a href="commands.html">Quasar Commands</a>
+<td><a href="menu_sales.html"><b>Up: </b>Sales</a>
+<td><a href="customer_quote.html"><b>Previous: </b>Customer Quote</a>
+<td><a href="customer_payment.html"><b>Next: </b>Customer Payments</a>
+</tr>
+</tbody></table>
+
+<hr>
+
+<H1>Customer Invoice</H1>
+<img src="images/customer_invoice.png"><br>
+<br>
+
+<h2>Invoice No</h2>
+
+<p> The invoice number is incremented by Quasar. This may be changed by
+the user. If the invoice number
+entered is the same as an existing invoice number then a warning message will be
+displayed.</p> 
+
+<h2>Reference</h2>
+
+<p> A number that references the customer invoice. For example, the
+customer may provide you with a purchase order number or a job number. 
+
+<h2>Date</h2>
+
+<p>The date for the customer invoice. The date determines the
+accounting period in which the customer invoice will be posted.
+
+<h2>Time</h2>
+
+<p>The time the customer invoice was created.
+
+<h2>Shift</h2>
+
+<p> The shift that the customer invoice is linked to through a shift
+close.
+
+<h2>Store</h2>
+
+<p>Select or change the default store. If a store has been
+defined for the user, then the user's store will display by
+default. If no store has been defined for the user, then the
+default store specified in the "Quasar Configuration" will be
+displayed.
+
+<h2>Station</h2>
+
+<p> The station (work station) on which the customer invoice is created.
+
+<h2>Employee</h2>
+
+<p> The employee creating the customer invoice.
+
+<h2>Customer</h2>
+<p>
+Select or enter the customer whom the invoice is being billed to.
+
+<h2>Address</h2>
+
+<p>The customers address.
+
+<h2>Terms</h2>
+
+<p>The payment terms of the invoice. Payment terms default from the customer master file.
+
+<h2>Ship Via</h2>
+
+<p>Enter the method of shipment.
+
+<h2>Promised Date</h2>
+
+<p> Enter the date the goods are promised to the customer. 
+
+<h2>Type</h2>
+
+<p>Select either item or account. Select item if the sales invoice
+will be used to sell or return items. Select account if the sales
+invoice will reflect a direct  charge or credit to a ledger account.
+
+<h2>Tender</h2>
+
+<p> If the invoice will be tendered by a single tender then select the
+individual tender. If the invoice will be tendered using multiple
+tenders, then use the "Tenders" folder.
+
+<h2>Memo</h2>
+
+<p>Defines the customer invoice.
+
+<h2>Item Entry Table</h2>
+
+<img src="images/customer_invoice_table.png"><br>
+
+<br> Use this section to enter items on the customer invoice.
+
+<p>
+<dl>
+<dd>
+<ul>
+<li><b>Item Number</b> - The item number of the product or products being sold.
+<li> <b>Description</b> - The description of the product or products
+being sold.
+<li> <b>Size</b> - The size of the item.
+<li> <b>Quantity</b> - The quantity of products being sold. A positive
+number entered indicates a product purchase. A negative number entered
+indicates product a return.
+<li><b>Price</b> - The price per selling unit for each product being sold.
+<li><b>Ext Price</b> -  The extended price for the items on the
+line. The extended price is the gross extended price before discounts.
+<li><b>Discount</b> - If the discount is a percent discount then the
+percentage will be displayed. If the discount is a dollar discount,
+then the total dollar amount will be displayed. Line discounts are
+selected in the "Item Info" folder.
+<li><b>Tax</b> - The selling tax code for the item. This is defaulted
+from the data entered in item master window. However, the tax code may
+be changed by the user.
+</ul>
+</dl>
+
+
+<h2>Totals</h2>
+
+<img src="images/customer_invoice_total.png"><br>
+
+<p> The totals folder displays the various totals for the customer
+invoice:
+
+<dl>
+<dd>
+<ul>
+<li> <b>Item Total</b> - The net item total before discounts and taxes.
+<li> <b>Line Discounts</b> - The total of all line discounts.
+<li> <b>Trans Discounts</b> - The total of all transaction discounts.
+<li> <b>Tax Total</b> - The accumulated total of all taxes.
+<li> <b>Deposit Total</b> - The total of all container deposits.
+<li> <b>Total</b> - The gross total for the customer invoice.
+<li> <b>Paid</b> - The amount of all payments allocated to the
+customer invoice.
+<li> <b>Due</b> - The net balance due on the customer invoice after
+all payments. 
+</ul>
+</dl>
+
+
+<h2>Comments</h2>
+
+<img src="images/customer_invoice_comment.png"><br>
+
+<p>Any comments relevant to the invoice. All comments will be printed
+on the hard copy of the customer invoice.
+
+
+<h2>References</h2>
+
+<img src="images/customer_invoice_reference.png"><br>
+
+<p>Displays the compulsary references entered.
+
+
+<h2>Taxes</h2>
+
+<img src="images/customer_invoice_tax.png"><br>
+
+<p> Quasar display a breakdown of the individual taxes.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Tax</b> - The tax id.
+<li> <b>Name</b> - The name of the tax.
+<li> <b>Taxable</b> - The net base amount that a given tax is charged to.
+<li> <b>Tax Amt</b> - The amount of tax allocated to the "Taxable" amount.
+<li> <b>Inc. Taxable</b> - The net base taxable amount including the amount of the tax. (for items with taxes included in the price)
+<li> <b>Inc. Tax Amt</b> - The net amount of tax calculated from the "Inc. Taxable" amount.
+</ul>
+</dl>
+
+<h2>Ship To</h2>
+
+<img src="images/customer_invoice_ship.png"><br>
+
+<p> Where products are shipped to a card or address other than
+the customers address the ship to address can be entered here. The
+ship to address is printed on the hard copy of the customer invoice. 
+
+<dl>
+<dd>
+<ul>
+<li> <b>Ship To</b> - Enter or select a card if different
+from the customer.
+<li> <b>Address</b> - Enter the new shipping address.
+</ul>
+</dl>
+
+<h2>Item Info</h2>
+
+<img src="images/customer_invoice_item.png"><br>
+
+<p> The item info folder displays specific information about an
+individual item(line) in the invoice. The information displayed will
+pertain to the line in which the cursor is placed. Line discounts are
+taken using the item info folder.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Discountable?</b> - Displays whether or not a discount may be
+taken on an item.
+<li> <b>Include Tax?</b> - Displays if the price of the item includes
+taxes.
+<li> <b>Include Deposit?</b> - Displays if the price of the item
+includes a container deposit.
+<li> <b>Tax</b> - The accumulation of all taxes on the line.
+<li> <b>Deposit</b> - The total of the container deposits on the
+line. 
+<li> <b>Discount</b> - Select the discount for to take a line
+discount.
+<li> <b>Percent</b> - Toggle on or off. Toggle on if the line discount
+will be a percentage discount.
+<li> <b>Dollar</b> - Toggle on or off. Toggle on if the line discount
+will be a dollar discount.
+<li> <b>Line Disc.</b> - Displays the total amount of a line discount.
+<li> <b>Line Total</b> - Displays the gross total for the line.
+<li> <b>Trans Disc.</b> - Displays total amount of transaction
+discounts allocated back to the line.
+</ul>
+</dl>
+
+<h2>Discounts</h2>
+
+<img src="images/customer_invoice_discount.png"><br>
+
+<p> The discounts folder is used to define transaction
+discounts. 
+
+<dl>
+<dd>
+<ul>
+<li> <b>Discount</b> - Enter or select the discount id.
+from the customer.
+<li> <b>Percent</b> - Enter a percentage discount. For example "10%"
+off.
+<li> <b>Dollars</b> - Enter a dollar discount. For example, "$1.00"
+off.
+<li> <b>Total</b> - The total of the discount.
+</ul>
+</dl>
+
+<h2>Tenders</h2>
+
+<img src="images/customer_invoice_tender.png"><br>
+
+<p> The tenders folder is used to define multiple tenders.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Tender</b> - Enter or select the tender.
+<li> <b>Amount</b> - Enter the amount of the tender.
+<li> <b>Rate</b> - Quasar displays the conversion rate for foreign
+currency. 
+<li> <b>Total</b> - The total of the tender.
+</ul>
+</dl>
+
+
+<h2>Voided?</h2>
+
+<p> Toggle on or off. Toggle off to void the invoice. Toggle on to
+re-set the invoice to non-voided.
+
+<h2>Print</h2>
+
+<p> Click on the print button to print a hard copy of the customer
+invoice.
+
+
+<h2>Payments</h2>
+
+<p> Click on the "Payments" button to take a customer payment and/or
+allocate a payment or return to an invoice. Clicking on "Payment" will
+cause the "Invoice Payment" window to be displayed. This window will
+display all transactions that can be allocated to the invoice.
+</p>
+
+<h1>Invoice Payment</h1>
+
+<br>
+<img src="images/invoice_payment.png"><br>
+<br>
+<p>
+If there are no transactions that can be allocated towards the payment of
+the invoice the body of the window will be blank. If there is a return
+or a credit that can be allocated to the invoice the details will be
+dispayed in the body of the window.</p>
+
+<p>
+
+<h3>Invoice Number</h3>
+
+<p>
+The invoice number for the invoice that you are paying or allocating a
+return or payment too. Note! you may also allocate an invoice to a
+return.
+
+<h3>Date</h3>
+
+<p>
+The date of the invoice.
+
+<h3>Total</h3>
+<p>
+The Total amount of the invoice. 
+
+<h3>Paid</h3>
+<p>
+The amount of the invoice that has previously been paid.
+
+<h3>Memo</h3>
+<p>
+
+The memo for the invoice. This memo displays on the journal
+transaction for the invoice.
+<p>
+
+<h3>Customer</h3>
+<p>
+The customer who the invoice is charged too.
+
+<h3>Balance</h3>
+<p>
+The current balance of the customers receivable account.
+
+<h3>Auto Allocate</h3>
+<p>
+Click on the "Auto Allocate" button to automatically allocate to the
+invoice. 
+
+<h2>Invoice Table</h3>
+
+<img src="images/invoice_payment_detail.png">
+
+<p> The inoice table displays all credits, returns or invoices that
+can be allocated back to the vendor invoice.
+<dl>
+<dd>
+<ul>
+<li><b>Type</b> -  The type of transaction. For example, Invoice or
+Payment. 
+<li><b>Number</b> - The number of the transaction that may be allocated
+against the invoice. 
+<li><b>Number</b> - The number of the transaction that may be
+allocated against the invoice. 
+<li><b>Date</b> - The date of the transaction that may be allocated
+against the invoice. 
+<li><b>Total</b> The total amount of the transaction.
+<li><b>Remaining</b> - The remaining amount of the transaction that
+may be allocated. 
+<li><b>Amount</b> - The amount of the transaction that you wish to
+allocate to the invoice.
+<li><b>Pay</b> Toggle on or off. Toggle on to allocate the total
+amount of the transaction to the invoice. 
+</ul>
+</dl>
+
+
+<h3>Quick Payment</h3>
+
+<p>
+Click on the "Quick Payment" button to create a payment for the
+invoice using the "Customer Payments" window.
+</p>
+
+<h2>Stock</h2>
+
+Click on the "Stock" button to review the stock status of the item in
+the line in which you are working
+
+<h2>Margin</h2>
+
+Click on the "Margin" button to view the cost and margin information
+for the item you are selling. 
+
+
+</p>
+<br>
+
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a>
+<td><a href="commands.html">Quasar Commands</a>
+<td><a href="menu_sales.html"><b>Up: </b>Sales</a>
+<td><a href="customer_quote.html"><b>Previous: </b>Customer Quote</a>
+<td><a href="customer_payment.html"><b>Next: </b>Customer Payments</a>
+</tr>
+</table>
+
+
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Customer Balances"
+	module="Card File"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <parameter
+	name="type_id"
+	description="Enter the type (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="customer type"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <variable
+	name="disp_balance"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<calcExpr>$column(balance) == "" ? 0 : $column(balance)</calcExpr>
+  </variable>
+
+  <variable
+	name="type_total"
+	resetType="Group"
+	resetGroup="type">
+	<sum>$var(disp_balance)</sum>
+  </variable>
+
+  <dataSource type="Query">
+      <code><![CDATA[
+	set where1 "card.inactive_on is null"
+	if { $param(type_id) != "" } {
+	    append where1 " and customer_type.type_id = '$param(type_id)'"
+	}
+
+	set where2 ""
+	if { $param(store_id) != "" } {
+	    set where2 "and store_id = '$param(store_id)'"
+	}
+
+        return "select card.name,card.number,customer_type.name,(select
+		sum(amount) from card_change where card_change.card_id =
+		card.card_id $where2) from (card_customer join card on
+		card_customer.customer_id = card.card_id) join customer_type
+		on card_customer.type_id = customer_type.type_id where $where1
+		order by customer_type.name, card.number"
+    ]]></code>
+    <column>name</column>
+    <column>number</column>
+    <column>type</column>
+    <column>balance</column>
+  </dataSource>
+
+  <group
+	name="type"
+	reprintHeader="false">
+	<expression>$column(type)</expression>
+	<header height="240">
+	  <text
+		x="0"
+		y="0"
+		width="3200"
+		height="240"
+		halign="Left"
+		valign="Center">
+		<font name="Times" isBold="true" size="18"/>
+		<expr>"Type: $column(type)"</expr>
+	  </text>
+	</header>
+	<footer height="160">
+	  <text
+		x="0"
+		y="5"
+		width="3200"
+		height="125"
+		halign="Right"
+		valign="Center">
+		<font name="Times" isBold="true" size="12"/>
+		<expr>"Total $group(type):"</expr>
+	  </text>
+	  <line x="3250" y="2" width="750">
+		<pen width="2"/>
+	  </line>
+	  <text
+	  	format="money"
+		x="3200"
+		y="5"
+		width="800"
+		height="125"
+		halign="Right"
+		valign="Center">
+		<font name="Times" isBold="true" size="12"/>
+		<var>var(type_total)</var>
+	  </text>
+	</footer>
+  </group>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Customer Balances</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Number</text>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="2400"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Name</text>
+    </text>
+    <text
+	x="3200"
+	y="0"
+	width="800"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Balance</text>
+    </text>
+  </pageHeader>
+
+  <detail height="130">
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>column(number)</var>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="2400"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>column(name)</var>
+    </text>
+    <text
+	format="money"
+	x="3200"
+	y="0"
+	width="800"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>var(disp_balance)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

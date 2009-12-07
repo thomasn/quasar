@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Count Items Not Found"
+	module="Inventory"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+  ]]></initialize>
+
+  <parameter
+	name="count_id"
+	description="Enter the count number (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="count"/>
+
+  <dataSource type="Query">
+    <code><![CDATA[
+	set where "pcount.inactive_on is null and item_id is null"
+	if { $param(count_id) != "" } {
+	    append where " and pcount.count_id = '$param(count_id)'"
+	}
+
+	return "select pcount.count_id,pcount.number,pcount.description,
+		pcount_item.number,pcount_item.quantity,seq_num from pcount
+		join pcount_item on pcount.count_id = pcount_item.count_id
+		where $where order by pcount.number,pcount.description,
+		pcount.count_id,seq_num"
+    ]]></code>
+    <column>count_id</column>
+    <column>count_number</column>
+    <column>description</column>
+    <column>item_number</column>
+    <column>counted</column>
+    <column>seq_num</column>
+  </dataSource>
+
+  <group
+	name="count"
+	reprintHeader="false">
+	<expression>$column(count_id)</expression>
+	<header height="260">
+	  <text
+		x="0"
+		y="0"
+		width="4800"
+		height="210"
+		halign="Left"
+		valign="Center">
+		<font name="Times" isBold="true" size="18"/>
+		<expr>"Count #$column(count_number): $column(description)"</expr>
+	  </text>
+	</header>
+	<footer height="160">
+	</footer>
+  </group>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Count Items Not Found</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(count_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"Count #[lookup pcount count_id $param(count_id) number]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="400"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Line #</text>
+    </text>
+    <text
+	x="400"
+	y="0"
+	width="1200"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Item Number</text>
+    </text>
+    <text
+	x="1600"
+	y="0"
+	width="400"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Counted</text>
+    </text>
+  </pageHeader>
+
+  <detail height="125">
+    <rectangle x="0" y="0" width="4800" height="125">
+	<printWhen>$sys(row_number) % 2 == 0</printWhen>
+	<pen style="NoPen"/>
+	<brush color="#F4F4F4"/>
+    </rectangle>
+    <text
+	format="number"
+	x="0"
+	y="0"
+	width="400"
+	height="125">
+	<font name="Times" size="10"/>
+	<expr>$column(seq_num) + 1</expr>
+    </text>
+    <text
+	x="400"
+	y="0"
+	width="1200"
+	height="125">
+	<font name="Times" size="10"/>
+	<var>column(item_number)</var>
+    </text>
+    <text
+	format="number"
+	x="1600"
+	y="0"
+	width="400"
+	height="125">
+	<font name="Times" size="10"/>
+	<var>column(counted)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Discounts"
+	module="Sales"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="150"
+	bottomMargin="150">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    if { $id == "" } {
+		return ""
+	    }
+
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+  ]]></initialize>
+
+  <dataSource type="Code">
+    <initialize><![CDATA[
+	set where ""
+	if { $param(store_id) != "" } {
+	    append where "and store_id = '$param(store_id)' "
+	}
+	if { $param(employee_id) != "" } {
+	    append where "and employee_id = '$param(employee_id)' "
+	}
+	if { $param(station_id) != "" } {
+	    append where "and station_id = '$param(station_id)' "
+	}
+
+	set rows ""
+	set query "select discount_id,total_amt,employee_id from
+	    invoice_discount join gltx on invoice_discount.invoice_id =
+	    gltx.gltx_id where voided = 'N' and inactive_on is null and
+	    post_date = '$param(date)' and discount_id is not null $where
+	    order by employee_id,discount_id"
+	select $query {
+	    set discount_id $column(1)
+	    set total_amt $column(2)
+	    set employee_id $column(3)
+
+	    set discount [lookup discount discount_id $discount_id name]
+	    set employee [lookup card card_id $employee_id name]
+
+	    lappend rows [list $employee $discount $total_amt]
+	}
+
+	set query "select discount_id,total_amt,employee_id from
+	    invoice_item_disc join gltx on invoice_item_disc.invoice_id =
+	    gltx.gltx_id where inactive_on is null and post_date =
+	    '$param(date)' and discount_id is not null $where order by
+	    employee_id,discount_id"
+	select $query {
+	    set discount_id $column(1)
+	    set total_amt $column(2)
+	    set employee_id $column(3)
+
+	    set discount [lookup discount discount_id $discount_id name]
+	    set employee [lookup card card_id $employee_id name]
+
+	    lappend rows [list $employee $discount $total_amt]
+	}
+
+	proc compare { row1 row2 } {
+	    set employee1 [lindex $row1 0]
+	    set employee2 [lindex $row2 0]
+	    if { $employee1 < $employee2 } {
+		return -1;
+	    }
+	    if { $employee1 > $employee2 } {
+		return 1;
+	    }
+
+	    set discount1 [lindex $row1 1]
+	    set discount2 [lindex $row2 1]
+	    if { $discount1 < $discount2 } {
+		return -1;
+	    }
+	    if { $discount1 > $discount2 } {
+		return 1;
+	    }
+
+	    return 0
+	}
+
+	# Re-sort rows based on employee and discount
+	set rows [lsort -command compare $rows]
+    ]]></initialize>
+    <next><![CDATA[
+	$current_row < [llength $rows]
+    ]]></next>
+    <get>
+	return [lindex [lindex $rows $current_row] $index]
+    </get>
+    <column>employee</column>
+    <column>discount</column>
+    <column>amount</column>
+  </dataSource>
+
+  <parameter
+	name="date"
+	description="Enter the date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="employee_id"
+	description="Enter the employee (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="employee"/>
+
+  <parameter
+	name="station_id"
+	description="Enter the station (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="station"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <variable
+	name="total_amount"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<sum>$column(amount)</sum>
+  </variable>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Discounts</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"On $param(date)"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(employee_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup card card_id $param(employee_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(station_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup station station_id $param(station_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="2000"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Employee</text>
+    </text>
+    <text
+	x="2000"
+	y="0"
+	width="2000"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Discount</text>
+    </text>
+    <text
+	x="4000"
+	y="0"
+	width="800"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Amount</text>
+    </text>
+  </pageHeader>
+
+  <detail height="130">
+    <text
+	x="0"
+	y="0"
+	width="2000"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(employee)</var>
+    </text>
+    <text
+	x="2000"
+	y="0"
+	width="2000"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(discount)</var>
+    </text>
+    <text
+	format="money"
+	x="4000"
+	y="0"
+	width="800"
+	height="125"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<var>column(amount)</var>
+    </text>
+  </detail>
+
+  <summary height="200">
+    <printWhen>$sys(row_number) != 1</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="2000"
+	height="200">
+	<font name="Times" isBold="true" size="12"/>
+	<text>Total</text>
+    </text>
+
+    <line x="4020" y="2" width="780">
+	<pen width="3"/>
+    </line>
+    <text
+	format="money"
+	x="4000"
+	y="0"
+	width="800"
+	height="200"
+	halign="Right">
+	<font name="Times" isBold="true" size="10"/>
+	<var>var(total_amount)</var>
+    </text>
+  </summary>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

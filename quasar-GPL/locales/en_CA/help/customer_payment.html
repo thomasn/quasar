@@ -1,0 +1,231 @@
+<html>
+<head>
+<TITLE>Customer Payments</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png">
+<td><a href="index.html">Table of Contents</a>
+<td><a href="commands.html">Quasar Commands</a>
+<td><a href="menu_sales.html"><b>Up: </b>Sales</a>
+<td><a href="customer_invoice.html"><b>Previous: </b>Customer Invoice</a>
+<td><a href="customer_withdraw.html"><b>Next: </b>Customer Withdraws</a>
+</tr>
+</tbody></table>
+
+<hr>
+
+<H1>Customer Payments</H1>
+<img src="images/customer_payment.png"><br>
+<br>
+<p>Customer payments may be applied to the oldest invoices automatically
+or if preferred may be allocated by hand to specific invoices. If the
+amount of a payment matches an invoice exactly Quasar Accounting applies the
+payment to the matching invoice. Of course, this may be changed and applied to
+any specific invoice or to the oldest, as you wish.
+ Following is a description of the attributes within the customer payment
+window: 
+
+<h2>Receipt No</h2>
+
+<p> The transaction id assigned to the payment.
+
+<h2>Reference</h2>
+
+<p> A reference number for the payment.
+
+<h2>Date</h2>
+
+<p> The date of the customer payment.
+
+<h2>Time</h2>
+
+<p> The time that the customer payment is created.
+
+<h2>Shift</h2>
+
+<p> The shift that the customer payment is linked to through a shift
+close.
+
+<h2>Store</h2>
+
+<p> Enter the store that the customer payment posting will affect.
+
+<h2>Station</h2>
+
+<p> The station (work station) on which the customer payment is created.
+
+<h2>Employee</h2>
+
+<p> The employee creating the customer payment.
+
+
+<h2>Customer</h2>
+
+<p> The card identification of the customer.
+
+<h2>Tender</h2>
+
+<p> If the payment is being made with a single tender select or enter
+the tender here. If the payment is being made with multiple tenders
+use the "Tenders" folder.
+
+<h2>Amount</h2>
+
+<p> The amount of the customer payment.
+
+<h2>Balance</h2>
+
+<p> The current balance of the customer's account.
+
+<h2>Discount Account</h2> 
+
+<p> Select the discount expense account to which any terms discounts given
+will be posted. 
+
+<h2>Discount Amount</h2>
+
+<p> Quasar calculates the total amount of terms discounts given.
+
+<h2>Allocations</h2>
+<br>
+<img src="images/customer_payment_allocation.png"><br>
+<br>
+<p> The allocations table displays all the customer invoices that have
+remaining balances. The invoices are displayed in ascending order from
+the oldest to the newest. 
+
+<dl>
+<dd>
+<ul>
+<li> <b>Due Date</b> - The date that the invoice payment is due.
+<li> <b>Invoice</b> - The transaction id of the invoices.
+<li> <b>Total</b> - The total of the invoice.
+<li> <b>Disc Date</b> - The date that the invoice must be paid if the
+customer is to receive the terms discount.
+<li> <b>Due</b> - The unpaid balance of the invoice.
+<li> <b>Payment</b> - The amount of the payment allocated against the
+invoice.
+<li> <b>Discount</b> - The amount of the terms discount applied to the
+invoice. 
+<li> <b>Pay</b> - Toggle on or off. Toggle on to apply the payment to the
+  invoice. Toggle off to remove the payment from the invoice.
+</ul>
+</dl>
+
+<h2>Tenders</h2>
+<br>
+<img src="images/customer_payment_tender.png"><br>
+<br>
+<p> The tenders table is used to make the payment using multiple
+tenders.  
+
+<dl>
+<dd>
+<ul>
+<li> <b>Tender</b> - Select or enter the tender.
+<li> <b>Amount</b> - Enter the tender amount.
+<li> <b>Rate</b> - Quasar calculates the conversion rate for foreign
+currency. 
+<li> <b>Total</b> - The total of the tender.
+</ul>
+</dl>
+
+<h2>References</h2>
+
+<br>
+<img src="images/customer_payment_reference.png"><br>
+<br>
+<p> Displays the compulsary references entered.
+
+
+
+<h2>Allocated</h2>
+
+<p> Quasar calculates the total amount of the payment that is
+allocated to specific invoices.
+
+<h2>Difference</h2>
+
+<p> The difference between the actual payment and the amount allocated
+to specific payments. 
+
+<h2>Oldest</h2>
+
+<p>
+Click on the oldest button to allocate the payment amount to the
+oldest invoice.
+
+<h2>Clear</h2>
+
+<p>
+Click on the clear button to clear all allocated payments and
+start the allocation process again.
+
+
+
+<h2>Info</h2>
+<img src="images/customer_payment_info.png"><br>
+
+<p> Click on the info button to view specific information
+about an invoice. The "Invoice Information" window will be displayed. The
+invoice information displayed is dependant on the line in payment
+table where the cursor rests. If you move the cursor to a new line in
+the payment table the information in the "Invoice Information" screen
+will change accordinly.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Invoice</b> - The transaction id of the invoices.
+<li> <b>Total</b> - The total of the invoice.
+<li> <b>Paid</b> - The total paid on the invoice.
+<li> <b>Due</b> - The unpaid balance of the invoice.
+<li> <b>Terms</b> - The discount terms for the invoice.
+<li> <b>Invoice Date</b> - The date of the invoice.
+<li> <b>Due Date</b> - The date that the invoice payment is due.
+<li> <b>Discount Date</b> - The date that the invoice must be paid if the
+customer is to receive the terms discount.
+<li> <b>Discount</b> - The amount of the terms discount calulated from
+the terms.
+<li> <b>Take Discount</b> - Click on the "Take Discount" button to
+give the customer the calculated discount shown in the discount
+attribute.
+<li> <b>Taken</b> - The amount of terms discount taken.
+<li> <b>Clear Discount</b> - Click on the clear discount button to
+clear any terms discount taken.
+<li> <b>View Invoice</b> - Click on the "View Invoice" button to view
+the actual customer invoice.
+</ul>
+</dl>
+
+
+<h2>Voided?</h2>
+
+<p>Toggle on or off. Toggle on to void the customer payment. Toggle off to
+re-set the customer payment to a non-voided state. </p>
+
+<Hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a>
+<td><a href="commands.html">Quasar Commands</a>
+<td><a href="menu_sales.html"><b>Up: </b>Sales</a>
+<td><a href="customer_invoice.html"><b>Previous: </b>Customer Invoice</a>
+<td><a href="customer_withdraw.html"><b>Next: </b>Customer Withdraws</a>
+</tr>
+</table>
+
+
+</body>
+</html>
+
+
+
+
+

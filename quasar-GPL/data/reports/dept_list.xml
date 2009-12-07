@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Department List"
+	module="Inventory"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <dataSource type="Query">
+    <query>select name, number from dept order by number, name</query>
+    <column>name</column>
+    <column>number</column>
+  </dataSource>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Department List</text>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Number</text>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="2400"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Name</text>
+    </text>
+  </pageHeader>
+
+  <detail height="130">
+    <rectangle x="0" y="0" width="4800" height="130">
+	<printWhen>$sys(row_number) % 2 == 0</printWhen>
+	<pen style="NoPen"/>
+	<brush color="#F4F4F4"/>
+    </rectangle>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="130">
+	<font name="Times" size="12"/>
+	<var>column(number)</var>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="2400"
+	height="130">
+	<font name="Times" size="12"/>
+	<var>column(name)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

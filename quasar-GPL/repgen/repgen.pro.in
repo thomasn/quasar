@@ -1,0 +1,39 @@
+include (../project.def)
+
+TEMPLATE	= lib
+TARGET		= quasar_repgen
+VERSION		= 1.4
+CONFIG		+= qt staticlib
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../lib
+INCLUDEPATH	+= ../utility;../business;../widget;.
+DEPENDPATH	= $$INCLUDEPATH
+
+HEADERS=data_source.h report_band.h report_defn.h report_element.h \
+	report_group.h report_interp.h report_output.h report_page.h \
+        report_page_view.h report_param.h report_var.h page_element.h \
+        code_data_source.h filter_data_source.h tcl_interp.h \
+        point_element.h line_element.h rectangle_element.h \
+        round_rect_element.h ellipse_element.h polygon_element.h \
+        image_element.h text_element.h element_factory.h interp_factory.h \
+        data_source_factory.h report_param_type.h string_param_type.h \
+        integer_param_type.h double_param_type.h date_param_type.h \
+        time_param_type.h bool_param_type.h param_type_factory.h \
+        param_dialog.h report_text_format.h text_format_factory.h \
+        date_text_format.h time_text_format.h number_text_format.h \
+        money_text_format.h percent_text_format.h choice_param_type.h
+SOURCES=data_source.cpp report_band.cpp report_defn.cpp report_element.cpp \
+	report_group.cpp report_interp.cpp report_output.cpp report_page.cpp \
+        report_page_view.cpp report_param.cpp report_var.cpp page_element.cpp \
+        code_data_source.cpp filter_data_source.cpp tcl_interp.cpp \
+        point_element.cpp line_element.cpp rectangle_element.cpp \
+        round_rect_element.cpp ellipse_element.cpp polygon_element.cpp \
+        image_element.cpp text_element.cpp element_factory.cpp \
+        interp_factory.cpp data_source_factory.cpp report_param_type.cpp \
+        string_param_type.cpp integer_param_type.cpp double_param_type.cpp \
+        date_param_type.cpp time_param_type.cpp bool_param_type.cpp \
+        param_type_factory.cpp param_dialog.cpp report_text_format.cpp \
+        text_format_factory.cpp date_text_format.cpp time_text_format.cpp \
+        number_text_format.cpp money_text_format.cpp percent_text_format.cpp \
+        choice_param_type.cpp

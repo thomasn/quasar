@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Card List"
+	module="Card File"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <dataSource type="Query">
+    <query>select name,phone_num from card order by name</query>
+    <column>name</column>
+    <column>phone_number</column>
+  </dataSource>
+
+  <title height="670">
+    <line x="0" y="10" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="670"
+	halign="Center"
+	valign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Card List</text>
+    </text>
+    <line x="0" y="660" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <pageHeader height="75">
+  </pageHeader>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="2400"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Name</text>
+    </text>
+    <text
+	x="2410"
+	y="0"
+	width="800"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Phone Number</text>
+    </text>
+  </pageHeader>
+
+  <detail height="158">
+    <line x="0" y="142" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="2400"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>column(name)</var>
+    </text>
+    <text
+	x="2410"
+	y="0"
+	width="800"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>column(phone_number)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

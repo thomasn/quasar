@@ -1,0 +1,40 @@
+include (../project.def)
+
+TEMPLATE	= app
+TARGET		= quasar
+VERSION		= 1.4
+CONFIG		+= qt
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../bin
+INCLUDEPATH	+= ../business;../gui;../utility;../database;../db_driver;.
+DEPENDPATH	= $$INCLUDEPATH
+
+# Linux setup
+linux-g++ {
+LIBS		 = -lquasar_gui -lquasar_db -lquasar_obj -lquasar_driver \
+		   -lquasar_widget -lquasar_repgen -lquasar_util $$TCL_LIB \
+		   $$ICU_LIBS
+TARGETDEPS	 = ../lib/libquasar_gui.a ../lib/libquasar_db.a \
+		   ../lib/libquasar_obj.a ../lib/libquasar_driver.a \
+		   ../lib/libquasar_widget.a ../lib/libquasar_util.a \
+		   ../lib/libquasar_repgen.a
+}
+
+# Windows setup
+win32 {
+TMAKE_LINK	+= /NODEFAULTLIB:libcmt.lib
+LIBS		= ..\lib\quasar_gui.lib ..\lib\quasar_db.lib \
+		  ..\lib\quasar_obj.lib ..\lib\quasar_driver.lib \
+		  ..\lib\quasar_widget.lib ..\lib\quasar_util.lib \
+		  ..\lib\quasar_repgen.lib $$TCL_LIB
+TARGETDEPS	= ..\lib\quasar_gui.lib ..\lib\quasar_db.lib \
+		  ..\lib\quasar_obj.lib ..\lib\quasar_driver.lib \
+		  ..\lib\quasar_widget.lib ..\lib\quasar_util.lib \
+		  ..\lib\quasar_repgen.lib
+RC_FILE		= Quasar.rc
+}
+
+SOURCES=quasar.cpp
+
+TRANSLATIONS=messages.ts

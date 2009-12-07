@@ -1,0 +1,71 @@
+<!DOCTYPE LABEL_DEFN>
+<LabelDefn>
+  <name>Small Shelf Labels</name>
+  <type>Shelf</type>
+  <pageWidth>612</pageWidth>
+  <pageHeight>792</pageHeight>
+  <topMargin>22</topMargin>
+  <leftMargin>26</leftMargin>
+  <rows>8</rows>
+  <columns>4</columns>
+  <orientation>portrait</orientation>
+  <labelWidth>121</labelWidth>
+  <labelHeight>85.5</labelHeight>
+  <hgap>9</hgap>
+  <vgap>9</vgap>
+
+  <rect>
+    <x>0</x> <y>0</y> <width>126</width> <height>85.5</height>
+    <pen><width>4</width><joinStyle>round</joinStyle><color>yellow</color></pen>
+  </rect>
+
+  <barcode>
+    <x>4</x> <y>4</y> <width>1</width> <height>20</height>
+    <scale>.8</scale>
+    <format>code128</format>
+    <text>@number</text>
+  </barcode>
+
+  <text>
+    <x>70</x> <y>4</y> <width>60</width> <height>10</height>
+    <font><family>Courier</family><size>10</size></font>
+    <halign>center</halign>
+    <text>@order_qty</text>
+  </text>
+
+   <text>
+    <x>70</x> <y>18</y> <width>60</width> <height>10</height>
+    <font><family>Courier</family><size>6</size></font>
+    <halign>center</halign>
+    <text>@order_number</text>
+  </text>
+
+  <text>
+    <x>70</x> <y>28</y> <width>60</width> <height>10</height>
+    <font><family>Times</family><size>10</size></font>
+    <halign>center</halign> <valign>bottom</valign>
+    <text>@size</text>
+  </text>
+
+  <text>
+    <wordWrap>Off</wordWrap>
+    <x>4</x> <y>35</y> <width>126</width> <height>27</height>
+    <font><family>Times</family><size>16</size></font>
+    <text>@description</text>
+  </text>
+ 
+  <text>
+    <x>4</x> <y>65</y> <width>60</width> <height>8</height>
+    <font><family>Times</family><size>8</size></font>
+    <halign>center</halign>
+    <text>@date</text>
+  </text>
+
+  <text>
+    <x>70</x> <y>54</y> <width>50</width> <height>27</height>
+    <font><family>Times</family><size>20</size></font>
+    <halign>right</halign>
+    <text>@price</text>
+  </text>
+
+</LabelDefn>

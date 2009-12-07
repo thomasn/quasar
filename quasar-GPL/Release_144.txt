@@ -1,0 +1,60 @@
+Release Notes for Quasar 1.4.4:
+-------------------------------
+
+Quasar 1.4.4 is mainly some bug fixes to release 1.4.3 though a few new things
+have also been added.  The main bug fix was to the input/output of percentages
+where 1.4.3 was always rounding them to zero decimal places.  Other changes are:
+
+	- slightly better Debian compile (tries /usr/share/qt3 in configure)
+
+	- quasar_setup internally changes to the "quasar" user if used as root
+
+	- split safe_id in company table to safe_station_id and safe_employee_id
+	  for proper referential integrity checking
+
+	- single reason for item adjustments instead of per line
+
+	- line number on physical count reports
+
+	- status and post date in packing slips and posting slips by batch
+
+	- fixed include zeros flag on item onhand cost/retail reports
+
+	- require station or employee on transaction depending on cashrec method
+
+	- validate min/max when creating items
+
+	- fix directory checks in Firebird driver config dialog
+
+	- remove old hacks to try and create Firebird users and read the
+	  SYSDBA.password file
+
+	- fix Firebird bug regarding very large numbers
+
+	- error checking in open balances screen
+
+	- sequence numbers screen in a scroll view
+
+	- refresh causing double lines in stock status fixed
+
+	- replace "-" with "_" in PostgreSQL database names
+
+	- allow . and / and - in numbers at POS
+
+	- fixed early timeout on SQL commands
+
+	- new customer list, count not found, and system check reports
+
+	- fix count discrepancy report for Tcl 8.3 users
+
+	- new vendor invoice list report and expanded purchase order list
+
+	- automatic "vaccum full analyze" on PostgreSQL after restore/import
+
+	- 64bit compile problem in Variant is fixed
+
+	- add item search to item adjustment, item transfer, purchase order,
+	  and vendor invoice screens
+
+	- fix number, money, currency, and integer parsing to no longer
+	  ignore non-numeric trailing text

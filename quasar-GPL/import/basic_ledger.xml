@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE IMPORT>
+
+<IMPORT>
+  <account>
+    <name>Chequing</name>
+    <number>1010</number>
+    <type>0</type>
+    <link>bank</link>
+  </account>
+  <account>
+    <name>Savings</name>
+    <number>1020</number>
+    <type>0</type>
+  </account>
+  <account>
+    <name>Accounts Receivable</name>
+    <number>1110</number>
+    <type>1</type>
+    <link>customer</link>
+  </account>
+  <account>
+    <name>Inventory - A</name>
+    <number>1210</number>
+    <type>2</type>
+  </account>
+  <account>
+    <name>Inventory - B</name>
+    <number>1220</number>
+    <type>2</type>
+  </account>
+  <account>
+    <name>Inventory - C</name>
+    <number>1230</number>
+    <type>2</type>
+  </account>
+  <account>
+    <name>Inventory - D</name>
+    <number>1240</number>
+    <type>2</type>
+  </account>
+  <account>
+    <name>Container Deposit</name>
+    <number>1280</number>
+    <type>2</type>
+    <link>deposit</link>
+  </account>
+  <account>
+    <name>Investments - Short Term</name>
+    <number>1310</number>
+    <type>3</type>
+  </account>
+  <account>
+    <name>Prepaid Expenses</name>
+    <number>1320</number>
+    <type>3</type>
+  </account>
+  <account>
+    <name>Undeposited Funds</name>
+    <number>1330</number>
+    <type>3</type>
+  </account>
+  <account>
+    <name>Buildings and Land</name>
+    <number>1410</number>
+    <type>4</type>
+  </account>
+  <account>
+    <name>Computer Software</name>
+    <number>1420</number>
+    <type>4</type>
+  </account>
+  <account>
+    <name>Furniture and Equipment</name>
+    <number>1430</number>
+    <type>4</type>
+  </account>
+  <account>
+    <name>Vehicles</name>
+    <number>1440</number>
+    <type>4</type>
+  </account>
+  <account>
+    <name>Accounts Payable</name>
+    <number>2010</number>
+    <type>6</type>
+    <link>vendor</link>
+  </account>
+  <account>
+    <name>American Express</name>
+    <number>2110</number>
+    <type>7</type>
+  </account>
+  <account>
+    <name>MasterCard</name>
+    <number>2120</number>
+    <type>7</type>
+  </account>
+  <account>
+    <name>Visa</name>
+    <number>2130</number>
+    <type>7</type>
+  </account>
+  <account>
+    <name>Direct Deposit Liabilities</name>
+    <number>2210</number>
+    <type>8</type>
+  </account>
+  <account>
+    <name>Federal Tax Payable</name>
+    <number>2220</number>
+    <type>8</type>
+  </account>
+  <account>
+    <name>GST Payable</name>
+    <number>2300</number>
+    <type>8</type>
+    <header>Yes</header>
+  </account>
+  <account>
+    <name>GST Collected</name>
+    <number>2310</number>
+    <type>8</type>
+    <parent>GST Payable</parent>
+  </account>
+  <account>
+    <name>GST Paid</name>
+    <number>2320</number>
+    <type>8</type>
+    <parent>GST Payable</parent>
+  </account>
+  <account>
+    <name>PST Payable</name>
+    <number>2350</number>
+    <type>8</type>
+    <header>Yes</header>
+  </account>
+  <account>
+    <name>PST Collected</name>
+    <number>2360</number>
+    <type>8</type>
+    <parent>PST Payable</parent>
+  </account>
+  <account>
+    <name>PST Paid</name>
+    <number>2370</number>
+    <type>8</type>
+    <parent>PST Payable</parent>
+  </account>
+  <account>
+    <name>Payroll Liabilities</name>
+    <number>2410</number>
+    <type>8</type>
+  </account>
+  <account>
+    <name>Transfer Accurals</name>
+    <number>2450</number>
+    <type>8</type>
+    <link>transfer</link>
+  </account>
+  <account>
+    <name>Ledger Transfer Accrual</name>
+    <number>2460</number>
+    <type>8</type>
+    <link>split</link>
+  </account>
+  <account>
+    <name>Bank Loans</name>
+    <number>2510</number>
+    <type>9</type>
+  </account>
+  <account>
+    <name>Retained Earnings</name>
+    <number>3010</number>
+    <type>10</type>
+    <retained>Yes</retained>
+  </account>
+  <account>
+    <name>Historical Balance</name>
+    <number>3020</number>
+    <type>10</type>
+    <historical>Yes</historical>
+  </account>
+  <account>
+    <name>Owners Contribution</name>
+    <number>3030</number>
+    <type>10</type>
+  </account>
+  <account>
+    <name>Owners Draw</name>
+    <number>3040</number>
+    <type>10</type>
+  </account>
+  <account>
+    <name>Share Capitol</name>
+    <number>3050</number>
+    <type>10</type>
+  </account>
+  <account>
+    <name>Sales</name>
+    <number>4000</number>
+    <header>Yes</header>
+    <type>11</type>
+  </account>
+  <account>
+    <name>Sales - A</name>
+    <number>4010</number>
+    <parent>Sales</parent>
+    <type>11</type>
+  </account>
+  <account>
+    <name>Sales - B</name>
+    <number>4020</number>
+    <parent>Sales</parent>
+    <type>11</type>
+  </account>
+  <account>
+    <name>Sales - C</name>
+    <number>4030</number>
+    <parent>Sales</parent>
+    <type>11</type>
+  </account>
+  <account>
+    <name>Sales - D</name>
+    <number>4040</number>
+    <parent>Sales</parent>
+    <type>11</type>
+  </account>
+  <account>
+    <name>Cost of Sales - A</name>
+    <number>5010</number>
+    <type>12</type>
+  </account>
+  <account>
+    <name>Cost of Sales - B</name>
+    <number>5020</number>
+    <type>12</type>
+  </account>
+  <account>
+    <name>Cost of Sales - C</name>
+    <number>5030</number>
+    <type>12</type>
+  </account>
+  <account>
+    <name>Cost of Sales - D</name>
+    <number>5040</number>
+    <type>12</type>
+  </account>
+  <account>
+    <name>Bad Debts</name>
+    <number>6010</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Bank Charges</name>
+    <number>6020</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Board of Directors</name>
+    <number>6030</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Cash Over/Short</name>
+    <number>6040</number>
+    <type>13</type>
+    <link>over_short</link>
+  </account>
+  <account>
+    <name>Communication</name>
+    <number>6050</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Courier and Postage</name>
+    <number>6060</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Data Processing</name>
+    <number>6070</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Depreciation</name>
+    <number>6080</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Freight and Delivery</name>
+    <number>6090</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Freight Accrual</name>
+    <number>6100</number>
+    <type>13</type>
+  </account>
+
+  <account>
+    <name>Insurance</name>
+    <number>6110</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Interest and Finance Charges</name>
+    <number>6120</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Leases</name>
+    <number>6130</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Miscellaneous</name>
+    <number>6140</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Office Supplies</name>
+    <number>6150</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Professional Fees</name>
+    <number>6200</number>
+    <type>13</type>
+    <header>Yes</header>
+  </account>
+  <account>
+    <name>Accounting</name>
+    <number>6210</number>
+    <type>13</type>
+    <parent>Professional Fees</parent>
+  </account>
+  <account>
+    <name>Consulting Fees</name>
+    <number>6220</number>
+    <type>13</type>
+    <parent>Professional Fees</parent>
+  </account>
+  <account>
+    <name>Legal Fees</name>
+    <number>6230</number>
+    <type>13</type>
+    <parent>Professional Fees</parent>
+  </account>
+  <account>
+    <name>Physical Over/Short</name>
+    <number>6310</number>
+    <type>13</type>
+    <link>physical</link>
+  </account>
+  <account>
+    <name>Rent</name>
+    <number>6410</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Staff Expenses</name>
+    <number>6500</number>
+    <type>13</type>
+    <header>Yes</header>
+  </account>
+  <account>
+    <name>Salaries and Wages</name>
+    <number>6510</number>
+    <type>13</type>
+    <parent>Staff Expenses</parent>
+  </account>
+  <account>
+    <name>Employee Benefits</name>
+    <number>6520</number>
+    <type>13</type>
+    <parent>Staff Expenses</parent>
+  </account>
+  <account>
+    <name>Recruitment Costs</name>
+    <number>6530</number>
+    <type>13</type>
+    <parent>Staff Expenses</parent>
+  </account>
+  <account>
+    <name>Union Fees</name>
+    <number>6540</number>
+    <type>13</type>
+    <parent>Staff Expenses</parent>
+  </account>
+  <account>
+    <name>Repairs and Maintenance</name>
+    <number>6600</number>
+    <type>13</type>
+    <header>Yes</header>
+  </account>
+  <account>
+    <name>Building Repairs</name>
+    <number>6610</number>
+    <type>13</type>
+    <parent>Repairs and Maintenance</parent>
+  </account>
+  <account>
+    <name>Computer Repairs</name>
+    <number>6620</number>
+    <type>13</type>
+    <parent>Repairs and Maintenance</parent>
+  </account>
+  <account>
+    <name>Equipment Repairs</name>
+    <number>6630</number>
+    <type>13</type>
+    <parent>Repairs and Maintenance</parent>
+  </account>
+  <account>
+    <name>Taxes and Licenses</name>
+    <number>6710</number>
+    <type>13</type>
+  </account>
+  <account>
+    <name>Terms Expense</name>
+    <number>6720</number>
+    <type>13</type>
+    <link>customer_terms</link>
+  </account>
+  <account>
+    <name>Utilities</name>
+    <number>6800</number>
+    <type>13</type>
+    <header>Yes</header>
+  </account>
+  <account>
+    <name>Gas and Electric</name>
+    <number>6810</number>
+    <type>13</type>
+    <parent>Utilities</parent>
+  </account>
+  <account>
+    <name>Water</name>
+    <number>6820</number>
+    <type>13</type>
+    <parent>Utilities</parent>
+  </account>
+  <account>
+    <name>Vehicle Expense</name>
+    <number>6900</number>
+    <type>13</type>
+    <header>Yes</header>
+  </account>
+  <account>
+    <name>Fuel</name>
+    <number>6910</number>
+    <type>13</type>
+    <parent>Vehicle Expense</parent>
+  </account>
+  <account>
+    <name>Insurance and Licenses</name>
+    <number>6920</number>
+    <type>13</type>
+    <parent>Vehicle Expense</parent>
+  </account>
+  <account>
+    <name>Repairs and Service</name>
+    <number>6930</number>
+    <type>13</type>
+    <parent>Vehicle Expense</parent>
+  </account>
+  <account>
+    <name>Bad Debt Recovery</name>
+    <number>8010</number>
+    <type>14</type>
+  </account>
+  <account>
+    <name>Foreign Exchange</name>
+    <number>8020</number>
+    <type>14</type>
+  </account>
+  <account>
+    <name>Government Grants</name>
+    <number>8030</number>
+    <type>14</type>
+  </account>
+  <account>
+    <name>Interest Income</name>
+    <number>8040</number>
+    <type>14</type>
+  </account>
+  <account>
+    <name>Rental Income</name>
+    <number>8050</number>
+    <type>14</type>
+  </account>
+  <account>
+    <name>Service Fees</name>
+    <number>8060</number>
+    <type>14</type>
+    <link>charge</link>
+  </account>
+  <account>
+    <name>Sundry Income</name>
+    <number>8070</number>
+    <type>14</type>
+  </account>
+  <account>
+    <name>Terms Income</name>
+    <number>8080</number>
+    <type>14</type>
+    <link>vendor_terms</link>
+  </account>
+  <account>
+    <name>Other Expense</name>
+    <number>9010</number>
+    <type>15</type>
+  </account>
+</IMPORT>

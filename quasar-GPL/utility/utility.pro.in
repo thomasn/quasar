@@ -1,0 +1,39 @@
+include (../project.def)
+
+TEMPLATE	= lib
+TARGET		= quasar_util
+VERSION		= 1.4
+CONFIG		+= qt staticlib
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../lib
+INCLUDEPATH	+= .
+DEPENDPATH	= $$INCLUDEPATH
+
+HEADERS=config_file.h date_time.h date_valcon.h fixed.h id.h \
+	label_item.h integer_valcon.h money_valcon.h number_valcon.h \
+	percent_valcon.h plu.h price.h price_valcon.h recv_xmodem.h \
+	send_xmodem.h smtp.h time_valcon.h valcon.h variant.h ymodem.h \
+        server_config.h company_defn.h screen_defn.h label_defn.h \
+        quasar_socket.h user_config.h table_defn.h column_defn.h \
+        constraint_defn.h index_defn.h client_config.h table_change.h \
+        data_change.h sha1.h message_log.h quasar_misc.h base64.h \
+        tcl_object.h data_model.h business_object.h update_defn.h \
+        serial_port.h icu_util.h quasar_int.h
+
+SOURCES=config_file.cpp date_time.cpp date_valcon.cpp fixed.cpp id.cpp \
+	label_item.cpp integer_valcon.cpp money_valcon.cpp number_valcon.cpp \
+        percent_valcon.cpp plu.cpp price.cpp price_valcon.cpp \
+	recv_xmodem.cpp send_xmodem.cpp smtp.cpp time_valcon.cpp \
+	valcon.cpp variant.cpp server_config.cpp company_defn.cpp \
+	screen_defn.cpp label_defn.cpp quasar_socket.cpp user_config.cpp \
+	table_defn.cpp column_defn.cpp constraint_defn.cpp index_defn.cpp \
+	client_config.cpp table_change.cpp data_change.cpp sha1.cpp \
+	message_log.cpp quasar_misc.cpp base64.cpp tcl_object.cpp \
+	data_model.cpp business_object.cpp update_defn.cpp icu_util.cpp
+
+unix:HEADERS+=shared_state.h
+unix:SOURCES+=serial_port_unix.cpp shared_state.cpp
+win32:SOURCES+=serial_port_win32.cpp
+
+TRANSLATIONS=messages.ts

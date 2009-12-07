@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="On Hand and Cost by Item"
+	module="Inventory"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="150"
+	bottomMargin="150">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+  ]]></initialize>
+
+  <dataSource type="Query">
+    <code><![CDATA[
+	set where ""
+	if { $param(store_id) != "" } {
+	    append where "and store_id = '$param(store_id)'"
+	}
+
+	return "select item_plu.number,description,sell_size,item_size.qty,
+	sum(item_change.on_hand),sum(item_change.total_cost),
+	sum(item.deposit*item_change.on_hand) from ((item_change join item
+	on item_change.item_id= item.item_id) join item_plu on
+	item_plu.item_id = item.item_id and item_plu.seq_num = 0) join
+	item_size on item_size.item_id = item.item_id and item_size.name =
+	item.sell_size where item_change.change_date <= '$param(date)' and
+	item.subdept_id = '$param(subdept_id)' $where group by
+	item_plu.number,description,sell_size,item_size.qty order by
+	item_plu.number"
+    ]]></code>
+    <column>number</column>
+    <column>description</column>
+    <column>size</column>
+    <column>size_qty</column>
+    <column>on_hand</column>
+    <column>cost</column>
+    <column>deposit</column>
+  </dataSource>
+
+  <parameter
+	name="date"
+	description="Enter the as/at date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="subdept_id"
+	description="Enter the subdepartment:"
+	type="lookup"
+	dataType="subdept"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <variable
+	name="size_on_hand"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<calcExpr>$column(on_hand) / $column(size_qty)</calcExpr>
+  </variable>
+
+  <variable
+	name="total_on_hand"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<sum>$var(size_on_hand)</sum>
+  </variable>
+
+  <variable
+	name="total_cost"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<sum>$column(cost)</sum>
+  </variable>
+
+  <variable
+	name="total_deposit"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<sum>$column(deposit)</sum>
+  </variable>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>On Hand and Cost by Item</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup subdept subdept_id $param(subdept_id) name] Subdepartment"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"As/at $param(date)"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Number</text>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="1600"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Description</text>
+    </text>
+    <text
+	x="2400"
+	y="0"
+	width="500"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Size</text>
+    </text>
+    <text
+	x="2900"
+	y="0"
+	width="500"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>On Hand</text>
+    </text>
+    <text
+	x="3400"
+	y="0"
+	width="800"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>OH x Cost</text>
+    </text>
+    <text
+	x="4200"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>OH x Deposit</text>
+    </text>
+  </pageHeader>
+
+  <detail height="130">
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(number)</var>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="1600"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(description)</var>
+    </text>
+    <text
+	x="2400"
+	y="0"
+	width="500"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(size)</var>
+    </text>
+    <text
+	format="number"
+	x="2900"
+	y="0"
+	width="500"
+	height="125"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<var>var(size_on_hand)</var>
+    </text>
+    <text
+	format="money"
+	x="3400"
+	y="0"
+	width="800"
+	height="125"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<var>column(cost)</var>
+    </text>
+    <text
+	format="money"
+	x="4200"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<var>column(deposit)</var>
+    </text>
+  </detail>
+
+  <summary height="250">
+    <text
+	x="800"
+	y="0"
+	width="1600"
+	height="250">
+	<font name="Times" isBold="true" size="14"/>
+	<expr>"Total:"</expr>
+    </text>
+
+    <line x="2940" y="2" width="460">
+	<pen width="3"/>
+    </line>
+    <text
+ 	format="number"
+	x="2900"
+	y="0"
+	width="500"
+	height="250"
+	halign="Right">
+	<font name="Times" isBold="true" size="14"/>
+	<var>var(total_on_hand)</var>
+    </text>
+
+    <line x="3440" y="2" width="760">
+	<pen width="3"/>
+    </line>
+    <text
+  	format="money"
+	x="3400"
+	y="0"
+	width="800"
+	height="250"
+	halign="Right">
+	<font name="Times" isBold="true" size="14"/>
+	<var>var(total_cost)</var>
+    </text>
+
+    <line x="4240" y="2" width="560">
+	<pen width="3"/>
+    </line>
+    <text
+  	format="money"
+	x="4200"
+	y="00"
+	width="600"
+	height="250"
+	halign="Right">
+	<font name="Times" isBold="true" size="14"/>
+	<var>var(total_deposit)</var>
+    </text>
+  </summary>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

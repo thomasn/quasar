@@ -1,0 +1,131 @@
+#!/bin/sh
+
+# Copyright (C) 1998-2004 Linux Canada Inc.  All rights reserved.
+#
+# This file is part of Quasar Accounting
+#
+# This file may be distributed and/or modified under the terms of the
+# GNU General Public License version 2 as published by the Free Software
+# Foundation and appearing in the file LICENSE.GPL included in the
+# packaging of this file.
+#
+# Licensees holding a valid Quasar Commercial License may use this file
+# in accordance with the Quasar Commercial License Agreement provided
+# with the Software in the LICENSE.COMMERCIAL file.
+#
+# This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
+# WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+#
+# See http://www.linuxcanada.com or email sales@linuxcanada.com for
+# information about Quasar Accounting support and maintenance options.
+#
+# Contact sales@linuxcanada.com if any conditions of this licensing are
+# not clear to you.
+
+# Figure out if by date or version
+if [ "$1" == "-date" ]; then
+    type="date"
+    version=$2
+    name=$(date -d $2 +%Y%m%d)
+elif [ "$1" == "-version" ]; then
+    type="version"
+    version="V$2_$3_$4"
+    name="$2.$3.$4"
+else
+    echo "Usage: build_source -date date | -version major minor patch"
+    exit
+fi
+
+# Get cvs root
+if [ "$CVSROOT" == "" ]; then
+    if [ -f ~/Quasar/CVS/Root ]; then
+	export CVSROOT=$(cat ~/Quasar/CVS/Root)
+    fi
+    if [ "$CVSROOT" == "" ]; then
+	echo "Error: unknown CVSROOT"
+	exit
+    fi
+fi
+
+# Get source location
+SOURCES=~/quasar_src
+if [ ! -d $SOURCES ]; then
+    mkdir $SOURCES
+fi
+
+# Clean up in case last process failed
+rm -rf $SOURCES/Quasar
+
+# Setup exported directory contents
+cd $SOURCES
+if [ $type == "date" ]; then
+    echo "Exporting Quasar source code on '$version'..."
+    cvs export -D $version Quasar
+else
+    echo "Exporting Quasar source code version '$version'..."
+    cvs export -r $version Quasar
+fi
+if [ $? != 0 ]; then
+    echo "Error: cvs export failed"
+    exit
+fi
+
+# Remove things in source repository that are not really used now
+rm -rf Quasar/autom4te.cache
+rm -rf Quasar/data_model
+rm -rf Quasar/doc
+rm -rf Quasar/installer
+rm -rf Quasar/locales/en_US
+rm -rf Quasar/setup/mandrake
+rm -rf Quasar/setup/redhat
+rm -rf Quasar/setup/slackware
+rm -rf Quasar/setup/suse
+rm -rf Quasar/zlib
+rm -f Quasar/header.txt
+rm -f Quasar/license.lic
+rm -f Quasar/project.pro
+rm -f Quasar/quasar.iss
+rm -f Quasar/script/*.sql
+rm -f Quasar/todo.txt
+rm -f Quasar/.cvsignore
+rm -f Quasar/*/.cvsignore
+
+# Copy for GPL and rename for Retail
+cp -a Quasar quasar-${name}_GPL
+mv Quasar quasar-${name}_Retail
+
+# Prepare GPL sources
+cd quasar-${name}_GPL
+./remove_retail
+rm -rf quasar_pos quasar_posd sybase_driver config/sybase*
+autoconf
+rm -f configure.ac
+rm -f remove_retail
+echo "Version: ${name}_GPL" >quasar.spec
+echo "License: GPL" >>quasar.spec
+cat setup/quasar.spec >>quasar.spec
+rm -f setup/quasar.spec
+cd ..
+
+# Prepare Retail sources
+cd quasar-${name}_Retail
+autoconf
+rm -f configure.ac
+rm -f remove_retail
+echo "Version: ${name}_Retail" >quasar.spec
+echo "License: Commercial" >>quasar.spec
+cat setup/quasar.spec >>quasar.spec
+rm -f setup/quasar.spec
+cd ..
+
+# Create the full retail sources
+echo -e "\nCreating retail source tar file..."
+tar czf quasar-${name}_Retail.tgz quasar-${name}_Retail
+
+# Create the limited GPL sources
+echo -e "Creating GPL source tar file..."
+tar czf quasar-${name}_GPL.tgz quasar-${name}_GPL
+
+# Clean up to free up space
+rm -rf quasar-${name}_GPL
+rm -rf quasar-${name}_Retail

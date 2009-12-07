@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Print Item Adjustment"
+	module="Inventory"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="150"
+	bottomMargin="150">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    if { $id == "" } { return "" }
+
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+
+	    return $value
+	}
+  ]]></initialize>
+
+  <parameter
+	name="adjust_id"
+	description="Enter the adjustment number:"
+	manditory="true"
+	type="lookup"
+	dataType="item adjustment"/>
+
+  <dataSource type="Code">
+	<initialize><![CDATA[
+	    proc make_address { name number street street2 city province
+				country postal phone_num fax_num email
+				web_page extra } {
+		set text $name
+		if { $street != "" } {
+		    if { $text != "" } { append text \n }
+		    append text $street
+		}
+		if { $street2 != "" } {
+		    if { $text != "" } { append text \n }
+		    append text $street2
+		}
+		if { $city != "" || $province != "" } {
+		    if { $text != "" } { append text \n }
+		    append text $city
+		    if { $city != "" && $province != "" } {
+			append text ", "
+		    }
+		    append text $province
+		}
+		if { $country != "" || $postal != "" } {
+		    if { $text != "" } { append text \n }
+		    append text $country
+		    if { $country != "" && $postal != "" } {
+			append text ", "
+		    }
+		    append text $postal
+		}
+		if { $extra == "Y" } {
+		    if { $phone_num != "" } {
+			if { $text != "" } { append text \n }
+			append text "Phone: $phone_num"
+		    }
+		    if { $fax_num != "" } {
+			if { $text != "" } { append text \n }
+			append text "Fax: $fax_num"
+		    }
+		    if { $email != "" } {
+			if { $text != "" } { append text \n }
+			append text "E-mail: $email"
+		    }
+		    if { $web_page != "" } {
+			if { $text != "" } { append text \n }
+			append text "Web Page: $web_page"
+		    }
+		}
+
+		return $text
+	    }
+
+	    proc get_address { card_id } {
+		if { $card_id == "" } {
+		    return ""
+		}
+
+		set query "select name,number,street,street2,city,
+		    province,country,postal,phone_num,fax_num,email,
+		    web_page from card where card_id = '$card_id'"
+		select $query {
+		    set name $column(1)
+		    set number $column(2)
+		    set street $column(3)
+		    set street2 $column(4)
+		    set city $column(5)
+		    set province $column(6)
+		    set country $column(7)
+		    set postal $column(8)
+		    set phone_num $column(9)
+		    set fax_num $column(10)
+		    set email $column(11)
+		    set web_page $column(12)
+		}
+
+	        return [make_address $name $number $street $street2 $city \
+			$province $country $postal $phone_num $fax_num \
+			$email $web_page "N"]
+	    }
+
+	    set query "select number,reference_str,post_date,post_time,
+		station_id,employee_id,store_id,reason_id,account_id from
+		item_adjust join gltx on item_adjust.item_adjust_id =
+		gltx.gltx_id where item_adjust_id = '$param(adjust_id)'"
+	    select $query {
+		set adjust_number $column(1)
+		set reference $column(2)
+		set post_date $column(3)
+		set post_time $column(4)
+		set station_id $column(5)
+		set employee_id $column(6)
+		set store_id $column(7)
+		set reason_id $column(8)
+		set account_id $column(9)
+	    }
+
+	    set query "select name,number,has_addr,street,street2,
+		city,province,country,postal,phone_num,fax_num,email,
+		web_page from store where store_id = '$store_id'"
+	    select $query {
+		set store_name $column(1)
+		set store_number $column(2)
+		set store_has_addr $column(3)
+		set store_street $column(4)
+		set store_street2 $column(5)
+		set store_city $column(6)
+		set store_province $column(7)
+		set store_country $column(8)
+		set store_postal $column(9)
+		set store_phone_num $column(10)
+		set store_fax_num $column(11)
+		set store_email $column(12)
+		set store_web $column(13)
+	    }
+
+	    # If no store address, get from company
+	    if { $store_has_addr == "N" } {
+		set query "select name,number,street,street2,city,
+		    province,country,postal,phone_num,fax_num,email,
+		    web_page from company";
+		select $query {
+		    set store_name $column(1)
+		    set store_number $column(2)
+		    set store_street $column(3)
+		    set store_street2 $column(4)
+		    set store_city $column(5)
+		    set store_province $column(6)
+		    set store_country $column(7)
+		    set store_postal $column(8)
+		    set store_phone_num $column(9)
+		    set store_fax_num $column(10)
+		    set store_email $column(11)
+		    set store_web $column(12)
+		}
+	    }
+
+	    # Make the store address
+	    set store_addr [make_address "" "" $store_street $store_street2 \
+		$store_city $store_province $store_country $store_postal \
+		$store_phone_num $store_fax_num $store_email $store_web "Y"]
+
+	    # Get the employee name
+	    if { $employee_id == "" } {
+		set salesperson ""
+	    } else {
+		set query "select number from card where card_id = 
+		    '$employee_id'"
+		select $query {
+		    set salesperson $column(1)
+		}
+	    }
+
+	    # Totals at bottom we will now be calculating
+	    set item_total 0
+	    set deposit_total 0
+
+	    # Process the items
+	    set rows ""
+	    set query "select gltx_item.item_id,gltx_item.number,
+	        gltx_item.description,size_name,quantity,inv_cost,
+		ext_deposit,item.description,voided from gltx_item
+		join item on gltx_item.item_id = item.item_id where
+		gltx_item.gltx_id = '$param(adjust_id)' order by
+		gltx_item.seq_num"
+	    select $query {
+		set item_id $column(1)
+		set number $column(2)
+		set description $column(3)
+		set size_name $column(4)
+		set qty $column(5)
+		set inv_cost $column(6)
+		set ext_deposit $column(7)
+		set item_desc $column(8)
+		set voided $column(9)
+
+		if { $voided == "Y" } {
+		    continue
+		}
+
+		if { $description == "" } {
+		    set description $item_desc
+		}
+
+		set total [expr $inv_cost + $ext_deposit]
+
+		lappend rows [list $number $description $size_name \
+		    $qty $inv_cost $ext_deposit $total]
+
+		set item_total [expr $item_total + $inv_cost]
+		set deposit_total [expr $deposit_total + $ext_deposit]
+	    }
+
+	    if { [llength $rows] == 0 } {
+		lappend rows [list "" "  " "" "" "" "" "" ""]
+	    }
+
+	    set adjust_total [expr $item_total + $deposit_total]
+	]]></initialize>
+
+	<next><![CDATA[
+		$current_row < [llength $rows]
+	]]></next>
+
+	<get>
+		return [lindex [lindex $rows $current_row] $index]
+	</get>
+
+	<column>item_number</column>
+	<column>description</column>
+	<column>size</column>
+	<column>qty</column>
+	<column>cost</column>
+	<column>deposit</column>
+	<column>total</column>
+  </dataSource>
+
+  <background height="6300">
+    <rectangle x="0" y="1620" width="4800" height="4200"/>
+    <line x="750" y="1620" height="4200"/>
+    <line x="2600" y="1620" height="4200"/>
+    <line x="3050" y="1620" height="4200"/>
+    <line x="3350" y="1620" height="4200"/>
+    <line x="3850" y="1620" height="4200"/>
+    <line x="4300" y="1620" height="4200"/>
+  </background>
+
+  <pageHeader height="1620">
+    <text x="0" y="0" width="2950" height="160">
+	<font name="Helvetica" size="16" isBold="true"/>
+	<var>store_name</var>
+    </text>
+    <text x="0" y="160" width="2950" height="1000" valign="Top">
+	<font name="Helvetica" size="10"/>
+	<var>store_addr</var>
+    </text>
+
+    <text x="3000" y="0" width="1200" height="160">
+	<font name="Times" size="16" isBold="true"/>
+	<text>Item Adjustment:</text>
+    </text>
+    <text x="4200" y="0" width="600" height="160" halign="Right">
+	<font name="Times" size="16" isBold="true"/>
+	<var>adjust_number</var>
+    </text>
+    <text x="3000" y="160" width="1200" height="120">
+	<font name="Times" size="12"/>
+	<text>Date:</text>
+    </text>
+    <text x="4200" y="160" width="600" height="120" halign="Right">
+	<font name="Times" size="12"/>
+	<var>post_date</var>
+    </text>
+    <text x="3000" y="280" width="1200" height="120">
+	<font name="Times" size="12"/>
+	<text>Page:</text>
+    </text>
+    <text x="4200" y="280" width="600" height="120" evalTime="Report" halign="Right">
+	<font name="Times" size="12"/>
+	<expr>"$sys(page_number) of $sys(page_count)"</expr>
+    </text>
+
+    <text x="3000" y="600" width="600" height="120">
+	<font name="Times" size="12"/>
+	<text>Reason:</text>
+    </text>
+    <text x="3600" y="600" width="1200" height="120" halign="Right">
+	<font name="Times" size="12"/>
+	<expr>[lookup adjust_reason reason_id $reason_id name]</expr>
+    </text>
+
+    <text x="3000" y="720" width="600" height="120">
+	<font name="Times" size="12"/>
+	<text>Account:</text>
+    </text>
+    <text x="3600" y="720" width="1200" height="120" halign="Right">
+	<font name="Times" size="12"/>
+	<expr>[lookup account account_id $account_id name]</expr>
+    </text>
+
+    <rectangle x="0" y="1500" width="4800" height="120"/>
+
+    <text x="0" y="1500" width="750" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Item Number</text>
+    </text>
+    <line x="750" y="1500" height="120"/>
+
+    <text x="750" y="1500" width="1850" height="120">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Description</text>
+    </text>
+    <line x="2600" y="1500" height="120"/>
+
+    <text x="2600" y="1500" width="450" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Size</text>
+    </text>
+    <line x="3050" y="1500" height="120"/>
+
+    <text x="3050" y="1500" width="300" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Qty</text>
+    </text>
+    <line x="3350" y="1500" height="120"/>
+
+    <text x="3350" y="1500" width="500" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Cost</text>
+    </text>
+    <line x="3850" y="1500" height="120"/>
+
+    <text x="3850" y="1500" width="450" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Deposit</text>
+    </text>
+    <line x="4300" y="1500" height="120"/>
+
+    <text x="4300" y="1500" width="500" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Total</text>
+    </text>
+  </pageHeader>
+
+  <pageFooter height="480">
+    <rectangle x="0" y="0" width="4800" height="390"/>
+    <line x="2950" y="0" height="390"/>
+    <line x="4100" y="0" height="390"/>
+
+    <text x="2950" y="0" width="1150" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Item Total</text>
+    </text>
+    <text x="4100" y="0" width="700" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<expr>[oconv money $item_total]</expr>
+    </text>
+
+    <text x="2950" y="120" width="1150" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Deposit Total</text>
+    </text>
+    <text x="4100" y="120" width="700" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<expr>[oconv money $deposit_total]</expr>
+    </text>
+
+    <text x="2950" y="240" width="1150" height="150" halign="Right">
+	<font name="Times" size="14" isBold="true"/>
+	<text>Total</text>
+    </text>
+    <text x="4100" y="240" width="700" height="150" halign="Right">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>[oconv money $adjust_total]</expr>
+    </text>
+  </pageFooter>
+
+  <detail height="120">
+    <text x="0" y="0" width="750" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(item_number)</var>
+    </text>
+    <text x="750" y="0" width="1850" height="120">
+	<font name="Times" size="10"/>
+	<var>column(description)</var>
+    </text>
+    <text x="2600" y="0" width="450" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(size)</var>
+    </text>
+    <text x="3050" y="0" width="300" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<expr>[oconv number $column(qty)]</expr>
+    </text>
+    <text x="3350" y="0" width="500" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<expr>[oconv money $column(cost)]</expr>
+    </text>
+    <text x="3850" y="0" width="450" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<expr>[oconv money $column(deposit)]</expr>
+    </text>
+    <text x="4300" y="0" width="500" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<expr>[oconv money $column(total)]</expr>
+    </text>
+  </detail>
+
+</ReportDefn>

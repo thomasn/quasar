@@ -1,0 +1,270 @@
+<html>
+<head>
+<TITLE>Customer Master</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png"></td>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_card.html"><b>Up: </b>Card File</a></td>
+<td><a href="address_book.html"><b>Previous: </b>Address Book</a></td>
+<td><a href="vendor_master.html"><b>Next: </b>Vendor Master</a></td>
+</tr>
+</tbody></table>
+<hr>
+
+<h1>Customer Master</h1>
+
+<img src="images/customer_master.png">
+
+<h2>Company (toggle on)</h2>
+
+<p>Toggle on or off. Toggle on if the customer is a company.</p>
+<br>
+<img src="images/customer_master_company.png"><br>
+<br>
+
+<h3>Company Name</h3>
+
+<p>The name of the company.</p>
+
+<h3>Contact</h3>
+
+<p>The contact name for the company.</p>
+
+<h3>Number</h3>
+
+<P> Enter a number that can be used to identify a customer. For
+example, when entering a customer on an invoice you can enter the
+number rather than the customer name and the customer name will be
+displayed. </P>
+
+<h3>Type</h3>
+
+<p>Select a customer type as defined in the customer type master
+screen. Selecting a customer type will populate the customer master
+screen with the default information for that type.  
+
+<h2>Company (toggle off)</h2>
+<p>Toggle on or off. Toggle off if the customer is an individual person.</p>
+<br>
+<img src="images/customer_master_person.png"><br>
+<br>
+
+<h3>Last Name</h3>
+
+<p>The customer's surname.<p>
+
+<h3>First Name</h3>
+
+<P> The customer's given name.</P>
+
+<h3>Number</h3>
+
+<P> Enter a number that can be used to identify a customer. For
+example, when entering a customer on an invoice you can enter the
+number rather than the customer name and the customer name will be
+displayed. </P>
+
+<h2>Address</h2>
+
+<img src="images/customer_master_address.png">
+
+<h3>Street</h3>
+
+<p>The customer's street address.</p>
+
+<h3>City</h3>
+
+<p>The city in which the customer resides or carries out business.</p>
+
+<h3>Province</h3>
+
+<p>The province in which the customer resides or carries out business</p>
+
+<h3>Country</h3>
+
+<p> The country in which the customer resides or carries out business</p>
+
+<h3>Postal Code</h3>
+
+<p>The customer's postal code.</p>
+
+<h3>Phone #</h3>
+
+<p>The customer's phone number.</p>
+
+<h3>Phone #2</h3>
+
+<p>The customer's second phone number.</p>
+
+
+<h3>Fax</h3>
+
+<p>The customer's fax number.</p>
+
+<h3>Email</h3>
+
+<p>The customer's email address.</p>
+
+<h3>Web Page</h3>
+
+<p>The customer's web page address.</p>
+
+
+<h2>Control</h2>
+
+<img src="images/customer_master_control.png">
+
+<p>Controls specific to this customer.
+
+<dl>
+<dd>
+<ul>
+<li> <b>AR Account</b> - Select the accounts receivable account that
+all transactions for this customer will be posted to. 
+<li> <b>Terms</b> - Enter the payment terms for this customer. An
+existing set of terms may be used or a new set of terms may be
+defined. The payment terms entered here will appear by default on
+customer invoices. <a href="term_master.html">(More)</a> 
+<li> <b>Tax Exempt</b> - Enter the tax or tax group from which the
+customer is exempt. 
+<li> <b>Credit Limit</b> - Enter the maximum credit that will be
+available to the customer. The credit limit may be overridden at the
+point-of-sale or on the customer invoice with proper security
+clearance.
+<li> <b>Credit Hold?</b> Toggle on or off. Toggle on if the customers
+credit privileges have been temporarily suspended. Note the credit
+hold may be overridden at the point-of-sale or on the customer invoice
+with proper security clearance. 
+<li> <b>Service Charge</b> - The annual service charge percent that
+will be charged on past due invoices.
+<li> <b>Statements?</b> - Toggle on or off. Toggle off if the customer
+is not to receive a hard copy of their statement during the statement
+printing process.
+</ul>
+</dl>
+
+<h2>Groups</h2>
+
+<img src="images/customer_master_group.png">
+
+<p>You can link a customer to a group for pricing
+purposes. Special prices can be created that will only be valid for
+specific groups. Groups are also excellent tools for reporting purposes, such
+as sales by customer group or viewing groups of aged receivables.</p>
+
+
+<h2>Transactions</h2>
+
+<img src="images/customer_master_transactions.png">
+
+<p>This section is used to define the types of transactions that can
+be created for this customer.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Can Charge</b> - Toggle on or off. Toggle on if the customer
+can charge to a receivable account. 
+<li> <b>Can Withdraw</b> - Toggle on or off. Toggle on if the customer
+can withdraw cash from their receivable account.
+<li> <b>Can Make Payment</b> - Toggle on or off. Toggle on if the
+customer can make a payment to their receivable account. 
+<li> <b>Check Withdraw Balance</b> - Toggle on or off. Toggle on if
+the customer can only withdraw cash when their receivable account is
+in a credit balance.
+<li> <b>Second Receipt</b> - Toggle on or off. Toggle on if the
+customer should always receive a second copy of their receipt from a
+point-of-sale terminal.
+<li> <b>Discount</b> - Enter transaction discounts that will be automatically
+given to this customer when purchasing at the point-of-sale.
+</ul>
+</dl>
+
+<h2>References</h2>
+
+<img src="images/customer_master_references.png">
+
+<p>A reference entered here is a required reference that must be
+entered for customer invoices, customer payments and customer
+withdraws for this customer. For example, a customer may request that
+a purchase order number be entered on every receipt. 
+
+<h2>Extra Info</h2>
+
+<img src="images/customer_master_extra.png">
+
+<p>Each company can add attributes and store information required
+specifically by that company. 
+
+<dl>
+<dd>
+<ul>
+<li> <b>Data Name</b> - Displays the name of defined attributes.
+<li> <b>Value</b> - Enter the data value specific to this customcer.
+<li> <b>Create Data</b> - Click on the "Create Data" button to create
+a new data attribute that will be displayed for all customers.
+<li> <b>Delete Data</b> - Click on the "Delete Data" button to delete
+the high-lighted data attribute. BEWARE: This will delete the attribute for
+all customers and all data values will be lost.
+<li> <b>Rename Data</b> - Click on the "Rename Data" button to rename
+the high-lighted data attribute.
+</ul>
+</dl>
+
+
+<h2>Opening Balance</h2>
+
+<img src="images/customer_master_balance.png">
+
+<p>The opening balance may only be entered when a receivable account
+is first created. 
+
+<h3>As of</h3>
+
+<p>Enter the as of date for the receivable opening balance.
+
+<h3>Balance</h3>
+
+<p>Enter the customers opening balance.
+
+
+<h2>Inactive?</h2>
+
+<p> Toggle on or off. Toggle on if the customer is no longer
+active. Quasar Accounting will not allow customers with a receivable
+balance to be set to inactive. Toggle off to make the customer active again. 
+
+<h2>Email</h2>
+
+<p> Click on the email button to send an email message.</p>
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_card.html"><b>Up: </b>Card File</a></td>
+<td><a href="address_book.html"><b>Previous: </b>Address Book</a></td>
+<td><a href="vendor_master.html"><b>Next: </b>Vendor Master</a></td>
+</tr>
+</table>
+
+<br>
+
+</body>
+</html>
+
+
+
+
+
+
+

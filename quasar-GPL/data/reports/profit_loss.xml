@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Profit &amp; Loss"
+	module="Ledger"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+
+	# Get accounts in proper chart order
+	proc ledger_chart { where1 where2 } {
+	    # First select all account in type, parent, number, and name order
+	    set accounts ""
+	    set query "select account_id,account_type,number,name,header,
+		parent_id,(select sum(amount) from account_change where
+		account_change.account_id = account.account_id and $where1)
+		from account where $where2 order by account_type,parent_id,
+		number,name"
+	    select $query {
+		set account_id $column(1);
+		set type $column(2)
+		set number $column(3)
+		set name $column(4)
+		set header $column(5)
+		set parent_id $column(6)
+		set amount $column(7)
+
+		if { $amount == "" } {
+		    set amount 0
+		}
+
+		lappend accounts [list $account_id $type $number $name \
+			$header $parent_id $amount]
+	    }
+
+	    # Put into proper chart order
+	    set chart ""
+	    while { [llength $accounts] != 0 } {
+		for { set i 0 } { $i < [llength $accounts] } { } {
+		    set account [lindex $accounts $i]
+		    set parent_id [lindex $account 5]
+
+		    # Top levels will go first so just insert into chart at end
+		    if { $parent_id == "" } {
+			lappend chart $account
+			set accounts [lreplace $accounts $i $i]
+			continue
+		    }
+
+		    # Search back for place to insert
+		    set pos [expr [llength $chart] - 1]
+		    while { $pos >= 0 } {
+			set info [lindex $chart $pos]
+			if { [lindex $info 0] == $parent_id } {
+			    break
+			}
+			if { [lindex $info 5] == $parent_id } {
+			    break
+			}
+			incr pos -1
+		    }
+
+		    # If position not found, continue
+		    if { $pos < 0 } {
+			incr i
+			continue
+		    }
+
+		    # If at end then just lappend
+		    if { $pos == [expr [llength $chart] - 1] } {
+			lappend chart $account
+			set accounts [lreplace $accounts $i $i]
+			continue
+		    }
+
+		    # Insert into place
+		    set chart [linsert $chart [expr $pos + 1] $account]
+		    set accounts [lreplace $accounts $i $i]
+		}
+	    }
+
+	    return $chart
+	}
+
+	proc type_name { type } {
+	    if { $type == 11 } { return "Income" }
+	    if { $type == 12 } { return "Cost of Goods Sold" }
+	    if { $type == 13 } { return "Expense" }
+	    if { $type == 14 } { return "Other Income" }
+	    if { $type == 15 } { return "Other Expense" }
+	    return "Unknown"
+	}
+
+	set indent_amt 0
+	set indent_by 200
+	set income_cnt 0
+	set cogs_cnt 0
+	set expense_cnt 0
+	for { set i 11 } { $i <= 15 } { incr i } {
+	    set totals($i) 0
+	}
+  ]]></initialize>
+
+  <dataSource type="Code">
+    <initialize><![CDATA[
+	# Selection criteria for account_change table
+	set where1 "change_date >= '$param(start_date)' and change_date <=
+		'$param(end_date)'"
+	if { $param(store_id) != "" } {
+	    append where1 " and store_id = '$param(store_id)'"
+	}
+
+	# Selection criteria for account table
+	set where2 "inactive_on is null and account_type > 10"
+
+	# Get accounts in chart order
+	set rows [ledger_chart $where1 $where2]
+
+	# Get net profit/loss
+	set net_profit 0
+	set query "select sum(amount) from account_change join account on
+		account_change.account_id = account.account_id where
+		account.account_type > 10 and $where1"
+	select $query {
+	    set net_profit $column(1)
+	}
+	if { $net_profit == "" } {
+	    set net_profit 0
+	}
+
+	# Adjust for any year end transfers
+	set query "select gltx_account.account_id,gltx_account.amount,
+		account.account_type from (gltx_account join gltx on
+		gltx_account.gltx_id = gltx.gltx_id) join account on
+		gltx_account.account_id = account.account_id where
+		gltx.inactive_on is null and gltx.memo = 'Year End Transfer'
+		and gltx.post_time = '00:00:00' and gltx.post_date >=
+		'$param(start_date)' and gltx.post_date <= '$param(end_date)'"
+	if { $param(store_id) != "" } {
+	    append query " and store_id = '$param(store_id)'"
+	}
+	select $query {
+	    set account_id $column(1)
+	    set amount $column(2)
+	    set type $column(3)
+
+	    set found 0
+	    for { set i 0 } { $i < [llength $rows] } { incr i } {
+		set row [lindex $rows $i]
+
+		if { [lindex $row 0] != $account_id } {
+		    continue
+		}
+
+		set new_amount [expr [lindex $row 6] - $amount]
+
+		set row [lreplace $row 6 6 $row_amount]
+		set rows [lreplace $rows $i $i $row]
+		set found 1
+		break
+	    }
+
+	    if { $found == 0 } {
+		set net_profit [expr $net_profit + $amount]
+	    }
+	}
+
+	# Information on headers
+	set header_ids ""
+	set header_types ""
+	set header_names ""
+	set header_total 0
+	set indent_amt 0
+
+	# Remove all data rows with zero amounts
+	for { set i 0 } { $i < [llength $rows] } { } {
+	    set row [lindex $rows $i]
+
+	    set header [lindex $row 4]
+	    set amount [lindex $row 6]
+
+	    if { $header == "N" && $amount == 0 } {
+		set rows [lreplace $rows $i $i]
+		continue
+	    }
+
+	    incr i
+	}
+
+	# Cleanup rows for display
+	for { set i 0 } { $i < [llength $rows] } { } {
+	    set row [lindex $rows $i]
+
+	    set account_id [lindex $row 0]
+	    set type [lindex $row 1]
+	    set number [lindex $row 2]
+	    set name [lindex $row 3]
+	    set header [lindex $row 4]
+	    set parent_id [lindex $row 5]
+	    set amount [lindex $row 6]
+
+	    # Reverse signs on income and other income accounts
+	    if { $type == 11 || $type == 14 } {
+		set amount [expr $amount * -1.0]
+		set row [lreplace $row 6 6 $amount]
+	    }
+
+	    # Remove and ignore headers without children
+	    if { $header == "Y" } {
+		# If is last row, remove it
+		if { $i == [llength $rows] - 1 } {
+		    set rows [lreplace $rows $i $i]
+		    continue
+	        }
+
+		# If next row is not a child, remove it
+		set next_row [lindex $rows [expr $i + 1]]
+		if { [lindex $next_row 5] != $account_id } {
+		    set rows [lreplace $rows $i $i]
+		    continue
+	        }
+	    }
+
+	    # If parent is different then current header, pop headers
+	    while { [llength $header_ids] != 0 } {
+		set header_id [lindex $header_ids end]
+		set header_type [lindex $header_types end]
+		set header_name [lindex $header_names end]
+
+		if { $parent_id == $header_id } {
+		    break
+		}
+
+		incr indent_amt -$indent_by
+
+		set footer_name "Total $header_name"
+		set footer_row [list "" $header_type "" $footer_name "N" \
+			$header_id $header_total $indent_amt]
+		set rows [linsert $rows $i $footer_row]
+		incr i
+
+		set header_ids [lreplace $header_ids end end]
+		set header_types [lreplace $header_types end end]
+		set header_names [lreplace $header_names end end]
+	    }
+
+	    # When no more headers, zero out total
+	    if { [llength $header_ids] == 0 } {
+	        set header_total 0
+	    }
+
+	    if { $header == "Y" } {
+		# Set indent amount for row
+		lappend row $indent_amt
+		set rows [lreplace $rows $i $i $row]
+
+		# Add to headers
+		lappend header_ids $account_id
+		lappend header_names $name
+		lappend header_types $type
+		incr indent_amt $indent_by
+	    } else {
+		# Add up how many are found of certain types
+		if { $type == 11 } { incr income_cnt }
+		if { $type == 12 } { incr cogs_cnt }
+		if { $type == 13 } { incr expense_cnt }
+
+		# Add to total by type
+		set totals($type) [expr $totals($type) + $amount]
+
+		# Add to header total if in any headers
+		if { [llength $header_ids] != 0 } {
+		    set header_total [expr $header_total + $amount]
+		}
+
+		# Set indent amount for row
+		lappend row $indent_amt
+		set rows [lreplace $rows $i $i $row]
+	    }
+
+	    incr i
+	}
+
+	# Add totals for any headers left un-closed
+	while { [llength $header_ids] != 0 } {
+	    set header_id [lindex $header_ids end]
+	    set header_type [lindex $header_types end]
+	    set header_name [lindex $header_names end]
+
+	    incr indent_amt -$indent_by
+
+	    set footer_name "Total $header_name"
+	    set footer_row [list "" $header_type "" $footer_name "N" \
+		    $header_id $header_total $indent_amt]
+	    lappend rows $footer_row
+
+	    set header_ids [lreplace $header_ids end end]
+	    set header_types [lreplace $header_types end end]
+	    set header_names [lreplace $header_names end end]
+	}
+    ]]></initialize>
+    <next><![CDATA[
+	$current_row < [llength $rows]
+    ]]></next>
+    <get>
+	return [lindex [lindex $rows $current_row] $index]
+    </get>
+    <column>account_id</column>
+    <column>type</column>
+    <column>number</column>
+    <column>name</column>
+    <column>header</column>
+    <column>parent_id</column>
+    <column>amount</column>
+    <column>row_indent</column>
+  </dataSource>
+
+  <parameter
+	name="start_date"
+	description="Enter the start date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="end_date"
+	description="Enter the end date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <variable
+	name="type_total"
+	resetType="Group"
+	resetGroup="type">
+	<sum>$column(amount)</sum>
+  </variable>
+
+  <variable
+	name="running_total"
+	resetType="Report">
+	<sum>$column(amount)</sum>
+  </variable>
+
+  <group name="type">
+	<expression>$column(type)</expression>
+	<header height="125">
+	  <afterCode>incr indent_amt $indent_by</afterCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12"/>
+		<expr>[type_name $column(type)]</expr>
+	  </text>
+	</header>
+	<footer height="200">
+	  <beforeCode>incr indent_amt -$indent_by</beforeCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12"/>
+		<expr>"Total [type_name $group(type)]"</expr>
+	  </text>
+	  <text
+		format="money"
+		x="2800"
+		y="0"
+		width="2000 - $indent_amt"
+		height="125"
+		halign="Right">
+		<font name="Times" size="12"/>
+		<expr>$totals($group(type))</expr>
+	  </text>
+	</footer>
+	<footer height="200">
+	  <printWhen><![CDATA[
+		$group(type) == 12 || ($cogs_cnt == 0 && $group(type) == 11)
+	  ]]></printWhen>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12" isBold="true"/>
+		<text>Gross Profit</text>
+	  </text>
+	  <text
+		format="money"
+		x="2800"
+		y="0"
+		width="2000 - $indent_amt"
+		height="125"
+		halign="Right">
+		<font name="Times" size="12" isBold="true"/>
+		<expr>$totals(11) - $totals(12)</expr>
+	  </text>
+	</footer>
+	<footer height="200">
+	  <printWhen><![CDATA[
+		$group(type) == 13 && ($income_cnt > 0 || $cogs_cnt > 0)
+	  ]]></printWhen>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12" isBold="true"/>
+		<text>Operating Profit</text>
+	  </text>
+	  <text
+		format="money"
+		x="2800"
+		y="0"
+		width="2000 - $indent_amt"
+		height="125"
+		halign="Right">
+		<font name="Times" size="12" isBold="true"/>
+		<expr>$totals(11) - $totals(12) - $totals(13)</expr>
+	  </text>
+	</footer>
+  </group>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Profit &amp; Loss</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"$param(start_date) to $param(end_date)"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush mode="solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="2800"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Account</text>
+    </text>
+    <text
+	x="2800"
+	y="0"
+	width="2000"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Amount</text>
+    </text>
+  </pageHeader>
+
+  <detail height="125">
+    <text
+	x="$indent_amt + $column(row_indent)"
+	y="0"
+	width="2800 - $indent_amt - $column(row_indent)"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(name)</var>
+    </text>
+    <text
+	format="money"
+	x="2800"
+	y="0"
+	width="2000 - $indent_amt - $column(row_indent)"
+	height="125"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<expr>$column(header) == "N" ? $column(amount) : ""</expr>
+    </text>
+  </detail>
+
+  <summary height="250">
+    <text
+	x="0"
+	y="0"
+	width="2800"
+	height="250">
+	<font name="Times" isBold="true" size="14"/>
+	<text>NET PROFIT/LOSS</text>
+    </text>
+    <text
+	format="money"
+	x="2800"
+	y="0"
+	width="2000"
+	height="250"
+	halign="Right">
+	<font name="Times" isBold="true" size="14"/>
+	<expr>$net_profit * -1</expr>
+    </text>
+  </summary>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

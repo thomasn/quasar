@@ -1,0 +1,148 @@
+# $Id: Makefile.in,v 1.9 2005/04/04 22:21:10 bpepers Exp $
+#
+# Copyright (C) 1998-2004 Linux Canada Inc.  All rights reserved.
+#
+# This file is part of Quasar Accounting
+#
+# This file may be distributed and/or modified under the terms of the
+# GNU General Public License version 2 as published by the Free Software
+# Foundation and appearing in the file LICENSE.GPL included in the
+# packaging of this file.
+#
+# Licensees holding a valid Quasar Commercial License may use this file
+# in accordance with the Quasar Commercial License Agreement provided
+# with the Software in the LICENSE.COMMERCIAL file.
+#
+# This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
+# WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+#
+# See http://www.linuxcanada.com or email sales@linuxcanada.com for
+# information about Quasar Accounting support and maintenance options.
+#
+# Contact sales@linuxcanada.com if any conditions of this licensing are
+# not clear to you.
+
+# Configuration output
+QTDIR=@QTDIR@
+QMAKE=@QMAKE@
+LUPDATE=@LUPDATE@
+export QTDIR QMAKE LUPDATE
+
+MAKEFILES=utility/Makefile widget/Makefile business/Makefile \
+	db_driver/Makefile database/Makefile quasard/Makefile \
+	quasar_clientd/Makefile quasar_setup/Makefile \
+	repgen/Makefile gui/Makefile quasar/Makefile \
+	quasar_report/Makefile quasar_import/Makefile \
+	merge_tr/Makefile model_editor/Makefile
+
+ifeq (@BUILD_POSTGRESQL@,yes)
+    MAKEFILES+=postgresql_driver/Makefile
+endif
+
+ifeq (@BUILD_FIREBIRD@,yes)
+    MAKEFILES+=firebird_driver/Makefile
+endif
+
+
+all: $(MAKEFILES)
+	cd utility && $(MAKE) -f Makefile
+	cd widget && $(MAKE) -f Makefile
+	cd business && $(MAKE) -f Makefile
+	cd db_driver && $(MAKE) -f Makefile
+	cd database && $(MAKE) -f Makefile
+	cd quasard && $(MAKE) -f Makefile
+	cd quasar_clientd && $(MAKE) -f Makefile
+	cd quasar_setup && $(MAKE) -f Makefile
+	cd repgen && $(MAKE) -f Makefile
+	cd gui && $(MAKE) -f Makefile
+	cd quasar && $(MAKE) -f Makefile
+	cd quasar_report && $(MAKE) -f Makefile
+	cd quasar_import && $(MAKE) -f Makefile
+	cd merge_tr && $(MAKE) -f Makefile
+	cd model_editor && $(MAKE) -f Makefile
+ifeq (@BUILD_POSTGRESQL@,yes)
+	cd postgresql_driver && $(MAKE) -f Makefile
+endif
+ifeq (@BUILD_FIREBIRD@,yes)
+	cd firebird_driver && $(MAKE) -f Makefile
+endif
+
+utility/Makefile: utility/utility.pro
+	cd utility && $(QMAKE) utility.pro -o Makefile
+
+widget/Makefile: widget/widget.pro
+	cd widget && $(QMAKE) widget.pro -o Makefile
+
+business/Makefile: business/business.pro
+	cd business && $(QMAKE) business.pro -o Makefile
+
+db_driver/Makefile: db_driver/db_driver.pro
+	cd db_driver && $(QMAKE) db_driver.pro -o Makefile
+
+database/Makefile: database/database.pro
+	cd database && $(QMAKE) database.pro -o Makefile
+
+quasard/Makefile: quasard/quasard.pro
+	cd quasard && $(QMAKE) quasard.pro -o Makefile
+
+quasar_clientd/Makefile: quasar_clientd/quasar_clientd.pro
+	cd quasar_clientd && $(QMAKE) quasar_clientd.pro -o Makefile
+
+quasar_setup/Makefile: quasar_setup/quasar_setup.pro
+	cd quasar_setup && $(QMAKE) quasar_setup.pro -o Makefile
+
+repgen/Makefile: repgen/repgen.pro
+	cd repgen && $(QMAKE) repgen.pro -o Makefile
+
+gui/Makefile: gui/gui.pro
+	cd gui && $(QMAKE) gui.pro -o Makefile
+
+quasar/Makefile: quasar/quasar.pro
+	cd quasar && $(QMAKE) quasar.pro -o Makefile
+
+quasar_report/Makefile: quasar_report/quasar_report.pro
+	cd quasar_report && $(QMAKE) quasar_report.pro -o Makefile
+
+quasar_import/Makefile: quasar_import/quasar_import.pro
+	cd quasar_import && $(QMAKE) quasar_import.pro -o Makefile
+
+postgresql_driver/Makefile: postgresql_driver/postgresql_driver.pro
+	cd postgresql_driver && $(QMAKE) postgresql_driver.pro -o Makefile
+
+firebird_driver/Makefile: firebird_driver/firebird_driver.pro
+	cd firebird_driver && $(QMAKE) firebird_driver.pro -o Makefile
+
+merge_tr/Makefile: merge_tr/merge_tr.pro
+	cd merge_tr && $(QMAKE) merge_tr.pro -o Makefile
+
+model_editor/Makefile: model_editor/model_editor.pro
+	cd model_editor && $(QMAKE) model_editor.pro -o Makefile
+
+
+clean:
+	cd utility && $(MAKE) -f Makefile clean
+	cd widget && $(MAKE) -f Makefile clean
+	cd business && $(MAKE) -f Makefile clean
+	cd db_driver && $(MAKE) -f Makefile clean
+	cd database && $(MAKE) -f Makefile clean
+	cd quasard && $(MAKE) -f Makefile clean
+	cd quasar_clientd && $(MAKE) -f Makefile clean
+	cd quasar_setup && $(MAKE) -f Makefile clean
+	cd repgen && $(MAKE) -f Makefile clean
+	cd gui && $(MAKE) -f Makefile clean
+	cd quasar && $(MAKE) -f Makefile clean
+	cd quasar_report && $(MAKE) -f Makefile clean
+	cd quasar_import && $(MAKE) -f Makefile clean
+	cd merge_tr && $(MAKE) -f Makefile clean
+	cd model_editor && $(MAKE) -f Makefile clean
+ifeq (@BUILD_POSTGRESQL@,yes)
+	cd postgresql_driver && $(MAKE) -f Makefile clean
+endif
+ifeq (@BUILD_FIREBIRD@,yes)
+	cd firebird_driver && $(MAKE) -f Makefile clean
+endif
+	rm -f lib/*.a */objs/*.o
+
+install: all
+	./install all
+

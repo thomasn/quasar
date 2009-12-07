@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Items Not Counted"
+	module="Inventory"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <parameter
+	name="dept_id"
+	description="Enter the department:"
+	manditory="false"
+	type="lookup"
+	dataType="dept"/>
+
+  <parameter
+	name="subdept_id"
+	description="Enter the subdepartment:"
+	manditory="false"
+	type="lookup"
+	dataType="subdept"/>
+
+  <parameter
+	name="group_id"
+	description="Group:"
+	manditory="false"
+	type="lookup"
+	dataType="group"/>
+
+  <parameter
+	name="location_id"
+	description="Location:"
+	manditory="false"
+	type="lookup"
+	dataType="location"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store:"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+  ]]></initialize>
+
+  <dataSource type="Code">
+    <initialize><![CDATA[
+	set item_ids ""
+
+	# Which items have been counted?
+	set query "select distinct item_id from pcount_item join pcount on
+		pcount_item.count_id = pcount.count_id";
+	if { $param(store_id) != "" } {
+	    append query " where store_id = '$param(store_id)'"
+	}
+	select $query {
+	    set item_id $column(1)
+	    set counted($item_id) 1
+	}
+
+	# Build where clause depending on params
+	set where ""
+	if { $param(store_id) != "" } {
+	    if { $where != "" } { append where " and" }
+	    append where " item_change.store_id = '$param(store_id)'"
+	}
+	if { $param(dept_id) != "" } {
+	    if { $where != "" } { append where " and" }
+	    append where " item.dept_id = '$param(dept_id)'"
+	}
+	if { $param(subdept_id) != "" } {
+	    if { $where != "" } { append where " and" }
+	    append where " item.subdept_id = '$param(subdept_id)'"
+	}
+	if { $param(group_id) != "" } {
+	    if { $where != "" } { append where " and" }
+	    append where " exists (select group_id from item_group
+		where item_group.item_id = item.item_id and
+		item_group.group_id = '$param(group_id)')"
+	}
+	if { $param(location_id) != "" } {
+	    if { $where != "" } { append where " and" }
+	    append where " exists (select location_id from item_store
+		where item_store.item_id = item.item_id and
+		item_store.location_id = '$param(location_id)')"
+	}
+	if { $where != "" } { set where "where $where" }
+
+	# Get on hand and item info
+	set query "select item.item_id,item_plu.number,description,sell_size,
+		item_size.qty,sum(on_hand) from ((item_change join item on
+		item_change.item_id = item.item_id) join item_size on
+		item_size.item_id = item.item_id and item_size.name =
+		item.sell_size) join item_plu on item_plu.item_id =
+		item.item_id and item_plu.seq_num = 0 $where group by
+		item.item_id,item_plu.number,description,sell_size,
+		item_size.qty"
+	select $query {
+	    set item_id $column(1)
+	    set number $column(2)
+	    set desc $column(3)
+	    set size $column(4)
+	    set size_qty $column(5)
+	    set on_hand $column(6)
+
+	    lappend item_ids $item_id
+	    set item_nums($item_id) $number
+	    set item_descs($item_id) $desc
+	    set item_sizes($item_id) $size
+	    set item_size_qtys($item_id) $size_qty
+	    set item_onhands($item_id) $on_hand
+	}
+
+	# Filter out items that have been counted
+	set rows ""
+	foreach item_id $item_ids {
+	    set number $item_nums($item_id)
+	    set desc $item_descs($item_id)
+	    set size $item_sizes($item_id)
+	    set size_qty $item_size_qtys($item_id)
+	    set on_hand $item_onhands($item_id)
+
+	    if { $size_qty != 0 } {
+		set on_hand [expr $on_hand / $size_qty]
+	    }
+
+	    if { ! [info exists counted($item_id)] } {
+		lappend rows [list $item_id $number $desc $size $size_qty \
+		    $on_hand]
+	    }
+	}
+    ]]></initialize>
+    <next><![CDATA[
+	$current_row < [llength $rows]
+    ]]></next>
+    <get>
+	return [lindex [lindex $rows $current_row] $index]
+    </get>
+    <column>item_id</column>
+    <column>number</column>
+    <column>desc</column>
+    <column>size</column>
+    <column>size_qty</column>
+    <column>on_hand</column>
+  </dataSource>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Items Not Counted</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(dept_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup dept dept_id $param(dept_id) name] Department"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(subdept_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup subdept subdept_id $param(subdept_id) name] Subdepartment"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(group_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup group group_id $param(group_id) name] Group"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(location_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup location location_id $param(location_id) name] Location"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Item Number</text>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="1700"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Description</text>
+    </text>
+    <text
+	x="2500"
+	y="0"
+	width="500"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Size</text>
+    </text>
+    <text
+	x="3000"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>On Hand</text>
+    </text>
+  </pageHeader>
+
+  <detail height="125">
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(number)</var>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="1700"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(desc)</var>
+    </text>
+    <text
+	x="2500"
+	y="0"
+	width="500"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(size)</var>
+    </text>
+    <text
+	x="3000"
+	y="0"
+	width="600"
+	height="125"
+	format="number"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<var>column(on_hand)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

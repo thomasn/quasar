@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE LABEL_DEFN>
+
+<LabelDefn>
+  <name>Feature</name>
+  <pageWidth>792</pageWidth>
+  <pageHeight>612</pageHeight>
+  <topMargin>36</topMargin>
+  <leftMargin>36</leftMargin>
+  <rows>2</rows>
+  <columns>2</columns>
+  <orientation>landscape</orientation>
+  <labelWidth>348</labelWidth>
+  <labelHeight>260</labelHeight>
+  <hgap>24</hgap>
+  <vgap>20</vgap>
+
+  <rect>
+    <x>0</x> <y>0</y> <width>348</width> <height>260</height>
+    <pen><width>14</width><color>red</color></pen>
+  </rect>
+
+  <rect>
+    <x>9</x> <y>9</y> <width>330</width> <height>90</height>
+    <brush><color>yellow</color></brush>
+  </rect>
+
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>9</x> <y>9</y> <width>330</width> <height>90</height>
+    <font><weight>87</weight><size>40</size></font>
+    <text>FEATURE</text>
+  </text>
+
+  <polygon>
+    <x>24</x> <y>36</y> <width>72</width> <height>72</height>
+    <pen><width>4</width><joinStyle>round</joinStyle><color>blue</color></pen>
+    <brush><color>white</color></brush>
+    <scale>.5</scale>
+    <point>36,0</point>
+    <point>45,27</point>
+    <point>72,27</point>
+    <point>50,45</point>
+    <point>59,72</point>
+    <point>36,54</point>
+    <point>13,72</point>
+    <point>22,45</point>
+    <point>0,27</point>
+    <point>27,27</point>
+  </polygon>
+
+  <polygon>
+    <x>288</x> <y>36</y> <width>72</width> <height>72</height>
+    <pen><width>4</width><joinStyle>round</joinStyle><color>blue</color></pen>
+    <brush><color>white</color></brush>
+    <scale>.5</scale>
+    <point>36,0</point>
+    <point>45,27</point>
+    <point>72,27</point>
+    <point>50,45</point>
+    <point>59,72</point>
+    <point>36,54</point>
+    <point>13,72</point>
+    <point>22,45</point>
+    <point>0,27</point>
+    <point>27,27</point>
+  </polygon>
+
+  <text>
+    <valign>center</valign><halign>center</halign>
+    <pen><color>red</color></pen>
+    <x>0</x> <y>100</y> <width>348</width> <height>30</height>
+    <font><italic>Yes</italic><size>24</size></font>
+    <text>Temporary Price Reduction</text>
+  </text>
+
+  <text>
+    <x>0</x> <y>130</y> <width>348</width> <height>40</height>
+    <valign>center</valign><halign>center</halign>
+    <font><size>28</size></font>
+    <text>@price</text>
+  </text>
+
+  <text>
+    <x>0</x> <y>170</y> <width>348</width> <height>36</height>
+    <valign>center</valign><halign>center</halign>
+    <font><weight>87</weight><size>14</size></font>
+    <text>@description</text>
+  </text>
+
+  <barcode>
+    <x>54</x> <y>206</y> <width>1</width> <height>36</height>
+    <format>code39</format>
+    <text>@number</text>
+  </barcode>
+</LabelDefn>

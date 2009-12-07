@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="System Check"
+	module="System"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+
+	proc type_name { type } {
+	    if { $type == 1  } { return "Item Adjustment" }
+	    if { $type == 2  } { return "Cheque" }
+	    if { $type == 6  } { return "Ledger Posting" }
+	    if { $type == 7  } { return "Customer Invoice" }
+	    if { $type == 11 } { return "Customer Payment" }
+	    if { $type == 12 } { return "Vendor Invoice" }
+	    if { $type == 20 } { return "Nosale" }
+	    if { $type == 21 } { return "Payout" }
+	    if { $type == 22 } { return "Customer Return" }
+	    if { $type == 23 } { return "Shift" }
+	    if { $type == 24 } { return "Tender Adjustment" }
+	    if { $type == 38 } { return "Vendor Claim" }
+	    if { $type == 41 } { return "Card Adjustment" }
+	    if { $type == 42 } { return "Withdraw" }
+	    return "Unknown: $type"
+	}
+
+	proc card_name { card_id } {
+	    set number [lookup card card_id $card_id number]
+	    if { $number != "" } {
+		return $number
+	    }
+	    return [lookup card card_id $card_id name]
+	}
+
+	proc item_number { item_id } {
+	    set value ""
+	    set query "select number from item_plu where item_id = '$item_id'
+			and seq_num = 0"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+
+	proc add_msg { msg } {
+	    global rows
+
+	    set row [list $msg]
+	    lappend rows $row
+	}
+
+	proc add_msg2 { part1 part2 } {
+	    global rows
+
+	    set msg "            - $part1  $part2"
+	    add_msg $msg
+	}
+
+	proc check_account_change { } {
+	    global param
+
+	    add_msg "Account Change Table Verification:"
+
+	    # Selection criteria
+	    if { $param(from) != "" && $param(to) != "" } {
+		set where1 "where change_date >= '$param(from)' and
+			change_date <= '$param(to)'"
+		set where2 "and post_date >= '$param(from)' and
+			post_date <= '$param(to)'"
+	    } elseif { $param(from) != "" } {
+		set where1 "where change_date >= '$param(from)'"
+		set where2 "and post_date >= '$param(from)'"
+	    } elseif { $param(to) != "" } {
+		set where1 "where change_date <= '$param(to)'"
+		set where2 "and post_date <= '$param(to)'"
+	    } else {
+		set where1 ""
+		set where2 ""
+	    }
+
+	    # Check balance is zero
+	    set query "select sum(amount) from account_change $where1"
+	    set total 0
+	    select $query {
+		set total $column(1)
+	    }
+	    if { $total == "" || $total == 0 } {
+		add_msg2 "balances to zero?" "yes"
+	    } else {
+		add_msg2 "balances to zero?" "no ($total)"
+	    }
+
+	    # Get account_change totals
+	    set query "select account_id,sum(amount),sum(credit_amt),
+			sum(debit_amt) from account_change $where1
+			group by account_id"
+	    select $query {
+		set account_id $column(1)
+		set amount $column(2)
+		set credit_amt $column(3)
+		set debit_amt $column(4)
+
+		set total [expr $credit_amt + $debit_amt]
+		set diff [expr abs($amount - $total)]
+
+		if { $diff > .00001 } {
+		    set num [lookup account account_id $account_id number]
+		    add_msg2 "amount not equal to credit/debit for $num (out by $diff)" ""
+		}
+
+		set change_total($account_id) $amount
+	    }
+
+	    # Compare to gltx_account totals
+	    set error_cnt 0
+	    set query "select gltx_account.account_id,sum(gltx_account.amount)
+			from gltx_account join gltx on gltx_account.gltx_id =
+			gltx.gltx_id where inactive_on is null $where2
+			group by gltx_account.account_id"
+	    select $query {
+		set account_id $column(1)
+		set amount $column(2)
+
+		set change_amt 0
+		if { [info exists change_total($account_id)] } {
+		    set change_amt $change_total($account_id)
+		}
+
+		set diff [expr abs($amount - $change_amt)]
+
+		if { $diff > .00001 } {
+		    set num [lookup account account_id $account_id number]
+		    add_msg2 "balance of account $num doesn't match" ""
+		    incr error_cnt
+		}
+
+		unset change_total($account_id)
+	    }
+	    foreach account_id [array names change_total] {
+		set num [lookup account account_id $account_id number]
+		add_msg2 "balance of account $num doesn't match" ""
+		incr error_cnt
+	    }
+	    if { $error_cnt == 0 } {
+		add_msg2 "matches detail?" "yes"
+	    }
+	}
+
+	proc check_card_change { } {
+	    global param
+
+	    add_msg ""
+	    add_msg "Card Change Table Verification:"
+
+	    # Selection criteria
+	    if { $param(from) != "" && $param(to) != "" } {
+		set where1 "where change_date >= '$param(from)' and
+			change_date <= '$param(to)'"
+		set where2 "and post_date >= '$param(from)' and
+			post_date <= '$param(to)'"
+	    } elseif { $param(from) != "" } {
+		set where1 "where change_date >= '$param(from)'"
+		set where2 "and post_date >= '$param(from)'"
+	    } elseif { $param(to) != "" } {
+		set where1 "where change_date <= '$param(to)'"
+		set where2 "and post_date <= '$param(to)'"
+	    } else {
+		set where1 ""
+		set where2 ""
+	    }
+
+	    # Get card_change totals
+	    set query "select card_id,sum(amount),sum(credit_amt),
+			sum(debit_amt) from card_change $where1
+			group by card_id"
+	    select $query {
+		set card_id $column(1)
+		set amount $column(2)
+		set credit_amt $column(3)
+		set debit_amt $column(4)
+
+		set total [expr $credit_amt + $debit_amt]
+		set diff [expr abs($amount - $total)]
+
+		if { $diff > .00001 } {
+		    set name [card_name $card_id]
+		    add_msg2 "amount not equal to credit/debit for $name (out by $diff)" ""
+		}
+
+		set change_total($card_id) $amount
+	    }
+
+	    # Compare to gltx_card totals
+	    set error_cnt 0
+	    set query "select gltx_card.card_id,sum(gltx_card.amount)
+			from gltx_card join gltx on gltx_card.gltx_id =
+			gltx.gltx_id where inactive_on is null $where2
+			group by gltx_card.card_id"
+	    select $query {
+		set card_id $column(1)
+		set amount $column(2)
+
+		set change_amt 0
+		if { [info exists change_total($card_id)] } {
+		    set change_amt $change_total($card_id)
+		}
+
+		set diff [expr abs($amount - $change_amt)]
+
+		if { $diff > .00001 } {
+		    set name [card_name $card_id]
+		    add_msg2 "balance of card \"$name\" doesn't match" ""
+		    incr error_cnt
+		}
+
+		unset change_total($card_id)
+	    }
+	    foreach card_id [array names change_total] {
+		set name [card_name $card_id]
+		add_msg2 "balance of card \"$name\" doesn't match" ""
+		incr error_cnt
+	    }
+	    if { $error_cnt == 0 } {
+		add_msg2 "matches detail?" "yes"
+	    }
+	}
+
+	proc check_item_change { } {
+	    global param
+
+	    add_msg ""
+	    add_msg "Item Change Table Verification:"
+
+	    # Selection criteria
+	    if { $param(from) != "" && $param(to) != "" } {
+		set where1 "where change_date >= '$param(from)' and
+			change_date <= '$param(to)'"
+		set where2 "and post_date >= '$param(from)' and
+			post_date <= '$param(to)'"
+	    } elseif { $param(from) != "" } {
+		set where1 "where change_date >= '$param(from)'"
+		set where2 "and post_date >= '$param(from)'"
+	    } elseif { $param(to) != "" } {
+		set where1 "where change_date <= '$param(to)'"
+		set where2 "and post_date <= '$param(to)'"
+	    } else {
+		set where1 ""
+		set where2 ""
+	    }
+
+	    # Get item_change totals
+	    set query "select item_id,sum(on_hand),sum(total_cost),
+			sum(on_order),sum(sold_qty),sum(sold_cost),
+			sum(sold_price),sum(recv_qty),sum(recv_cost),
+			sum(adj_qty),sum(adj_cost) from item_change
+			$where1 group by item_id"
+	    select $query {
+		set item_id $column(1)
+		set on_hand $column(2)
+		set total_cost $column(3)
+		set on_order $column(4)
+		set sold_qty $column(5)
+		set sold_cost $column(6)
+		set sold_price $column(7)
+		set recv_qty $column(8)
+		set recv_cost $column(9)
+		set adj_qty $column(10)
+		set adj_cost $column(11)
+
+		set net_qty [expr $recv_qty + $adj_qty - $sold_qty]
+		set net_cost [expr $recv_cost + $adj_cost - $sold_cost]
+
+		set diff_qty [expr abs($on_hand - $net_qty)]
+		set diff_cost [expr abs($total_cost - $net_cost)]
+
+		if { $diff_qty > .00001 } {
+		    set num [item_number $item_id]
+		    add_msg2 "on hand not equal to sold/recv/adj for $num" ""
+		}
+
+		if { $diff_cost > .00001 } {
+		    set n [item_number $item_id]
+		    add_msg2 "total cost not equal to sold/recv/adj for $n" ""
+		}
+
+		if { $on_order < 0 } {
+		    set num [item_number $item_id]
+		    add_msg2 "negative on order of $on_order for $num" ""
+		}
+
+		set on_orders($item_id) $on_order
+		set on_hands($item_id) $on_hand
+		set total_costs($item_id) $total_cost
+		set sold_qtys($item_id) $sold_qty
+		set sold_costs($item_id) $sold_cost
+		set sold_prices($item_id) $sold_price
+		set recv_qtys($item_id) $recv_qty
+		set recv_costs($item_id) $recv_cost
+		set adj_qtys($item_id) $adj_qty
+		set adj_costs($item_id) $adj_cost
+	    }
+
+	    # Compare to gltx_item totals
+	    set error_cnt 0
+	    set query "select gltx_item.item_id,sum(gltx_item.quantity),
+			sum(gltx_item.inv_cost),sum(gltx_item.sale_price)
+			from gltx_item join gltx on gltx_item.gltx_id =
+			gltx.gltx_id where gltx_item.item_id is not null and
+			gltx_item.voided = 'N' and inactive_on is null $where2
+			group by gltx_item.item_id"
+	    select $query {
+		set item_id $column(1)
+		set on_hand $column(2)
+		set total_cost $column(3)
+		set sales $column(4)
+
+		if { ![info exists on_hands($item_id)] } {
+		    if { $on_hand != 0 } {
+			set num [item_number $item_id]
+			add_msg2 "on hand of item \"$num\" is wrong" ""
+			incr error_cnt
+		    }
+		} else if { $on_hands($item_id) != $on_hand } {
+		    set num [item_number $item_id]
+		    add_msg2 "on hand of item \"$name\" is wrong" ""
+		    incr error_cnt
+		}
+
+		if { ![info exists total_costs($item_id)] } {
+		    if { $total_cost != 0 } {
+			set num [item_number $item_id]
+			add_msg2 "landed cost of item \"$num\" is wrong" ""
+			incr error_cnt
+		    }
+		} else if { $total_costs($item_id) != $total_cost } {
+		    set num [item_number $item_id]
+		    add_msg2 "landed cost of item \"$name\" is wrong" ""
+		    incr error_cnt
+		}
+
+		if { ![info exists sold_prices($item_id)] } {
+		    if { $sales != 0 } {
+			set num [item_number $item_id]
+			add_msg2 "sales of item \"$num\" is wrong" ""
+			incr error_cnt
+		    }
+		} else if { $sold_prices($item_id) != $sales } {
+		    set num [item_number $item_id]
+		    add_msg2 "sales of item \"$name\" is wrong" ""
+		    incr error_cnt
+		}
+	    }
+	    if { $error_cnt == 0 } {
+		add_msg2 "matches detail?" "yes"
+	    }
+
+	    # TODO: validate sold/recv/adj qtys separately?
+	    # TODO: negative on hands here or another place?
+	}
+
+	proc check_future_tx { } {
+	    global param
+
+	    add_msg ""
+	    add_msg "Future Dated Transactions:"
+
+	    # Get current date
+	    set now [clock format [clock seconds] -format "%Y-%m-%d"]
+
+	    # Get transaction info
+	    set error_cnt 0
+	    set query "select number,post_date,data_type,amount from gltx
+			where post_date > '$now' and inactive_on is null"
+	    select $query {
+		set number $column(1)
+		set post_date $column(2)
+		set data_type $column(3)
+		set amount $column(4)
+
+		add_msg2 "[type_name $data_type] #$number is on $post_date" ""
+		incr error_cnt
+	    }
+	    if { $error_cnt == 0 } {
+		add_msg2 "future dated transactions?" "none"
+	    }
+	}
+
+	proc check_double_tx { } {
+	    global param
+
+	    add_msg ""
+	    add_msg "Duplicate Transactions:"
+
+	    # Selection criteria
+	    if { $param(from) != "" && $param(to) != "" } {
+		set where "and post_date >= '$param(from)' and
+			post_date <= '$param(to)'"
+	    } elseif { $param(from) != "" } {
+		set where "and post_date >= '$param(from)'"
+	    } elseif { $param(to) != "" } {
+		set where "and post_date <= '$param(to)'"
+	    } else {
+		set where ""
+	    }
+
+	    # Get transaction info
+	    set error_cnt 0
+	    set query "select number,data_type,count(*) from gltx where
+			inactive_on is null $where group by number,data_type
+			having count(*) > 1 order by 2,1"
+	    select $query {
+		set number $column(1)
+		set data_type $column(2)
+		set count $column(3)
+
+		add_msg2 "[type_name $data_type] #$number is duplicated $count times" ""
+		incr error_cnt
+	    }
+	    if { $error_cnt == 0 } {
+		add_msg2 "duplicate transactions?" "none"
+	    }
+	}
+
+	proc check_missing_tx { } {
+	    global param
+
+	    add_msg ""
+	    add_msg "Missing Transaction Numbers:"
+
+	    # Selection criteria
+	    if { $param(from) != "" && $param(to) != "" } {
+		set where "where post_date >= '$param(from)' and
+			post_date <= '$param(to)'"
+	    } elseif { $param(from) != "" } {
+		set where "where post_date >= '$param(from)'"
+	    } elseif { $param(to) != "" } {
+		set where "where post_date <= '$param(to)'"
+	    } else {
+		set where ""
+	    }
+
+	    # Get transaction info
+	    set error_cnt 0
+	    set data_types ""
+	    set query "select data_type,number from gltx $where order by 2"
+	    select $query {
+		set data_type $column(1)
+		set number $column(2)
+
+		if { ![info exists numbers($data_type)] } {
+		    set numbers($data_type) ""
+		    lappend data_types $data_type
+		}
+
+		lappend numbers($data_type) $number
+	    }
+
+	    foreach data_type $data_types {
+		set nums $numbers($data_type)
+		set nums [lsort -dictionary $nums]
+		set last_num ""
+		foreach num $nums {
+		    if { ![regexp {^[0-9]+$} $num] } {
+		        continue
+		    }
+
+		    if { $last_num != "" && $num != $last_num } {
+			if { $num != [expr $last_num + 1] } {
+			    add_msg2 "[type_name $data_type] goes from $last_num to $num" ""
+			    incr error_cnt
+			}
+		    }
+
+		    set last_num $num
+		}
+	    }
+	    if { $error_cnt == 0 } {
+		add_msg2 "missing transactions?" "none"
+	    }
+	}
+  ]]></initialize>
+
+  <parameter
+	name="junk"
+	description="Make sure you run this when the system is idle"
+	manditory="true"
+	type="bool"/>
+
+  <parameter
+	name="from"
+	description="Enter the from date:"
+	manditory="false"
+	type="date"/>
+
+  <parameter
+	name="to"
+	description="Enter the to date:"
+	manditory="false"
+	type="date"/>
+
+  <parameter
+	name="check_account_change"
+	description="Check Account Change?"
+	type="bool"/>
+
+  <parameter
+	name="check_card_change"
+	description="Check Card Change?"
+	type="bool"/>
+
+  <parameter
+	name="check_item_change"
+	description="Check Item Change?"
+	type="bool"/>
+
+  <parameter
+	name="check_future_tx"
+	description="Check Future Dated Transactions?"
+	type="bool"/>
+
+  <parameter
+	name="check_double_tx"
+	description="Check Duplicate Transactions?"
+	type="bool"/>
+
+  <parameter
+	name="check_missing_tx"
+	description="Check Missing Transactions?"
+	type="bool"/>
+
+  <dataSource type="Code">
+    <initialize><![CDATA[
+	set rows ""
+	if { $param(check_account_change) } {
+	    check_account_change
+	}
+	if { $param(check_card_change) } {
+	    check_card_change
+	}
+	if { $param(check_item_change) } {
+	    check_item_change
+	}
+	if { $param(check_future_tx) } {
+	    check_future_tx
+	}
+	if { $param(check_double_tx) } {
+	    check_double_tx
+	}
+	if { $param(check_missing_tx) } {
+	    check_missing_tx
+	}
+    ]]></initialize>
+    <next><![CDATA[
+	$current_row < [llength $rows]
+    ]]></next>
+    <get>
+	return [lindex [lindex $rows $current_row] $index]
+    </get>
+    <column>message</column>
+  </dataSource>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>System Check</text>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <detail height="125">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(message)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

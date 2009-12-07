@@ -1,0 +1,274 @@
+<html>
+<head>
+<TITLE>Purchase Order</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png"></td>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_purchases.html"><b>Up: </b>Purchases</a></td>
+<td><a href="order_list.html"><b>Previous: </b>Order List</a></td>
+<td><a href="receive_list.html"><b>Next: </b>Vendor Invoice List</a></td>
+</tr>
+</tbody></table>
+
+
+<hr>
+
+<H1>Purchase Order</H1>
+<img src="images/order_master.png"><br>
+<br>
+<p>
+Use the purchase order window to create an order to a vendor. It must
+be noted that it is
+not necessary to create a purchase order to update your
+on hand inventory records. All that is necessary to
+update your on hand records is the creation of a vendor invoice.
+<p>
+Use the search feature to find items in large orders. Just click on the
+"Search" button on the right and search by item or description.
+
+<h2>Vendor</h2>
+
+<p>The card id for the vendor.
+
+<h2>Address</h2>
+
+<p>The address of the vendor.
+
+
+<h2>Order No</h2>
+
+<p>The order number that will be used as a reference for the purchase
+order. Quasar defaults to the next available order number.
+
+<h2>Store</h2>
+<p> 
+The store placing the order. If the stores ship to address is
+different from the company address, the store address will appear in
+the ship to section of the printed order.
+
+<h2>Date</h2>
+
+<p>The date the purchase order is created. 
+
+<h2>Ship Via</h2>
+
+<p>Enter the shipping method.
+
+<h2>Terms</h2>
+
+<p>Enter the payment terms for this vendor. An existing set of terms
+may be used or a new set of terms may be defined. Payment terms
+entered in the vendor master screen will appear here by default. <a
+href="term_master.html">(More)</a>
+
+<h2>Item Entry Table</h2>
+
+<p>
+Enter the items, quantity and cost of the items to order.
+
+
+<dl>
+<dd>
+<ul>
+<li> <b>Item Number</b> - The item number of the item ordered.
+<li> <b>Description</b> - The description of the item ordered.
+<li> <b>Size</b> - The size of the item ordered.
+<li> <b>Quantity</b> - The quantity of units (size) ordered.
+<li> <b>Cost</b> - The vendor cost for the item being ordered.
+<li> <b>Ext Cost</b> - The extended cost of the line.
+<li> <b>Tax</b> - The tax code defining the taxes that are applicable
+</ul>
+</dl>
+
+
+<h2>Totals</h2>
+<br>
+<img src="images/order_master_total.png"><br>
+<p>
+The totals folder displays the various totals for the purchase order.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Item Total</b> - The sub-total of all items prior to charges,
+taxes and container deposits.
+<li> <b>Charge Total</b> - The total of all internal charges applied
+to all items. An internal charge is a charge that will be included on
+the vendor invoice. For example, A franchiser may charge a franchise
+a service charge.
+<li> <b>Size</b> - The size of the item ordered.
+<li> <b>Quantity</b> - The quantity of units (size) ordered.
+<li> <b>Tax Total</b> - The total of all taxes on the order.
+<li> <b>Deposit Total</b> - The total of all container deposits
+applicable on the order.
+<li> <b>Total</b> - The total of all items, taxes, charges and
+container deposits on the order.
+</ul>
+</dl>
+
+<h2>Comments</h2>
+<br>
+<img src="images/order_master_comment.png"><br>
+
+<p> 
+Enter comments that are specific to the order.
+
+
+<h2>Taxes</h2>
+<br>
+<img src="images/order_master_tax.png"><br>
+<p>
+Displays the individual taxes and tax totals for the order.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Tax</b> The identification of the tax.
+<li> <b>Name</b> The name of the tax.
+<li> <b>Taxable</b> - The net base amount that a given tax is charged to.
+<li> <b>Tax Amt</b> - The amount of tax allocated to the "Taxable" amount.
+<li> <b>Inc. Taxable</b> - The net base taxable amount including the amount of the tax. (for items with taxes included in the price)
+<li> <b>Inc. Tax Amt</b> - The net amount of tax calculated from the "Inc. Taxable" amount.
+</ul>
+</dl>
+
+<h2>Charges</h2>
+<br>
+<img src="images/order_master_charge.png"><br>
+
+<p> 
+Use the charges folder to define internal and external charges that
+will affect the order.
+
+<h3>Internal Charges Table</h3>
+<p>
+Use the internal charges table to define internal charges affecting
+the order. Internal charges will be billed on the vendor invoice. An
+example of an internal charge is where a franchiser bills a franchise
+a service fee.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Internal Charge</b> - Enter or select the internal charge to
+apply.
+<li> <b>Amount</b> - The amount of the internal charge on the
+order. This may be calculated or entered.
+<li> <b>Tax</b> - Displays the tax code applicable to the charge.
+</ul>
+</dl>
+
+<h3>External Charge Table</b>
+
+<p> Use the external charge table to define charges that will increase
+the landed cost of the item. External charges will not print on the
+hard copy of the order nor will it impact the vendor
+invoice. The purpose of defining external charges on an order is to
+provide the ability to calculate new selling prices for items based on
+its anticipated landed cost. An example of an external charge is
+freight from a third party carrier.
+
+<dl>
+<dd>
+<ul>
+<li> <b>External Charge</b> - Enter or select the external charge to
+apply.
+<li> <b>Amount</b> - The amount of the external charge.  This may be
+calculated or entered. 
+<li> <b>Tax</b> - Displays the tax code applicable to the charge.
+</ul>
+</dl>
+
+<h2>Ship To</h2>
+<br>
+<img src="images/order_master_ship.png"><br>
+
+<p>
+Where products are shipped to a card or address other than
+the company or store address the ship to address can be entered in the
+ship to folder. The
+ship to address is printed on the hard copy of the order. 
+
+<h2>Item Info</h2> 
+<br>
+<img src="images/order_master_item.png"><br>
+
+<p>
+The item info folder displays specific information on a line where
+your cursor resides in the item entry table. 
+
+<dl>
+<dd>
+<ul>
+<li> <b>Received</b> - Displays the total quantity of the item received
+and entered on the Quasar vendor invoice screen(s}.
+<li> <b>Include Tax</b> - Toggle on or off. Toggle on if the cost of
+the item includes tax.
+<li> <b>Include Deposit</b> - Toggle on or off. Toggle on if the cost
+of the item includes the container deposit.
+<li> <b>Tax</b> - Displays the total amount of the tax for the item.
+<li> <b>Deposit</b> - Displays the total amount of the container
+deposit for the item.
+<li> <b>Line Cost</b> - Displays the total vendor cost for the item.
+<li> <b>Internal Charge</b> - Displays the total amount of internal charges
+allocated to the item.
+<li> <b>External Charge</b> - Displays the total amount of the
+external charge allocated to the item.
+</ul>
+</dl>
+
+<h2>Search</h2>
+<br>
+<img src="images/order_master_search.png"><br>
+<p>
+Click on the "Search"  button to search for items in large orders. You can
+search by item or by description. 
+
+<h2>Print</h2>
+
+<p>
+Click on the "Print"  button to print a hard copy of the order to the
+printer. 
+
+<h2>History</h2>
+
+<p>
+Click on the "History" button to display the sales history for the
+item in the line where your cursor resides. As you move from one item to
+another the sales history will refresh and display the history for the
+current item.
+
+
+<h2>Closed</h2> 
+
+<p>A purchase order may be closed or open. When an order is open, the
+ordered quantity minus the received quantity is 
+calculated as part of the items "on order quantity". When a purchase
+order is closed it is no longer used in the calculation of an items on
+order quantity.
+</p>
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_purchases.html"><b>Up: </b>Purchases</a></td>
+<td><a href="order_list.html"><b>Previous: </b>Order List</a></td>
+<td><a href="receive_list.html"><b>Next: </b>Vendor Invoice List</a></td>
+</tr>
+</table>
+
+
+<br>
+
+</body>
+</html>

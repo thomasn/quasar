@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Tax List"
+	module="Inventory"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc tax_rate { tax_id } {
+	    set rate 0
+	    set grouped "N"
+
+	    set query "select rate,grouped from tax where tax_id = '$tax_id'"
+	    select $query {
+		set rate $column(1)
+		set grouped $column(2)
+	    }
+
+	    if { $grouped == "Y" } {
+		set query "select child_id from tax_group where tax_id = '$tax_id'"
+		select $query {
+		    set child_id $column(1)
+		    set rate [expr $rate + [tax_rate $child_id]]
+		}
+	    }
+
+	    return $rate
+	}
+  ]]></initialize>
+
+  <dataSource type="Query">
+    <query>select tax_id,name,description from tax order by name</query>
+    <column>tax_id</column>
+    <column>name</column>
+    <column>description</column>
+  </dataSource>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Tax List</text>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="600"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Name</text>
+    </text>
+    <text
+	x="610"
+	y="0"
+	width="2400"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Description</text>
+    </text>
+    <text
+	x="3020"
+	y="0"
+	width="800"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Rate</text>
+    </text>
+  </pageHeader>
+
+  <detail height="130">
+    <rectangle x="0" y="0" width="4800" height="130">
+	<printWhen>$sys(row_number) % 2 == 0</printWhen>
+	<pen style="NoPen"/>
+	<brush color="#F4F4F4"/>
+    </rectangle>
+    <text
+	x="0"
+	y="0"
+	width="600"
+	height="130">
+	<font name="Times" size="12"/>
+	<var>column(name)</var>
+    </text>
+    <text
+	x="600"
+	y="0"
+	width="2400"
+	height="130">
+	<font name="Times" size="12"/>
+	<var>column(description)</var>
+    </text>
+    <text
+	format="percent"
+	x="3000"
+	y="0"
+	width="800"
+	height="130"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<expr>[tax_rate $column(tax_id)]</expr>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

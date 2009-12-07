@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Balance Sheet"
+	module="Ledger"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+
+	# Get accounts in proper chart order
+	proc ledger_chart { where1 where2 } {
+	    # First select all account in type, parent, number, and name order
+	    set accounts ""
+	    set query "select account_id,account_type,number,name,header,
+		parent_id,(select sum(amount) from account_change where
+		account_change.account_id = account.account_id and $where1)
+		from account where $where2 order by account_type,parent_id,
+		number,name"
+	    select $query {
+		set account_id $column(1);
+		set type $column(2)
+		set number $column(3)
+		set name $column(4)
+		set header $column(5)
+		set parent_id $column(6)
+		set amount $column(7)
+
+		if { $amount == "" } {
+		    set amount 0
+		}
+
+		lappend accounts [list $account_id $type $number $name \
+			$header $parent_id $amount]
+	    }
+
+	    # Put into proper chart order
+	    set chart ""
+	    while { [llength $accounts] != 0 } {
+		for { set i 0 } { $i < [llength $accounts] } { } {
+		    set account [lindex $accounts $i]
+		    set parent_id [lindex $account 5]
+
+		    # Top levels will go first so just insert into chart at end
+		    if { $parent_id == "" } {
+			lappend chart $account
+			set accounts [lreplace $accounts $i $i]
+			continue
+		    }
+
+		    # Search back for place to insert
+		    set pos [expr [llength $chart] - 1]
+		    while { $pos >= 0 } {
+			set info [lindex $chart $pos]
+			if { [lindex $info 0] == $parent_id } {
+			    break
+			}
+			if { [lindex $info 5] == $parent_id } {
+			    break
+			}
+			incr pos -1
+		    }
+
+		    # If position not found, continue
+		    if { $pos < 0 } {
+			incr i
+			continue
+		    }
+
+		    # If at end then just lappend
+		    if { $pos == [expr [llength $chart] - 1] } {
+			lappend chart $account
+			set accounts [lreplace $accounts $i $i]
+			continue
+		    }
+
+		    # Insert into place
+		    set chart [linsert $chart [expr $pos + 1] $account]
+		    set accounts [lreplace $accounts $i $i]
+		}
+	    }
+
+	    return $chart
+	}
+
+	proc type_name { type } {
+	    if { $type == 0 } { return "Bank" }
+	    if { $type == 1 } { return "Accounts Receivable" }
+	    if { $type == 2 } { return "Inventory" }
+	    if { $type == 3 } { return "Other Current Asset" }
+	    if { $type == 4 } { return "Fixed Asset" }
+	    if { $type == 5 } { return "Other Asset" }
+	    if { $type == 6 } { return "Accounts Payable" }
+	    if { $type == 7 } { return "Credit Card" }
+	    if { $type == 8 } { return "Other Current Liability" }
+	    if { $type == 9 } { return "Long Term Liability" }
+	    if { $type == 10 } { return "EQUITY" }
+	    return "Unknown"
+	}
+
+	proc is_asset { type } {
+	    if { $type < 6 } {
+	        return 1
+	    }
+	    return 0
+	}
+
+	proc is_curr_asset { type } {
+	    if { $type < 4 } {
+	        return 1
+	    }
+	    return 0
+	}
+
+	proc is_liability { type } {
+	    if { $type > 5 && $type < 10 } {
+	        return 1
+	    }
+	    return 0
+	}
+
+	proc is_curr_liability { type } {
+	    if { $type > 5 && $type < 9 } {
+	        return 1
+	    }
+	    return 0
+	}
+
+	set indent_amt 0
+	set indent_by 200
+	set assetPrinted 0
+	set currAssetPrinted 0
+	set liabPrinted 0
+	set currLiabPrinted 0
+	for { set i 0 } { $i <= 10 } { incr i } {
+	    set totals($i) 0
+	}
+	set cur_assets 0
+	set asset_total 0
+	set cur_liabs 0
+	set liab_total 0
+	set liab_equity_total 0
+  ]]></initialize>
+
+  <dataSource type="Code">
+    <initialize><![CDATA[
+	# Selection criteria for account_change table
+	set where1 "change_date <= '$param(date)'"
+	if { $param(store_id) != "" } {
+	    append where1 " and store_id = '$param(store_id)'"
+	}
+
+	# Selection criteria for account table
+	set where2 "inactive_on is null and account_type < 11"
+
+	# Get accounts in chart order
+	set rows [ledger_chart $where1 $where2]
+
+	# Get net profit/loss
+	set net_profit 0
+	set query "select sum(amount) from account_change join account on
+		account_change.account_id = account.account_id where
+		account.account_type > 10 and $where1"
+	select $query {
+	    set net_profit $column(1)
+	}
+	if { $net_profit == "" } {
+	    set net_profit 0
+	}
+
+	# Add net profit line to rows
+	set row [list "" 10 "" "Net Profit/Loss" "N" "" $net_profit 0]
+	lappend rows $row
+
+	# Information on headers
+	set header_ids ""
+	set header_types ""
+	set header_names ""
+	set header_total 0
+	set indent_amt 0
+
+	# Remove all data rows with zero amounts
+	for { set i 0 } { $i < [llength $rows] } { } {
+	    set row [lindex $rows $i]
+
+	    set header [lindex $row 4]
+	    set amount [lindex $row 6]
+
+	    if { $header == "N" && $amount == 0 } {
+		set rows [lreplace $rows $i $i]
+		continue
+	    }
+
+	    incr i
+	}
+
+	# Cleanup rows for display
+	for { set i 0 } { $i < [llength $rows] } { } {
+	    set row [lindex $rows $i]
+
+	    set account_id [lindex $row 0]
+	    set type [lindex $row 1]
+	    set number [lindex $row 2]
+	    set name [lindex $row 3]
+	    set header [lindex $row 4]
+	    set parent_id [lindex $row 5]
+	    set amount [lindex $row 6]
+
+	    # Reverse signs on liability and equity accounts
+	    if { $type > 5 } {
+		set amount [expr $amount * -1.0]
+		set row [lreplace $row 6 6 $amount]
+	    }
+
+	    # Remove and ignore headers without children
+	    if { $header == "Y" } {
+		# If is last row, remove it
+		if { $i == [llength $rows] - 1 } {
+		    set rows [lreplace $rows $i $i]
+		    continue
+	        }
+
+		# If next row is not a child, remove it
+		set next_row [lindex $rows [expr $i + 1]]
+		if { [lindex $next_row 5] != $account_id } {
+		    set rows [lreplace $rows $i $i]
+		    continue
+	        }
+	    }
+
+	    # If parent is different then current header, pop headers
+	    while { [llength $header_ids] != 0 } {
+		set header_id [lindex $header_ids end]
+		set header_type [lindex $header_types end]
+		set header_name [lindex $header_names end]
+
+		if { $parent_id == $header_id } {
+		    break
+		}
+
+		incr indent_amt -$indent_by
+
+		set footer_name "Total $header_name"
+		set footer_row [list "" $header_type "" $footer_name "N" \
+			$header_id $header_total $indent_amt]
+		set rows [linsert $rows $i $footer_row]
+		incr i
+
+		set header_ids [lreplace $header_ids end end]
+		set header_types [lreplace $header_types end end]
+		set header_names [lreplace $header_names end end]
+	    }
+
+	    # When no more headers, zero out total
+	    if { [llength $header_ids] == 0 } {
+	        set header_total 0
+	    }
+
+	    if { $header == "Y" } {
+		# Set indent amount for row
+		lappend row $indent_amt
+		set rows [lreplace $rows $i $i $row]
+
+		# Add to headers
+		lappend header_ids $account_id
+		lappend header_names $name
+		lappend header_types $type
+		incr indent_amt $indent_by
+	    } else {
+		# Add to total by type
+		set totals($type) [expr $totals($type) + $amount]
+
+		# Add to header total if in any headers
+		if { [llength $header_ids] != 0 } {
+		    set header_total [expr $header_total + $amount]
+		}
+
+		# Set indent amount for row
+		lappend row $indent_amt
+		set rows [lreplace $rows $i $i $row]
+	    }
+
+	    incr i
+	}
+
+	# Add totals for any headers left un-closed
+	while { [llength $header_ids] != 0 } {
+	    set header_id [lindex $header_ids end]
+	    set header_type [lindex $header_types end]
+	    set header_name [lindex $header_names end]
+
+	    incr indent_amt -$indent_by
+
+	    set footer_name "Total $header_name"
+	    set footer_row [list "" $header_type "" $footer_name "N" \
+		    $header_id $header_total $indent_amt]
+	    lappend rows $footer_row
+
+	    set header_ids [lreplace $header_ids end end]
+	    set header_types [lreplace $header_types end end]
+	    set header_names [lreplace $header_names end end]
+	}
+
+	set cur_assets [expr $totals(0) + $totals(1) + $totals(2) + $totals(3)]
+	set asset_total [expr $cur_assets + $totals(4) + $totals(5)]
+	set cur_liabs [expr $totals(6) + $totals(7) + $totals(8)]
+	set liab_total [expr $cur_liabs + $totals(9)]
+	set liab_equity_total [expr $liab_total + $totals(10)]
+    ]]></initialize>
+    <next><![CDATA[
+	$current_row < [llength $rows]
+    ]]></next>
+    <get>
+	return [lindex [lindex $rows $current_row] $index]
+    </get>
+    <column>account_id</column>
+    <column>type</column>
+    <column>number</column>
+    <column>name</column>
+    <column>header</column>
+    <column>parent_id</column>
+    <column>amount</column>
+    <column>row_indent</column>
+  </dataSource>
+
+  <parameter
+	name="date"
+	description="Enter the as/of date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <group name="type">
+	<expression>$column(type)</expression>
+	<header height="125">
+	  <printWhen><![CDATA[
+		! $assetPrinted && [is_asset $column(type)]
+	  ]]></printWhen>
+	  <beforeCode>set assetPrinted 1</beforeCode>
+	  <afterCode>incr indent_amt $indent_by</afterCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12"/>
+		<text>ASSETS</text>
+	  </text>
+	</header>
+	<header height="125">
+	  <printWhen><![CDATA[
+		! $currAssetPrinted && [is_curr_asset $column(type)]
+	  ]]></printWhen>
+	  <beforeCode>set currAssetPrinted 1</beforeCode>
+	  <afterCode>incr indent_amt $indent_by</afterCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12"/>
+		<text>Current Assets</text>
+	  </text>
+	</header>
+	<header height="125">
+	  <printWhen><![CDATA[
+		! $liabPrinted && [is_liability $column(type)]
+	  ]]></printWhen>
+	  <beforeCode>set liabPrinted 1</beforeCode>
+	  <afterCode>incr indent_amt $indent_by</afterCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12"/>
+		<text>LIABILITIES</text>
+	  </text>
+	</header>
+	<header height="125">
+	  <printWhen><![CDATA[
+		! $currLiabPrinted && [is_curr_liability $column(type)]
+	  ]]></printWhen>
+	  <beforeCode>set currLiabPrinted 1</beforeCode>
+	  <afterCode>incr indent_amt $indent_by</afterCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12"/>
+		<text>Current Liabilities</text>
+	  </text>
+	</header>
+	<header height="125">
+	  <afterCode>incr indent_amt $indent_by</afterCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12"/>
+		<expr>[type_name $column(type)]</expr>
+	  </text>
+	</header>
+	<footer height="125">
+	  <beforeCode>incr indent_amt -$indent_by</beforeCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12"/>
+		<expr>"Total [type_name $group(type)]"</expr>
+	  </text>
+	  <text
+		format="money"
+		x="2800"
+		y="0"
+		width="2000 - $indent_amt"
+		height="125"
+		halign="Right">
+		<font name="Times" size="12"/>
+		<expr>$totals($group(type))</expr>
+	  </text>
+	</footer>
+	<footer height="125">
+	  <printWhen><![CDATA[
+		$currAssetPrinted && ! [is_curr_asset $column(type)]
+	  ]]></printWhen>
+	  <beforeCode>
+		incr indent_amt -$indent_by
+		set currAssetPrinted 0
+	  </beforeCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12"/>
+		<text>Total Current Assets</text>
+	  </text>
+	  <text
+		format="money"
+		x="2800"
+		y="0"
+		width="2000 - $indent_amt"
+		height="125"
+		halign="Right">
+		<font name="Times" size="12"/>
+		<var>cur_assets</var>
+	  </text>
+	</footer>
+	<footer height="200">
+	  <printWhen><![CDATA[
+		$assetPrinted && ! [is_asset $column(type)]
+	  ]]></printWhen>
+	  <beforeCode>
+		incr indent_amt -$indent_by
+		set assetPrinted 0
+	  </beforeCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="150">
+		<font name="Times" isBold="true" size="14"/>
+		<text>Total ASSETS</text>
+	  </text>
+	  <text
+		format="money"
+		x="2800"
+		y="0"
+		width="2000 - $indent_amt"
+		height="150"
+		halign="Right">
+		<font name="Times" isBold="true" size="14"/>
+		<var>asset_total</var>
+	  </text>
+	</footer>
+	<footer height="125">
+	  <printWhen><![CDATA[
+		$currLiabPrinted && ! [is_curr_liability $column(type)]
+	  ]]></printWhen>
+	  <beforeCode>
+		incr indent_amt -$indent_by
+		set currLiabPrinted 0
+	  </beforeCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12"/>
+		<text>Total Current Liabilities</text>
+	  </text>
+	  <text
+		format="money"
+		x="2800"
+		y="0"
+		width="2000 - $indent_amt"
+		height="125"
+		halign="Right">
+		<font name="Times" size="12"/>
+		<var>cur_liabs</var>
+	  </text>
+	</footer>
+	<footer height="200">
+	  <printWhen><![CDATA[
+		$liabPrinted && ! [is_liability $column(type)]
+	  ]]></printWhen>
+	  <beforeCode>
+		incr indent_amt -$indent_by
+		set liabPrinted 0
+	  </beforeCode>
+	  <text
+		x="$indent_amt"
+		y="0"
+		width="2800 - $indent_amt"
+		height="125">
+		<font name="Times" size="12"/>
+		<text>Total LIABILITIES</text>
+	  </text>
+	  <text
+		format="money"
+		x="2800"
+		y="0"
+		width="2000 - $indent_amt"
+		height="125"
+		halign="Right">
+		<font name="Times" size="12"/>
+		<var>liab_total</var>
+	  </text>
+	</footer>
+  </group>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Balance Sheet</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"As/at $param(date)"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush mode="solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="2800"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Account</text>
+    </text>
+    <text
+	x="2800"
+	y="0"
+	width="2000"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Amount</text>
+    </text>
+  </pageHeader>
+
+  <detail height="125">
+    <text
+	x="$indent_amt + $column(row_indent)"
+	y="0"
+	width="2800 - $indent_amt - $column(row_indent)"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(name)</var>
+    </text>
+    <text
+	format="money"
+	x="2800"
+	y="0"
+	width="2000 - $indent_amt - $column(row_indent)"
+	height="125"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<expr>$column(header) == "N" ? $column(amount) : ""</expr>
+    </text>
+  </detail>
+
+  <summary height="250">
+    <text
+	x="0"
+	y="0"
+	width="2800"
+	height="250">
+	<font name="Times" isBold="true" size="14"/>
+	<text>TOTAL LIABILITIES &amp; EQUITY</text>
+    </text>
+    <text
+	format="money"
+	x="2800"
+	y="0"
+	width="2000"
+	height="250"
+	halign="Right">
+	<font name="Times" isBold="true" size="14"/>
+	<var>liab_equity_total</var>
+    </text>
+  </summary>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

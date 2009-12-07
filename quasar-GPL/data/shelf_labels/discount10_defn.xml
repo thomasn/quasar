@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE LABEL_DEFN>
+
+<LabelDefn>
+  <name>Discount10</name>
+  <pageWidth>792</pageWidth>
+  <pageHeight>612</pageHeight>
+  <topMargin>36</topMargin>
+  <leftMargin>36</leftMargin>
+  <rows>2</rows>
+  <columns>1</columns>
+  <orientation>landscape</orientation>
+  <labelWidth>710</labelWidth>
+  <labelHeight>260</labelHeight>
+  <hgap>9</hgap>
+  <vgap>9</vgap>
+
+  <rect>
+    <x>9</x> <y>9</y> <width>710</width> <height>260</height>
+    <pen><width>14</width><color>blue</color></pen>
+    <brush><color>yellow</color></brush>
+  </rect>
+
+  <polygon>
+    <x>54</x> <y>54</y> <width>72</width> <height>72</height>
+    <pen><width>4</width><joinStyle>round</joinStyle><color>blue</color></pen>
+    <point>36,0</point>
+    <point>45,27</point>
+    <point>72,27</point>
+    <point>50,45</point>
+    <point>59,72</point>
+    <point>36,54</point>
+    <point>13,72</point>
+    <point>22,45</point>
+    <point>0,27</point>
+    <point>27,27</point>
+  </polygon>
+
+  <polygon>
+    <x>600</x> <y>54</y> <width>72</width> <height>72</height>
+    <pen><width>4</width><joinStyle>round</joinStyle><color>blue</color></pen>
+    <point>36,0</point>
+    <point>45,27</point>
+    <point>72,27</point>
+    <point>50,45</point>
+    <point>59,72</point>
+    <point>36,54</point>
+    <point>13,72</point>
+    <point>22,45</point>
+    <point>0,27</point>
+    <point>27,27</point>
+  </polygon>
+
+  <text>
+    <x>108</x> <y>0</y> <width>504</width> <height>260</height>
+    <font><weight>87</weight><size>100</size></font>
+    <halign>center</halign>
+    <valign>center</valign>
+    <text>10% OFF</text>
+  </text>
+</LabelDefn>

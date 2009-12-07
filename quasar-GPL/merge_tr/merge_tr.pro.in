@@ -1,0 +1,12 @@
+include (../project.def)
+
+TEMPLATE	= app
+TARGET		= merge_tr
+VERSION		= 1.2
+CONFIG		+= qt
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../bin
+
+HEADERS=messages.h
+SOURCES=merge_tr.cpp messages.cpp

@@ -1,0 +1,185 @@
+<html>
+<head>
+<TITLE>Price Batch Master</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png"></td>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_inventory.html"><b>Up: </b>Inventory</a></td>
+<td><a href="price_batch_list.html"><b>Previous: </b>Price Batch List</a></td>
+<td><a href="label_batch_list.html"><b>Next: </b>Label Batch List</a></td>
+</tr>
+</tbody></table>
+
+
+<hr>
+
+<H1>Price Batch Master</H1>
+
+<p>
+The selling prices for one or multiple items can be changed in a batch. The
+batch must be executed for the prices to take effect. Executed batches are
+stored as inactive for future reference. You may add items manually to the
+batch, or you may select the items from a department, sub-department, item
+group, location, purchase order or vendor invoice. You can calculate the new
+selling price of all items in the table by clicking on the ``Calculate'' 
+  button. The new price can be calculated using markup, margin, a percentage
+  increase or the items target margin. After calculating the new prices you
+  can round them using your rounding rules. Rounding rules must be setup in
+  your Quasar Configuration screen for the store. Click on "Round" on the
+  right hand side to round your prices. Next, after calculating new
+  prices and rounding them you may execute the batch to put the new prices in
+  effect or you may choose to file the batch and execute it at a later
+  date. Price labels may also be generated from the price batch.
+
+<br> 
+<br>
+<img src="images/price_batch_master.png"><br>
+<br>
+
+
+<h2>Price Change Table</h2>
+
+<dl>
+<dd>
+<ul>
+<li> <b>Item Number</b> - The item number of each item.
+<li> <b>Description</b> - The description of the item.
+<li> <b>Size</b> - The size of the item.
+<li> <b>Cost</b> - Displays the costs from the item master file,
+unless a purchase order was selected. If a purchase order was selected
+then the cost prices are displayed as per the landed cost in the purchase
+order. 
+<li> <b>Price</b> - The old prices as they exist prior to having
+the prices set. 
+<li> <b>New Price</b> - The new prices of the items. This can be
+entered manually or calculated using the use calculate button.
+</ul>
+</dl>
+
+<h2>Add Items</h2>
+
+<br> 
+<br>
+<img src="images/price_batch_master_add.png"><br>
+<br>
+
+Click on the add items button to display the add items table
+
+<dl>
+<dd>
+<ul>
+<li> <b>Department</b> - Select or enter a department and add all items
+within it. You can add several departments by choosing one department at at
+time. 
+<li> <b>Sub-department</b> -  Select or enter a sub-department and add all
+items within it. You can add several sub-departments by choosing one
+sub-department at at time. 
+<li> <b>Group</b> -  Select or enter an item group and add all
+items within it. You can add several groups by choosing one
+group at at time. 
+<li> <b>Location</b> -  Select or enter a location and add all
+items within it. You can add several locations by choosing one
+location at at time. 
+<li> <b>Purchase Order</b> - Select or enter a purchase order and add all items within it to the
+price change table. If this option is selected the new selling
+prices will be calculated based on the landed cost prices in the purchase order
+itself. The landed cost includes charges such as freight and fees.
+<li> <b>Vendor Invoice</b> - Select or enter a vendor invoice and add all items within it to the
+price change table. If this option is selected the new selling
+prices will be calculated based on the cost prices in the vendor invoice
+itself. The landed cost includes charges such as freight and fees.
+</ul>
+</dl>
+
+
+<h2>Clear Items</h2>
+
+Select to clear all items on the list.
+
+<h2>Calculate</h2>
+
+<br>
+<img src="images/price_batch_master_calculate.png"><br>
+<br>
+
+Calculates the new selling prices. You may calculate the new selling
+prices by selecting one of the following: 
+
+<h3>Use Markup?</h3>
+
+Calculates the selling price by marking the price
+  up from cost by the entered amount. For example, marking up an item
+  that costs $1.00 by a 50% markup will set the new selling price to
+  $1.50.
+
+<h3>Use Margin?</h3>
+
+ Calculates the selling price so that the desired
+  margin of profit is achieved. For example, to achieve a 50% margin
+  of profit on an item that costs $1.00 the selling price will be set
+  to $2.00.
+
+<h3>% Change</h3>
+
+ Calculates the selling price based on a percentage
+  change from the current price. Entering a positive percentage change
+  will increase the price by that percentage. Entering a negative
+  percentage change will decrease the selling price by that percentage.
+
+<h3>Use Target</h3>
+
+ Calculates the selling price of each item based on
+  its target margin.
+
+<h2>Round</h2>
+
+<p> Click on the round button to round your prices based on your rounding
+rules defined in Quasar Configuration.
+
+<h2>Print</h2>
+
+<p> Click on the print button to print a preliminary copy of your price change.
+
+<h2>Labels</h2>
+
+<p> Click on the labels button to print shelf labels for all of the items in
+the price batch.
+
+<h2>Execute</h2>
+
+<p> Click on the execute button to execute the batch. The prices do not take
+effect until the batch is exectuted.
+</p>
+
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_inventory.html"><b>Up: </b>Inventory</a></td>
+<td><a href="price_batch_list.html"><b>Previous: </b>Price Batch List</a></td>
+<td><a href="label_batch_list.html"><b>Next: </b>Label Batch List</a></td>
+</tr>
+</table>
+
+
+<br>
+
+</body>
+</html>
+
+
+
+
+
+
+

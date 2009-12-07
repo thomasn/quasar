@@ -1,0 +1,33 @@
+include (../project.def)
+
+TEMPLATE	= lib
+TARGET		= quasar_widget
+VERSION		= 1.4
+CONFIG		+= qt staticlib
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../lib
+INCLUDEPATH	+= ../utility;.
+DEPENDPATH	= $$INCLUDEPATH
+
+HEADERS=arrow_line.h calendar.h cell_editor.h check_box.h combo_box.h \
+	connect_dialog.h data_lookup.h date_edit.h date_popup.h date_range.h \
+	double_edit.h id_edit.h integer_edit.h item_edit.h line_edit.h \
+	list_view.h list_view_item.h lookup_edit.h lookup_popup.h \
+        lookup_window.h money_edit.h multi_line_edit.h number_edit.h \
+        percent_edit.h popup.h price_edit.h push_button.h report_box.h \
+        report_label.h row_header.h table.h table_column.h table_row.h \
+        time_edit.h valcon_edit.h
+
+SOURCES=arrow_line.cpp calendar.cpp cell_editor.cpp check_box.cpp \
+	combo_box.cpp connect_dialog.cpp data_lookup.cpp date_edit.cpp \
+        date_popup.cpp date_range.cpp double_edit.cpp id_edit.cpp \
+        integer_edit.cpp item_edit.cpp line_edit.cpp list_view.cpp \
+        list_view_item.cpp lookup_edit.cpp lookup_popup.cpp \
+        lookup_window.cpp money_edit.cpp multi_line_edit.cpp \
+        number_edit.cpp percent_edit.cpp popup.cpp price_edit.cpp \
+        push_button.cpp report_box.cpp report_label.cpp row_header.cpp \
+        table.cpp table_column.cpp table_row.cpp time_edit.cpp \
+        valcon_edit.cpp
+
+TRANSLATIONS=messages.ts

@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Item Ranking"
+	module="Sales"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="150"
+	bottomMargin="150">
+
+  <initialize><![CDATA[
+	proc select_where { } {
+	    global param
+
+	    set where "change_date >= '$param(from)' and change_date <=
+		'$param(to)' "
+
+	    if { $param(dept_id) != "" } {
+		append where "and item.dept_id = '$param(dept_id)'"
+	    }
+	    if { $param(subdept_id) != "" } {
+		append where "and item.subdept_id = '$param(subdept_id)'"
+	    }
+	    if { $param(group_id) != "" } {
+		append where "and exists (select group_id from item_group
+		    where item_group.item_id = item.item_id and
+		    item_group.group_id = '$param(group_id)')"
+	    }
+	    if { $param(vendor_id) != "" } {
+		append where "and exists (select vendor_id from item_vendor
+		    where item_vendor.item_id = item.item_id and
+		    item_vendor.vendor_id = '$param(vendor_id)')"
+	    }
+	    if { $param(store_id) != "" } {
+		append where "and store_id = '$param(store_id)'"
+	    }
+
+	    return $where
+	}
+
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+  ]]></initialize>
+
+  <dataSource type="Filter">
+    <expr>$param(count) == 0 || $sys(row_number) &lt; $param(count)</expr>
+
+    <dataSource type="Query">
+    <code><![CDATA[
+	set where [select_where]
+
+	if { $param(field) == "Sold" } {
+	    set field 3
+	} else {
+	    set field 4
+	}
+
+	if { $param(order) == "Descending" } {
+	    set order desc
+	} else {
+	    set order asc
+	}
+
+	return "select item_plu.number,description,sum(item_change.sold_qty) /
+	item_size.qty,sum(item_change.sold_price)-sum(item_change.sold_cost),
+	sell_size from ((item_change join item on item_change.item_id =
+	item.item_id) join item_plu on item.item_id = item_plu.item_id and
+	item_plu.seq_num = 0) join item_size on item_size.item_id =
+	item.item_id and item_size.name = item.sell_size where $where
+	group by item_plu.number,description,sell_size,item_size.qty
+	order by $field $order"
+    ]]></code>
+    <column>number</column>
+    <column>description</column>
+    <column>sold</column>
+    <column>profit</column>
+    <column>size</column>
+    </dataSource>
+  </dataSource>
+
+  <parameter
+	name="from"
+	description="Enter the from date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="to"
+	description="Enter the to date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="dept_id"
+	description="Enter the department:"
+	manditory="false"
+	type="lookup"
+	dataType="dept"/>
+
+  <parameter
+	name="subdept_id"
+	description="Enter the subdepartment:"
+	manditory="false"
+	type="lookup"
+	dataType="subdept"/>
+
+  <parameter
+	name="group_id"
+	description="Group:"
+	manditory="false"
+	type="lookup"
+	dataType="group"/>
+
+  <parameter
+	name="vendor_id"
+	description="Vendor:"
+	manditory="false"
+	type="lookup"
+	dataType="vendor"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <parameter
+	name="field"
+	description="Sort by:"
+	defaultValue="Sold"
+	manditory="true"
+	type="choice"
+	choices="Sold,Profit"/>
+
+  <parameter
+	name="order"
+	description="Order:"
+	defaultValue="Descending"
+	manditory="true"
+	type="choice"
+	choices="Descending,Ascending"/>
+
+  <parameter
+	name="count"
+	description="# Items (0 for all):"
+	defaultValue="0"
+	manditory="true"
+	type="integer"/>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Item Ranking</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"From $param(from) to $param(to)"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(dept_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup dept dept_id $param(dept_id) name] Department"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(subdept_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup subdept subdept_id $param(subdept_id) name] Subdepartment"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(group_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup groups group_id $param(group_id) name] Group"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(vendor_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup card card_id $param(vendor_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Item</text>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="2400"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Description</text>
+    </text>
+    <text
+	x="3200"
+	y="0"
+	width="500"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Size</text>
+    </text>
+    <text
+	x="3700"
+	y="0"
+	width="550"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Sold</text>
+    </text>
+    <text
+	x="4250"
+	y="0"
+	width="550"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Profit</text>
+    </text>
+  </pageHeader>
+
+  <detail height="120">
+    <rectangle x="0" y="0" width="4800" height="120">
+	<printWhen>$sys(row_number) % 2 == 0</printWhen>
+	<pen style="NoPen"/>
+	<brush color="#F4F4F4"/>
+    </rectangle>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="120">
+	<font name="Times" size="10"/>
+	<var>column(number)</var>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="2400"
+	height="120">
+	<font name="Times" size="10"/>
+	<var>column(description)</var>
+    </text>
+    <text
+	x="3200"
+	y="0"
+	width="500"
+	height="120">
+	<font name="Times" size="10"/>
+	<var>column(size)</var>
+    </text>
+    <text
+	format="number"
+	x="3700"
+	y="0"
+	width="550"
+	height="120"
+	halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(sold)</var>
+    </text>
+    <text
+	format="money"
+	x="4250"
+	y="0"
+	width="550"
+	height="120"
+	halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(profit)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

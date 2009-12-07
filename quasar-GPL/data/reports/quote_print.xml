@@ -1,0 +1,774 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Print Quote"
+	module="Sales"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="150"
+	bottomMargin="150">
+
+  <parameter
+	name="quote_id"
+	description="Enter the quote number:"
+	manditory="true"
+	type="lookup"
+	dataType="quote"/>
+
+  <dataSource type="Code">
+	<initialize><![CDATA[
+	    proc make_address { name number street street2 city province
+				country postal phone_num fax_num email
+				web_page extra } {
+		set text $name
+		if { $street != "" } {
+		    if { $text != "" } { append text \n }
+		    append text $street
+		}
+		if { $street2 != "" } {
+		    if { $text != "" } { append text \n }
+		    append text $street2
+		}
+		if { $city != "" || $province != "" } {
+		    if { $text != "" } { append text \n }
+		    append text $city
+		    if { $city != "" && $province != "" } {
+			append text ", "
+		    }
+		    append text $province
+		}
+		if { $country != "" || $postal != "" } {
+		    if { $text != "" } { append text \n }
+		    append text $country
+		    if { $country != "" && $postal != "" } {
+			append text ", "
+		    }
+		    append text $postal
+		}
+		if { $extra == "Y" } {
+		    if { $phone_num != "" } {
+			if { $text != "" } { append text \n }
+			append text "Phone: $phone_num"
+		    }
+		    if { $fax_num != "" } {
+			if { $text != "" } { append text \n }
+			append text "Fax: $fax_num"
+		    }
+		    if { $email != "" } {
+			if { $text != "" } { append text \n }
+			append text "E-mail: $email"
+		    }
+		    if { $web_page != "" } {
+			if { $text != "" } { append text \n }
+			append text "Web Page: $web_page"
+		    }
+		}
+
+		return $text
+	    }
+
+	    proc get_address { card_id } {
+		if { $card_id == "" } {
+		    return ""
+		}
+
+		set query "select name,number,street,street2,city,
+		    province,country,postal,phone_num,fax_num,email,
+		    web_page from card where card_id = '$card_id'"
+		select $query {
+		    set name $column(1)
+		    set number $column(2)
+		    set street $column(3)
+		    set street2 $column(4)
+		    set city $column(5)
+		    set province $column(6)
+		    set country $column(7)
+		    set postal $column(8)
+		    set phone_num $column(9)
+		    set fax_num $column(10)
+		    set email $column(11)
+		    set web_page $column(12)
+		}
+
+	        return [make_address $name $number $street $street2 $city \
+			$province $country $postal $phone_num $fax_num \
+			$email $web_page "N"]
+	    }
+
+	    proc make_price { unit_price for_qty for_price } {
+		if { $for_qty == 0 } {
+		    return [oconv money $unit_price]
+		}
+
+		if { $unit_price != 0 } {
+		    set text "[oconv money $unit_price] "
+		} else {
+		    set text ""
+		}
+
+		append text "[oconv number $for_qty]/[oconv money $for_price]"
+		return $text
+	    }
+
+	    set query "select number,reference_str,quote_date,
+		customer_id,employee_id,store_id,ship_id,ship_via,
+		term_id,expiry_date,line_type,tax_exempt_id,
+		customer_addr,ship_addr,comments from quote where
+		quote.quote_id = '$param(quote_id)'"
+	    select $query {
+		set quote_number $column(1)
+		set reference $column(2)
+		set quote_date $column(3)
+		set customer_id $column(4)
+		set employee_id $column(5)
+		set store_id $column(6)
+		set ship_id $column(7)
+		set ship_via $column(8)
+		set term_id $column(9)
+		set expiry_date $column(10)
+		set line_type $column(11)
+		set tax_exempt_id $column(12)
+		set customer_addr $column(13)
+		set ship_addr $column(14)
+		set comments $column(15)
+	    }
+
+	    set query "select name,number,has_addr,street,street2,
+		city,province,country,postal,phone_num,fax_num,email,
+		web_page from store where store_id = '$store_id'"
+	    select $query {
+		set store_name $column(1)
+		set store_number $column(2)
+		set store_has_addr $column(3)
+		set store_street $column(4)
+		set store_street2 $column(5)
+		set store_city $column(6)
+		set store_province $column(7)
+		set store_country $column(8)
+		set store_postal $column(9)
+		set store_phone_num $column(10)
+		set store_fax_num $column(11)
+		set store_email $column(12)
+		set store_web $column(13)
+	    }
+
+	    # If no store address, get from company
+	    if { $store_has_addr == "N" } {
+		set query "select name,number,street,street2,city,
+		    province,country,postal,phone_num,fax_num,email,
+		    web_page from company";
+		select $query {
+		    set store_name $column(1)
+		    set store_number $column(2)
+		    set store_street $column(3)
+		    set store_street2 $column(4)
+		    set store_city $column(5)
+		    set store_province $column(6)
+		    set store_country $column(7)
+		    set store_postal $column(8)
+		    set store_phone_num $column(9)
+		    set store_fax_num $column(10)
+		    set store_email $column(11)
+		    set store_web $column(12)
+		}
+	    }
+
+	    # Make the store address
+	    set store_addr [make_address "" "" $store_street $store_street2 \
+		$store_city $store_province $store_country $store_postal \
+		$store_phone_num $store_fax_num $store_email $store_web "Y"]
+
+	    # Get the customer number
+	    if { $customer_id == "" } {
+		set customer_number ""
+	    } else {
+		set query "select number from card where card_id =
+		    '$customer_id'"
+		select $query {
+		    set customer_number $column(1)
+		}
+	    }
+
+	    # Get the customer bill and ship addresses
+	    if { $customer_addr == "" } {
+		set customer_addr [get_address $customer_id]
+	    }
+	    if { $ship_addr == "" } {
+		set ship_addr [get_address $ship_id]
+	    }
+
+	    # Get the employee name
+	    if { $employee_id == "" } {
+		set salesperson ""
+	    } else {
+		set query "select number from card where card_id = 
+		    '$employee_id'"
+		select $query {
+		    set salesperson $column(1)
+		}
+	    }
+
+	    # Get the terms
+	    if { $term_id == "" } {
+		set terms ""
+	    } else {
+		set query "select name from term where term_id = '$term_id'"
+		select $query {
+		    set terms $column(1)
+		}
+	    }
+
+	    # Totals at bottom we will now be calculating
+	    set item_total 0
+	    set discount_total 0
+	    set deposit_total 0
+	    set tax_total 0
+
+	    # Process the items
+	    set rows ""
+	    if { $line_type == 0 } {
+	    	set query "select quote_item.item_id,quote_item.number,
+		    quote_item.description,size_name,quantity,
+		    unit_price,for_qty,for_price,ext_price,ext_base,
+		    ext_deposit,tax.name,item.description,discount_id,
+		    method,quote_item_disc.amount,quote_item_disc.total_amt
+		    from ((quote_item left join quote_item_disc on
+		    quote_item.quote_id = quote_item_disc.quote_id and
+		    quote_item.seq_num = quote_item_disc.seq_num) join item on
+		    quote_item.item_id = item.item_id) left join tax on
+		    quote_item.tax_id = tax.tax_id where
+		    quote_item.quote_id = '$param(quote_id)' order by
+		    quote_item.seq_num"
+		select $query {
+		    set item_id $column(1)
+		    set number $column(2)
+		    set description $column(3)
+		    set size_name $column(4)
+		    set qty $column(5)
+		    set unit_price $column(6)
+		    set for_qty $column(7)
+		    set for_price $column(8)
+		    set ext_price $column(9)
+		    set ext_base $column(10)
+		    set ext_deposit $column(11)
+		    set tax $column(12)
+		    set item_desc $column(13)
+		    set disc_id $column(14)
+		    set disc_method $column(15)
+		    set disc_amt $column(16)
+		    set disc_total $column(17)
+
+		    if { $description == "" } {
+			set description $item_desc
+		    }
+
+		    if { $disc_id == "" } {
+			set discount ""
+			set disc_total 0
+		    } else {
+			if { $disc_method == 0 } {
+			    set discount [oconv percent $disc_amt]
+			} else {
+			    set discount [oconv money $disc_amt]
+			}
+		    }
+
+		    set price [make_price $unit_price $for_qty $for_price]
+		    set total [expr $ext_price - $disc_total]
+
+		    lappend rows [list $number $description $size_name $qty \
+			$price $ext_price $discount $total $tax]
+
+		    set item_total [expr $item_total + $ext_base]
+		    set discount_total [expr $discount_total - $disc_total]
+		    set deposit_total [expr $deposit_total + $ext_deposit]
+		}
+	    } else {
+	    	set query "select quote_item.account_id,quote_item.description,
+		    quantity,unit_price,for_qty,for_price,ext_price,
+		    ext_base,ext_deposit,tax.name,account.name,discount_id,
+		    method,quote_item_disc.amount,quote_item_disc.total_amt
+		    from ((quote_item left join quote_item_disc on
+		    quote_item.quote_id = quote_item_disc.quote_id and
+		    quote_item.seq_num = quote_item_disc.seq_num) join account
+		    on quote_item.account_id = account.account_id) left join
+		    tax on quote_item.tax_id = tax.tax_id where
+		    quote_item.quote_id = '$param(quote_id)' order by
+		    quote_item.seq_num"
+		select $query {
+		    set account_id $column(1)
+		    set description $column(2)
+		    set qty $column(3)
+		    set unit_price $column(4)
+		    set for_qty $column(5)
+		    set for_price $column(6)
+		    set ext_price $column(7)
+		    set ext_base $column(8)
+		    set ext_deposit $column(9)
+		    set tax $column(10)
+		    set account_name $column(11)
+		    set disc_id $column(12)
+		    set disc_method $column(13)
+		    set disc_amt $column(14)
+		    set disc_total $column(15)
+
+		    if { $description == "" } {
+			set description $account_name
+		    }
+
+		    if { $disc_id == "" } {
+			set discount ""
+			set disc_total 0
+		    } else {
+			if { $disc_method == 0 } {
+			    set discount [oconv percent $disc_amt]
+			} else {
+			    set discount [oconv money $disc_amt]
+			}
+		    }
+
+		    set price [make_price $unit_price $for_qty $for_price]
+		    set total [expr $ext_price - $disc_total]
+
+		    lappend rows [list "" $description "" $qty $price \
+			$ext_price $discount $total $tax]
+
+		    set item_total [expr $item_total + $ext_base]
+		    set discount_total [expr $discount_total - $disc_total]
+		    set deposit_total [expr $deposit_total + $ext_deposit]
+		}
+	    }
+
+	    # Process the discounts
+	    set first "Y"
+	    set query "select discount.name,quote_discount.method,
+		quote_discount.amount,quote_discount.total_amt from
+		quote_discount join discount on quote_discount.discount_id =
+		discount.discount_id where quote_discount.quote_id =
+		'$param(quote_id)' order by seq_num"
+	    select $query {
+		set name $column(1)
+		set method $column(2)
+		set amount $column(3)
+		set total_amt $column(4)
+
+		if { $method == 0 } {
+		    set discount [oconv percent $amount]
+		} else {
+		    set discount [oconv money $amount]
+		}
+
+		set total_amt [expr $total_amt * -1.0]
+		set discount_total [expr $discount_total + $total_amt]
+
+		if { $first == "Y" } {
+		    set first "N"
+		    lappend rows [list "" "  " "" "" "" "" "" "" ""]
+		}
+
+		lappend rows [list "" "$name Discount" "" "" "" "" $discount \
+		    $total_amt ""]
+	    }
+
+	    # Process the taxes
+	    set tax_names ""
+	    set tax_taxables ""
+	    set tax_rates ""
+	    set tax_totals ""
+	    set tax_numbers ""
+	    set query "select tax.name,tax.number,tax.rate,taxable,amount,
+		inc_taxable,inc_amount from quote_tax join tax on
+		quote_tax.tax_id = tax.tax_id and quote_tax.quote_id =
+		'$param(quote_id)' order by seq_num"
+	    select $query {
+		set name $column(1)
+		set number $column(2)
+		set rate $column(3)
+		set taxable $column(4)
+		set amount $column(5)
+		set inc_taxable $column(6)
+		set inc_amount $column(7)
+
+		if { $amount != 0 } {
+		    if { $tax_names == "" } { set tax_names "Tax" }
+		    if { $tax_taxables == "" } { set tax_taxables "Taxable" }
+		    if { $tax_rates == "" } { set tax_rates "Rate" }
+		    if { $tax_totals == "" } { set tax_totals "Total" }
+		    if { $tax_numbers == "" } { set tax_numbers "  " }
+
+		    append tax_names "\n$name"
+		    append tax_taxables "\n[oconv money $taxable]"
+		    append tax_rates "\n[oconv percent $rate]"
+		    append tax_totals "\n[oconv money $amount]"
+		    append tax_numbers "\n$number"
+		}
+
+		if { $inc_amount != 0 } {
+		    if { $tax_names == "" } { set tax_names "Tax" }
+		    if { $tax_taxables == "" } { set tax_taxables "Taxable" }
+		    if { $tax_rates == "" } { set tax_rates "Rate" }
+		    if { $tax_totals == "" } { set tax_totals "Total" }
+		    if { $tax_numbers == "" } { set tax_numbers "  " }
+
+		    append tax_names "\n$name"
+		    append tax_taxables "\n[oconv money $inc_taxable]"
+		    append tax_rates "\n[oconv percent $rate]"
+		    append tax_totals "\n[oconv money $inc_amount]"
+		    append tax_numbers "\n$number"
+		}
+
+		set tax_total [expr $tax_total + $amount + $inc_amount]
+	    }
+
+	    if { [llength $rows] == 0 } {
+		lappend rows [list "" "  " "" "" "" "" "" "" ""]
+	    }
+
+	    set quote_total [expr $item_total + $discount_total + \
+		$deposit_total + $tax_total]
+	]]></initialize>
+
+	<next><![CDATA[
+		$current_row < [llength $rows]
+	]]></next>
+
+	<get>
+		return [lindex [lindex $rows $current_row] $index]
+	</get>
+
+	<column>item_number</column>
+	<column>description</column>
+	<column>size</column>
+	<column>qty</column>
+	<column>price</column>
+	<column>ext_price</column>
+	<column>discount</column>
+	<column>total</column>
+	<column>tax</column>
+  </dataSource>
+
+  <background height="6300">
+    <rectangle x="0" y="2400" width="4800" height="3030"/>
+    <line x="750" y="2400" height="3030">
+	<printWhen>$line_type == 0</printWhen>
+    </line>
+    <line x="2100" y="2400" height="3030"/>
+    <line x="2550" y="2400" height="3030"/>
+    <line x="2850" y="2400" height="3030"/>
+    <line x="3300" y="2400" height="3030"/>
+    <line x="3750" y="2400" height="3030"/>
+    <line x="4000" y="2400" height="3030"/>
+    <line x="4600" y="2400" height="3030"/>
+  </background>
+
+  <pageHeader height="2513">
+    <text x="0" y="0" width="2950" height="160">
+	<font name="Helvetica" size="16" isBold="true"/>
+	<var>store_name</var>
+    </text>
+    <text x="0" y="160" width="2950" height="1000" valign="Top">
+	<font name="Helvetica" size="10"/>
+	<var>store_addr</var>
+    </text>
+
+    <text x="3000" y="0" width="1200" height="160">
+	<font name="Times" size="16" isBold="true"/>
+	<text>Customer Quote:</text>
+    </text>
+    <text x="4200" y="0" width="600" height="160" halign="Right">
+	<font name="Times" size="16" isBold="true"/>
+	<var>quote_number</var>
+    </text>
+    <text x="3000" y="160" width="1200" height="120">
+	<font name="Times" size="12"/>
+	<text>Date:</text>
+    </text>
+    <text x="4200" y="160" width="600" height="120" halign="Right">
+	<font name="Times" size="12"/>
+	<var>quote_date</var>
+    </text>
+    <text x="3000" y="280" width="1200" height="120">
+	<font name="Times" size="12"/>
+	<text>Page:</text>
+    </text>
+    <text x="4200" y="280" width="600" height="120" evalTime="Report" halign="Right">
+	<font name="Times" size="12"/>
+	<expr>"$sys(page_number) of $sys(page_count)"</expr>
+    </text>
+    <text x="3000" y="400" width="1200" height="120">
+	<font name="Times" size="12"/>
+	<expr>$customer_number == "" ? "" : "Account Number:"</expr>
+    </text>
+    <text x="4200" y="400" width="600" height="120" halign="Right">
+	<font name="Times" size="12"/>
+	<var>customer_number</var>
+    </text>
+
+    <rectangle x="0" y="1200" width="2360" height="600"/>
+    <text x="0" y="1200" width="2360" height="113">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Bill To:</text>
+    </text>
+    <line x="0" y="1313" width="2360"/>
+    <text x="0" y="1313" width="2360" height="487">
+	<font name="Times" size="10"/>
+	<var>customer_addr</var>
+    </text>
+
+    <rectangle x="2440" y="1200" width="2360" height="600"/>
+    <text x="2440" y="1200" width="2360" height="113">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Ship To:</text>
+    </text>
+    <line x="2440" y="1313" width="2360"/>
+    <text x="2440" y="1313" width="2360" height="487">
+	<font name="Times" size="10"/>
+	<var>ship_addr</var>
+    </text>
+
+    <rectangle x="0" y="1950" width="4800" height="226"/>
+    <line x="0" y="2063" width="4800"/>
+
+    <text x="0" y="1950" width="975" height="113" halign="Center">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Salesperson</text>
+    </text>
+    <text x="0" y="2063" width="975" height="113" halign="Center">
+	<font name="Times" size="10"/>
+	<var>salesperson</var>
+    </text>
+    <line x="975" y="1950" height="226"/>
+
+    <text x="975" y="1950" width="1125" height="113" halign="Center">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Customer PO#</text>
+    </text>
+    <text x="975" y="2063" width="1125" height="113" halign="Center">
+	<font name="Times" size="10"/>
+	<var>reference</var>
+    </text>
+    <line x="2100" y="1950" height="226"/>
+
+    <text x="2100" y="1950" width="825" height="113" halign="Center">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Ship Via</text>
+    </text>
+    <text x="2100" y="2063" width="825" height="113" halign="Center">
+	<font name="Times" size="10"/>
+	<var>ship_via</var>
+    </text>
+    <line x="2925" y="1950" height="226"/>
+
+    <text x="2925" y="1950" width="1050" height="113" halign="Center">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Expiry Date</text>
+    </text>
+    <text x="2925" y="2063" width="1050" height="113" halign="Center">
+	<font name="Times" size="10"/>
+	<var>expiry_date</var>
+    </text>
+    <line x="3975" y="1950" height="226"/>
+
+    <text x="3975" y="1950" width="825" height="113" halign="Center">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Terms</text>
+    </text>
+    <text x="3975" y="2063" width="825" height="113" halign="Center">
+	<font name="Times" size="10"/>
+	<var>terms</var>
+    </text>
+
+    <rectangle x="0" y="2400" width="4800" height="113"/>
+
+    <text x="0" y="2400" width="2100" height="113">
+	<printWhen>$line_type == 1</printWhen>
+	<font name="Times" size="12" isBold="true"/>
+	<text>Description</text>
+    </text>
+    <line x="2100" y="2400" height="113"/>
+
+    <text x="0" y="2400" width="750" height="113">
+	<printWhen>$line_type == 0</printWhen>
+	<font name="Times" size="12" isBold="true"/>
+	<text>Item Number</text>
+    </text>
+    <line x="750" y="2400" height="113">
+	<printWhen>$line_type == 0</printWhen>
+    </line>
+    <text x="750" y="2400" width="1350" height="113">
+	<printWhen>$line_type == 0</printWhen>
+	<font name="Times" size="12" isBold="true"/>
+	<text>Description</text>
+    </text>
+    <line x="2100" y="2400" height="113"/>
+    <text x="2100" y="2400" width="450" height="113" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Size</text>
+    </text>
+    <line x="2550" y="2400" height="113"/>
+    <text x="2550" y="2400" width="300" height="113" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Qty</text>
+    </text>
+    <line x="2850" y="2400" height="113"/>
+    <text x="2850" y="2400" width="450" height="113" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Price</text>
+    </text>
+    <line x="3300" y="2400" height="113"/>
+    <text x="3300" y="2400" width="450" height="113" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Ext. Price</text>
+    </text>
+    <line x="3750" y="2400" height="113"/>
+    <text x="3750" y="2400" width="250" height="113" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Disc.</text>
+    </text>
+    <line x="4000" y="2400" height="113"/>
+    <text x="4000" y="2400" width="600" height="113" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Total</text>
+    </text>
+    <line x="4600" y="2400" height="113"/>
+    <text x="4600" y="2400" width="200" height="113" halign="Center">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Tax</text>
+    </text>
+  </pageHeader>
+
+  <pageFooter height="870">
+    <rectangle x="0" y="0" width="4800" height="870"/>
+    <line x="2850" y="0" height="870"/>
+    <line x="4000" y="0" height="720"/>
+    <line x="4600" y="0" height="720"/>
+    <line x="2850" y="720" width="1950"/>
+
+    <text x="0" y="0" width="600" height="870" valign="top">
+	<font name="Helvetica" size="8"/>
+	<var>tax_names</var>
+    </text>
+    <text x="600" y="0" width="600" height="870" halign="right" valign="top">
+	<font name="Helvetica" size="8"/>
+	<var>tax_taxables</var>
+    </text>
+    <text x="1200" y="0" width="350" height="870" halign="right" valign="top">
+	<font name="Helvetica" size="8"/>
+	<var>tax_rates</var>
+    </text>
+    <text x="1550" y="0" width="600" height="870" halign="right" valign="top">
+	<font name="Helvetica" size="8"/>
+	<var>tax_totals</var>
+    </text>
+    <text x="2200" y="0" width="600" height="870" valign="top">
+	<font name="Helvetica" size="8"/>
+	<var>tax_numbers</var>
+    </text>
+
+    <text x="2850" y="0" width="1150" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Item Total</text>
+    </text>
+    <text x="4000" y="0" width="600" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<expr>[oconv money $item_total]</expr>
+    </text>
+
+    <text x="2850" y="120" width="1150" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Discount Total</text>
+    </text>
+    <text x="4000" y="120" width="600" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<expr>[oconv money $discount_total]</expr>
+    </text>
+
+    <text x="2850" y="240" width="1150" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Tax Total</text>
+    </text>
+    <text x="4000" y="240" width="600" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<expr>[oconv money $tax_total]</expr>
+    </text>
+
+    <text x="2850" y="360" width="1150" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Deposit Total</text>
+    </text>
+    <text x="4000" y="360" width="600" height="120" halign="Right">
+	<font name="Times" size="12" isBold="true"/>
+	<expr>[oconv money $deposit_total]</expr>
+    </text>
+
+    <text x="2850" y="720" width="1150" height="150" halign="Right">
+	<font name="Times" size="14" isBold="true"/>
+	<text>Quote Total</text>
+    </text>
+    <text x="4000" y="720" width="600" height="150" halign="Right">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>[oconv money $quote_total]</expr>
+    </text>
+  </pageFooter>
+
+  <detail height="120">
+    <text x="0" y="0" width="2100" height="120">
+	<printWhen>$line_type == 1</printWhen>
+	<font name="Times" size="10"/>
+	<var>column(description)</var>
+    </text>
+    <text x="0" y="0" width="750" height="120">
+	<printWhen>$line_type == 0</printWhen>
+	<font name="Times" size="10"/>
+	<var>column(item_number)</var>
+    </text>
+    <text x="750" y="0" width="1350" height="120">
+	<printWhen>$line_type == 0</printWhen>
+	<font name="Times" size="10"/>
+	<var>column(description)</var>
+    </text>
+    <text x="2100" y="0" width="450" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(size)</var>
+    </text>
+    <text x="2550" y="0" width="300" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<expr>[oconv number $column(qty)]</expr>
+    </text>
+    <text x="2850" y="0" width="450" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(price)</var>
+    </text>
+    <text x="3300" y="0" width="450" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<expr>[oconv money $column(ext_price)]</expr>
+    </text>
+    <text x="3750" y="0" width="250" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(discount)</var>
+    </text>
+    <text x="4000" y="0" width="600" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<expr>[oconv money $column(total)]</expr>
+    </text>
+    <text x="4600" y="0" width="200" height="120" halign="Right">
+	<font name="Times" size="10"/>
+	<var>column(tax)</var>
+    </text>
+  </detail>
+
+  <summary height="360">
+    <printWhen>$comments != ""</printWhen>
+    <onBottom>1</onBottom>
+    <rectangle x="0" y="0" width="4800" height="360">
+	<brush style="solid" color="white"/>
+    </rectangle>
+    <text x="0" y="0" width="4800" height="360">
+	<font name="Times" size="10"/>
+	<var>comments</var>
+    </text>
+  </summary>
+</ReportDefn>

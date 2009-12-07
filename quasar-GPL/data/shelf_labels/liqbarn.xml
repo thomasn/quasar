@@ -1,0 +1,1233 @@
+<!DOCTYPE LABEL_DEFN>
+<LabelDefn>
+  <name>Liquor Barn TEC Keytops</name>
+  <pageWidth>612</pageWidth>
+  <pageHeight>792</pageHeight>
+  <topMargin>36</topMargin>
+  <leftMargin>36</leftMargin>
+  <rows>1</rows>
+  <columns>1</columns>
+  <orientation>portrait</orientation>
+  <labelWidth>612</labelWidth>
+  <labelHeight>792</labelHeight>
+  <hgap>0</hgap>
+  <vgap>0</vgap>
+
+  <rect>
+    <x>0</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F1</text>
+  </text>
+
+  <rect>
+    <x>36</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>36</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F2</text>
+  </text>
+
+  <rect>
+    <x>72</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>72</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F3</text>
+  </text>
+
+  <rect>
+    <x>108</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>108</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F4</text>
+  </text>
+
+  <rect>
+    <x>144</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>144</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F5</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F6</text>
+  </text>
+
+  <rect>
+    <x>216</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>216</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F7</text>
+  </text>
+
+  <rect>
+    <x>252</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>252</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F8</text>
+  </text>
+
+  <rect>
+    <x>288</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>288</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>14</size></font>
+    <text>Price</text>
+  </text>
+
+  <rect>
+    <x>324</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>324</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>12</size></font>
+    <text>Ref #</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Void
+Line</text>
+  </text>
+
+  <rect>
+    <x>396</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>396</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>11</size></font>
+    <text>Set
+Void</text>
+  </text>
+
+  <rect>
+    <x>432</x> <y>0</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>432</x> <y>0</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Subtotal</text>
+  </text>
+
+  <rect>
+    <x>0</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Tab</text>
+  </text>
+
+  <rect>
+    <x>36</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>36</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Space
+Bar</text>
+  </text>
+
+  <rect>
+    <x>72</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>72</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Cancel</text>
+  </text>
+
+  <rect>
+    <x>108</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>108</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Price
+Inquiry</text>
+  </text>
+
+  <rect>
+    <x>144</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>144</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Cust #</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Back
+Space</text>
+  </text>
+
+  <rect>
+    <x>216</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>216</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Suspend</text>
+  </text>
+
+  <rect>
+    <x>252</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>252</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Resume</text>
+  </text>
+
+  <rect>
+    <x>288</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>288</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Reading</text>
+  </text>
+
+  <rect>
+    <x>324</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>324</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Ringoff</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Up</text>
+  </text>
+
+  <rect>
+    <x>396</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>396</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Down</text>
+  </text>
+
+  <rect>
+    <x>432</x> <y>36</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>432</x> <y>36</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Post
+Void</text>
+  </text>
+
+
+
+
+
+  <rect>
+    <x>0</x> <y>72</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>72</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Cash</text>
+  </text>
+
+  <rect>
+    <x>90</x> <y>72</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>90</x> <y>72</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Cheque</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>72</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>72</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Visa</text>
+  </text>
+
+  <rect>
+    <x>270</x> <y>72</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>270</x> <y>72</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>14</size></font>
+    <text>Master Card</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>72</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>72</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Voucher</text>
+  </text>
+
+  <rect>
+    <x>0</x> <y>108</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>108</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Quantity</text>
+  </text>
+
+  <rect>
+    <x>90</x> <y>108</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>90</x> <y>108</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Repeat</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>108</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>108</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Discount</text>
+  </text>
+
+  <rect>
+    <x>270</x> <y>108</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>270</x> <y>108</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Debit</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>108</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>108</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Enter</text>
+  </text>
+
+
+
+  <rect>
+    <x>0</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F1</text>
+  </text>
+
+  <rect>
+    <x>36</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>36</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F2</text>
+  </text>
+
+  <rect>
+    <x>72</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>72</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F3</text>
+  </text>
+
+  <rect>
+    <x>108</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>108</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F4</text>
+  </text>
+
+  <rect>
+    <x>144</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>144</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F5</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F6</text>
+  </text>
+
+  <rect>
+    <x>216</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>216</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F7</text>
+  </text>
+
+  <rect>
+    <x>252</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>252</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F8</text>
+  </text>
+
+  <rect>
+    <x>288</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>288</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>14</size></font>
+    <text>Price</text>
+  </text>
+
+  <rect>
+    <x>324</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>324</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>12</size></font>
+    <text>Ref #</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Void
+Line</text>
+  </text>
+
+  <rect>
+    <x>396</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>396</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>11</size></font>
+    <text>Set
+Void</text>
+  </text>
+
+  <rect>
+    <x>432</x> <y>160</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>432</x> <y>160</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Subtotal</text>
+  </text>
+
+  <rect>
+    <x>0</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Tab</text>
+  </text>
+
+  <rect>
+    <x>36</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>36</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Space
+Bar</text>
+  </text>
+
+  <rect>
+    <x>72</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>72</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Cancel</text>
+  </text>
+
+  <rect>
+    <x>108</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>108</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Price
+Inquiry</text>
+  </text>
+
+  <rect>
+    <x>144</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>144</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Cust #</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Back
+Space</text>
+  </text>
+
+  <rect>
+    <x>216</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>216</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Suspend</text>
+  </text>
+
+  <rect>
+    <x>252</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>252</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Resume</text>
+  </text>
+
+  <rect>
+    <x>288</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>288</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Reading</text>
+  </text>
+
+  <rect>
+    <x>324</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>324</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Ringoff</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Up</text>
+  </text>
+
+  <rect>
+    <x>396</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>396</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Down</text>
+  </text>
+
+  <rect>
+    <x>432</x> <y>196</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>432</x> <y>196</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Post
+Void</text>
+  </text>
+
+
+  <rect>
+    <x>0</x> <y>232</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>232</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Cash</text>
+  </text>
+
+  <rect>
+    <x>90</x> <y>232</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>90</x> <y>232</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Cheque</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>232</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>232</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Visa</text>
+  </text>
+
+  <rect>
+    <x>270</x> <y>232</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>270</x> <y>232</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>14</size></font>
+    <text>Master Card</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>232</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>232</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Voucher</text>
+  </text>
+
+  <rect>
+    <x>0</x> <y>268</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>268</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Quantity</text>
+  </text>
+
+  <rect>
+    <x>90</x> <y>268</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>90</x> <y>268</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Repeat</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>268</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>268</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Discount</text>
+  </text>
+
+  <rect>
+    <x>270</x> <y>268</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>270</x> <y>268</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Debit</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>268</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>268</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Enter</text>
+  </text>
+
+
+
+
+  <rect>
+    <x>0</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F1</text>
+  </text>
+
+  <rect>
+    <x>36</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>36</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F2</text>
+  </text>
+
+  <rect>
+    <x>72</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>72</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F3</text>
+  </text>
+
+  <rect>
+    <x>108</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>108</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F4</text>
+  </text>
+
+  <rect>
+    <x>144</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>144</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F5</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F6</text>
+  </text>
+
+  <rect>
+    <x>216</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>216</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F7</text>
+  </text>
+
+  <rect>
+    <x>252</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FF33</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>252</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>F8</text>
+  </text>
+
+  <rect>
+    <x>288</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>288</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>14</size></font>
+    <text>Price</text>
+  </text>
+
+  <rect>
+    <x>324</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>324</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>12</size></font>
+    <text>Ref #</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Void
+Line</text>
+  </text>
+
+  <rect>
+    <x>396</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>396</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>11</size></font>
+    <text>Set
+Void</text>
+  </text>
+
+  <rect>
+    <x>432</x> <y>320</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>432</x> <y>320</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Subtotal</text>
+  </text>
+
+  <rect>
+    <x>0</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Tab</text>
+  </text>
+
+  <rect>
+    <x>36</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>36</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Space
+Bar</text>
+  </text>
+
+  <rect>
+    <x>72</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>72</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Cancel</text>
+  </text>
+
+  <rect>
+    <x>108</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>108</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Price
+Inquiry</text>
+  </text>
+
+  <rect>
+    <x>144</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>144</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Cust #</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Back
+Space</text>
+  </text>
+
+  <rect>
+    <x>216</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>216</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Suspend</text>
+  </text>
+
+  <rect>
+    <x>252</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>252</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Resume</text>
+  </text>
+
+  <rect>
+    <x>288</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>288</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Reading</text>
+  </text>
+
+  <rect>
+    <x>324</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>324</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>8</size></font>
+    <text>Ringoff</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Up</text>
+  </text>
+
+  <rect>
+    <x>396</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#00FFFF</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>396</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Down</text>
+  </text>
+
+  <rect>
+    <x>432</x> <y>356</y> <width>36</width> <height>36</height>
+    <brush><style>solid</style><color>#FFFF99</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>432</x> <y>356</y> <width>36</width> <height>36</height>
+    <font><weight>normal</weight><size>10</size></font>
+    <text>Post
+Void</text>
+  </text>
+
+
+  <rect>
+    <x>0</x> <y>392</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>392</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Cash</text>
+  </text>
+
+  <rect>
+    <x>90</x> <y>392</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>90</x> <y>392</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Cheque</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>392</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>392</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Visa</text>
+  </text>
+
+  <rect>
+    <x>270</x> <y>392</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>270</x> <y>392</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>14</size></font>
+    <text>Master Card</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>392</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>392</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Voucher</text>
+  </text>
+
+  <rect>
+    <x>0</x> <y>428</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>0</x> <y>428</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Quantity</text>
+  </text>
+
+  <rect>
+    <x>90</x> <y>428</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>90</x> <y>428</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Repeat</text>
+  </text>
+
+  <rect>
+    <x>180</x> <y>428</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>180</x> <y>428</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Discount</text>
+  </text>
+
+  <rect>
+    <x>270</x> <y>428</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>270</x> <y>428</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Debit</text>
+  </text>
+
+  <rect>
+    <x>360</x> <y>428</y> <width>90</width> <height>36</height>
+    <brush><style>solid</style><color>#CCFFCC</color></brush>
+  </rect>
+  <text>
+    <valign>center</valign> <halign>center</halign>
+    <x>360</x> <y>428</y> <width>90</width> <height>36</height>
+    <font><weight>normal</weight><size>18</size></font>
+    <text>Enter</text>
+  </text>
+
+</LabelDefn>

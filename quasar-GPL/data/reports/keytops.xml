@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="TEC ST50 Keytops"
+	module="Keytops"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="150"
+	bottomMargin="150">
+
+  <dataSource type="Code">
+	<next>
+		$current_row &lt; 2
+	</next>
+  </dataSource>
+
+<detail height="3000">
+
+  <rectangle x="0" y="0" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="0" y="0" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Void
+Line</text>
+  </text>
+
+  <rectangle x="300" y="0" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="300" y="0" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Set
+Void</text>
+  </text>
+
+  <rectangle x="600" y="0" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="600" y="0" width="300" height="300" halign="center">
+    <font size="14"/>
+    <text>Price</text>
+  </text>
+
+  <rectangle x="900" y="0" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="900" y="0" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Cancel</text>
+  </text>
+
+  <rectangle x="1200" y="0" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="1200" y="0" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Price
+Inquiry</text>
+  </text>
+
+  <rectangle x="1500" y="0" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="1500" y="0" width="300" height="300" halign="center">
+    <font size="12"/>
+    <text>Ref #</text>
+  </text>
+
+
+  <rectangle x="1800" y="0" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="1800" y="0" width="300" height="300" halign="center">
+    <font size="8"/>
+    <text>Reading</text>
+  </text>
+
+  <rectangle x="2100" y="0" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2100" y="0" width="300" height="300" halign="center">
+    <font size="8"/>
+    <text>Ringoff</text>
+  </text>
+
+  <rectangle x="2400" y="0" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2400" y="0" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Sub
+Total</text>
+  </text>
+
+  <rectangle x="2700" y="0" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2700" y="0" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Post
+Void</text>
+  </text>
+
+  <rectangle x="3000" y="0" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="3000" y="0" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Suspend</text>
+  </text>
+
+  <rectangle x="3300" y="0" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="3300" y="0" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Resume</text>
+  </text>
+
+  <rectangle x="0" y="300" width="300" height="300">
+    <brush style="solid" color="#00FF33"/>
+  </rectangle>
+  <text x="0" y="300" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>F1</text>
+  </text>
+
+  <rectangle x="300" y="300" width="300" height="300">
+    <brush style="solid" color="#00FF33"/>
+  </rectangle>
+  <text x="300" y="300" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>F2</text>
+  </text>
+
+  <rectangle x="600" y="300" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="600" y="300" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Tab</text>
+  </text>
+
+  <rectangle x="900" y="300" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="900" y="300" width="300" height="300" halign="center">
+    <font size="12"/>
+    <text>Cust#</text>
+  </text>
+
+  <rectangle x="1200" y="300" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="1200" y="300" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Back
+Space</text>
+  </text>
+
+
+  <rectangle x="1500" y="300" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="1500" y="300" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>H</text>
+  </text>
+
+
+  <rectangle x="1800" y="300" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="1800" y="300" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>I</text>
+  </text>
+
+  <rectangle x="2100" y="300" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2100" y="300" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>J</text>
+  </text>
+
+  <rectangle x="2400" y="300" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2400" y="300" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>K</text>
+  </text>
+
+  <rectangle x="2700" y="300" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2700" y="300" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>L</text>
+  </text>
+
+  <rectangle x="3000" y="300" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="3000" y="300" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>M</text>
+  </text>
+
+  <rectangle x="3300" y="300" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="3300" y="300" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>N</text>
+  </text>
+
+
+  <rectangle x="0" y="600" width="300" height="300">
+    <brush style="solid" color="#00FF33"/>
+  </rectangle>
+  <text x="0" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>F3</text>
+  </text>
+
+  <rectangle x="300" y="600" width="300" height="300">
+    <brush style="solid" color="#00FF33"/>
+  </rectangle>
+  <text x="300" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>F4</text>
+  </text>
+
+  <rectangle x="600" y="600" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="600" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Space
+Bar</text>
+  </text>
+
+  <rectangle x="900" y="600" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="900" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Up</text>
+  </text>
+
+  <rectangle x="1200" y="600" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="1200" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Down</text>
+  </text>
+
+
+  <rectangle x="1500" y="600" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="1500" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>O</text>
+  </text>
+
+
+  <rectangle x="1800" y="600" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="1800" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>P</text>
+  </text>
+
+  <rectangle x="2100" y="600" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2100" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Q</text>
+  </text>
+
+  <rectangle x="2400" y="600" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2400" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>R</text>
+  </text>
+
+  <rectangle x="2700" y="600" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2700" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>S</text>
+  </text>
+
+  <rectangle x="3000" y="600" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="3000" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>T</text>
+  </text>
+
+  <rectangle x="3300" y="600" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="3300" y="600" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>U</text>
+  </text>
+
+  <rectangle x="0" y="900" width="300" height="300">
+    <brush style="solid" color="#00FF33"/>
+  </rectangle>
+  <text x="0" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>F5</text>
+  </text>
+
+  <rectangle x="300" y="900" width="300" height="300">
+    <brush style="solid" color="#00FF33"/>
+  </rectangle>
+  <text x="300" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>F6</text>
+  </text>
+
+  <rectangle x="600" y="900" width="300" height="300">
+    <brush style="solid" color="#FFFFFF"/>
+  </rectangle>
+  <text x="600" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>7</text>
+  </text>
+
+  <rectangle x="900" y="900" width="300" height="300">
+    <brush style="solid" color="#FFFFFF"/>
+  </rectangle>
+  <text x="900" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>8</text>
+  </text>
+
+  <rectangle x="1200" y="900" width="300" height="300">
+    <brush style="solid" color="#FFFFFF"/>
+  </rectangle>
+  <text x="1200" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>9</text>
+  </text>
+
+  <rectangle x="1500" y="900" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="1500" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>V</text>
+  </text>
+
+  <rectangle x="1800" y="900" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="1800" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>W</text>
+  </text>
+
+  <rectangle x="2100" y="900" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2100" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>X</text>
+  </text>
+
+  <rectangle x="2400" y="900" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2400" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Y</text>
+  </text>
+
+  <rectangle x="2700" y="900" width="300" height="300">
+    <brush style="solid" color="#FFFF99"/>
+  </rectangle>
+  <text x="2700" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Z</text>
+  </text>
+
+  <rectangle x="3000" y="900" width="300" height="300">
+    <brush style="solid" color="#FFCC99"/>
+  </rectangle>
+  <text x="3000" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Naphta</text>
+  </text>
+
+  <rectangle x="3300" y="900" width="300" height="300">
+    <brush style="solid" color="#FFCC99"/>
+  </rectangle>
+  <text x="3300" y="900" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>P50 Heat</text>
+  </text>
+
+  <rectangle x="0" y="1200" width="300" height="300">
+    <brush style="solid" color="#00FF33"/>
+  </rectangle>
+  <text x="0" y="1200" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>F7</text>
+  </text>
+
+  <rectangle x="300" y="1200" width="300" height="300">
+    <brush style="solid" color="#00FF33"/>
+  </rectangle>
+  <text x="300" y="1200" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>F8</text>
+  </text>
+
+  <rectangle x="600" y="1200" width="300" height="300">
+    <brush style="solid" color="#FFFFFF"/>
+  </rectangle>
+  <text x="600" y="1200" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>4</text>
+  </text>
+
+  <rectangle x="900" y="1200" width="300" height="300">
+    <brush style="solid" color="#FFFFFF"/>
+  </rectangle>
+  <text x="900" y="1200" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>5</text>
+  </text>
+
+  <rectangle x="1200" y="1200" width="300" height="300">
+    <brush style="solid" color="#FFFFFF"/>
+  </rectangle>
+  <text x="1200" y="1200" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>6</text>
+  </text>
+
+  <rectangle x="1500" y="1200" width="300" height="300">
+    <brush style="solid" color="#00FFFF"/>
+  </rectangle>
+  <text x="1500" y="1200" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Up</text>
+  </text>
+
+  <rectangle x="1800" y="1200" width="300" height="300">
+    <brush style="solid" color="#FFFF66"/>
+  </rectangle>
+  <text x="1800" y="1200" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>NWTel</text>
+  </text>
+
+  <rectangle x="2100" y="1200" width="300" height="300">
+    <brush style="solid" color="#FFFF66"/>
+  </rectangle>
+  <text x="2100" y="1200" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>NTPC</text>
+  </text>
+
+  <rectangle x="2400" y="1200" width="300" height="300">
+    <brush style="solid" color="#FFFF66"/>
+  </rectangle>
+  <text x="2400" y="1200" width="300" height="300" halign="center">
+    <font size="9"/>
+    <text>Coupon</text>
+  </text>
+
+  <rectangle x="2700" y="1200" width="300" height="300">
+    <brush style="solid" color="#FFCC99"/>
+  </rectangle>
+  <text x="2700" y="1200" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Gas</text>
+  </text>
+
+  <rectangle x="3000" y="1200" width="300" height="300">
+    <brush style="solid" color="#FFCC99"/>
+  </rectangle>
+  <text x="3000" y="1200" width="300" height="300" halign="center">
+    <font size="10"/>
+    <text>Hardware</text>
+  </text>
+
+  <rectangle x="3300" y="1200" width="300" height="300">
+    <brush style="solid" color="#FFCC99"/>
+  </rectangle>
+  <text x="3300" y="1200" width="300" height="300" halign="center">
+    <font size="9"/>
+    <text>Yamaha</text>
+  </text>
+
+  <rectangle x="0" y="1500" width="750" height="300">
+    <brush style="solid" color="#CCFFCC"/>
+  </rectangle>
+  <text x="0" y="1500" width="750" height="300" halign="center">
+    <font size="18"/>
+    <text>Cash</text>
+  </text>
+
+  <rectangle x="750" y="1500" width="750" height="300">
+    <brush style="solid" color="#CCFFCC"/>
+  </rectangle>
+  <text x="750" y="1500" width="750" height="300" halign="center">
+    <font size="18"/>
+    <text>Cheque</text>
+  </text>
+
+  <rectangle x="1500" y="1500" width="750" height="300">
+    <brush style="solid" color="#CCFFCC"/>
+  </rectangle>
+  <text x="1500" y="1500" width="750" height="300" halign="center">
+    <font size="18"/>
+    <text>Visa</text>
+  </text>
+
+  <rectangle x="2250" y="1500" width="750" height="300">
+    <brush style="solid" color="#CCFFCC"/>
+  </rectangle>
+  <text x="2250" y="1500" width="750" height="300" halign="center">
+    <font size="14"/>
+    <text>Master Card</text>
+  </text>
+
+  <rectangle x="3000" y="1500" width="750" height="300">
+    <brush style="solid" color="#CCFFCC"/>
+  </rectangle>
+  <text x="3000" y="1500" width="750" height="300" halign="center">
+    <font size="18"/>
+    <text>Voucher</text>
+  </text>
+
+  <rectangle x="0" y="1800" width="750" height="300">
+    <brush style="solid" color="#CCFFCC"/>
+  </rectangle>
+  <text x="0" y="1800" width="750" height="300" halign="center">
+    <font size="18"/>
+    <text>Quantity</text>
+  </text>
+
+  <rectangle x="750" y="1800" width="750" height="300">
+    <brush style="solid" color="#CCFFCC"/>
+  </rectangle>
+  <text x="750" y="1800" width="750" height="300" halign="center">
+    <font size="18"/>
+    <text>Repeat</text>
+  </text>
+
+  <rectangle x="1500" y="1800" width="750" height="300">
+    <brush style="solid" color="#CCFFCC"/>
+  </rectangle>
+  <text x="1500" y="1800" width="750" height="300" halign="center">
+    <font size="18"/>
+    <text>Discount</text>
+  </text>
+
+  <rectangle x="2250" y="1800" width="750" height="300">
+    <brush style="solid" color="#CCFFCC"/>
+  </rectangle>
+  <text x="2250" y="1800" width="750" height="300" halign="center">
+    <font size="18"/>
+    <text>Debit</text>
+  </text>
+
+  <rectangle x="3000" y="1800" width="750" height="300">
+    <brush style="solid" color="#CCFFCC"/>
+  </rectangle>
+  <text x="3000" y="1800" width="750" height="300" halign="center">
+    <font size="18"/>
+    <text>Enter</text>
+  </text>
+</detail>
+</ReportDefn>

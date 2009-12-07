@@ -1,0 +1,32 @@
+include (../project.def)
+
+TEMPLATE	= app
+TARGET		= quasar_import
+VERSION		= 1.4
+CONFIG		+= qt
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../bin
+INCLUDEPATH	+= ../utility;../db_driver;../business;../database;.
+DEPENDPATH	= $$INCLUDEPATH
+
+# Linux import
+linux-g++ {
+LIBS		 = -lquasar_db -lquasar_obj -lquasar_driver \
+                   -lquasar_util $$ICU_LIBS
+TARGETDEPS	 = ../lib/libquasar_db.a ../lib/libquasar_driver.a \
+                   ../lib/libquasar_obj.a ../lib/libquasar_util.a
+}
+
+# Windows import
+win32 {
+TMAKE_LINK	+= /NODEFAULTLIB:libcmt.lib
+LIBS		= ..\lib\quasar_util.lib
+TARGETDEPS	= ..\lib\quasar_util.lib
+RC_FILE		= QuasarImport.rc
+}
+
+HEADERS=importer.h
+SOURCES=quasar_import.cpp importer.cpp
+
+TRANSLATIONS=messages.ts

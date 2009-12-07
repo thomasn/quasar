@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Account List"
+	module="Ledger"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc type_name { type } {
+	    if { $type == 0 } { return "Bank" }
+	    if { $type == 1 } { return "Accounts Receivable" }
+	    if { $type == 2 } { return "Inventory" }
+	    if { $type == 3 } { return "Other Current Assets" }
+	    if { $type == 4 } { return "Fixed Assets" }
+	    if { $type == 5 } { return "Other Assets" }
+	    if { $type == 6 } { return "Accounts Payable" }
+	    if { $type == 7 } { return "Credit Card" }
+	    if { $type == 8 } { return "Other Current Liability" }
+	    if { $type == 9 } { return "Long Term Liability" }
+	    if { $type == 10 } { return "Equity" }
+	    if { $type == 11 } { return "Income" }
+	    if { $type == 12 } { return "Cost of Goods Sold" }
+	    if { $type == 13 } { return "Expense" }
+	    if { $type == 14 } { return "Other Income" }
+	    if { $type == 15 } { return "Other Expense" }
+	    return "Unknown"
+	}
+  ]]></initialize>
+
+  <dataSource type="Query">
+    <query>
+	select name, account_type from account order by account_type,name
+    </query>
+    <column>name</column>
+    <column>type</column>
+  </dataSource>
+
+  <title height="350">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Account List</text>
+    </text>
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+    <line x="0" y="300" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <pageHeader height="75">
+  </pageHeader>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="2400"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Name</text>
+    </text>
+    <text
+	x="2410"
+	y="0"
+	width="2000"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Type</text>
+    </text>
+  </pageHeader>
+
+  <detail height="158">
+    <line x="0" y="142" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="2400"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(name)</var>
+    </text>
+    <text
+	x="2410"
+	y="0"
+	width="2000"
+	height="125">
+	<font name="Times" size="12"/>
+	<expr>[type_name $column(type)]</expr>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

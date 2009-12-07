@@ -1,0 +1,24 @@
+Release Notes for Quasar 1.4.5:
+-------------------------------
+
+Quasar 1.4.5 is a quick bug fix release with just a couple other things
+thrown in to make amd64 compiling easier.  The changes are:
+
+	- fixed a bug with date handling in some time zones.  It was
+	  working 100% in Mountain time but was broken in Central and
+	  perhaps other time zones.
+
+	- fixed bug in the SHA1 code that was getting the wrong crypted
+	  value
+
+	- changed Variant and fixed to use int32_t and int64_t to make
+	  compiling work better on amd64 systems
+
+	- added checks in quasar_int.h to enforce that the int32_t and
+	  int64_t types are the size they should be
+
+	- changed config and data files to be owned by "root" with a
+	  group of "quasar" and 0640 permissions
+
+	- fixed harmless warning in Point-of-Sale posting program when
+	  processing blank dates

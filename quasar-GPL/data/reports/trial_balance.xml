@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Trial Balance"
+	module="Ledger"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+  ]]></initialize>
+
+  <dataSource type="Query">
+    <code><![CDATA[
+	set where "change_date <= '$param(date)' and header = 'N'";
+	if { $param(store_id) != "" } {
+	    append where " and store_id = '$param(store_id)'"
+	}
+
+	return "select account_type,name,number,sum(account_change.amount)
+	from account join account_change on account.account_id =
+	account_change.account_id where $where group by account_type,name,
+	number having sum(account_change.amount) != 0.0 order by
+	account_type,name,number"
+    ]]></code>
+    <column>type</column>
+    <column>name</column>
+    <column>number</column>
+    <column>amount</column>
+  </dataSource>
+
+  <parameter
+	name="date"
+	description="Enter the as/of date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <variable
+	name="debit_amt"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<calcExpr><![CDATA[
+		$column(amount) < 0 ? "" : $column(amount)
+	]]></calcExpr>
+  </variable>
+
+  <variable
+	name="total_debits"
+	resetType="Report">
+	<sum>$var(debit_amt)</sum>
+  </variable>
+
+  <variable
+	name="credit_amt"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<calcExpr><![CDATA[
+		$column(amount) > 0 ? "" : [expr $column(amount) * -1.0]
+	]]></calcExpr>
+  </variable>
+
+  <variable
+	name="total_credits"
+	resetType="Report">
+	<sum>$var(credit_amt)</sum>
+  </variable>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Trial Balance</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"As/at $param(date)"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush mode="solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Number</text>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="2300"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Name</text>
+    </text>
+    <text
+	x="3100"
+	y="0"
+	width="850"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Debits</text>
+    </text>
+    <text
+	x="3950"
+	y="0"
+	width="850"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Credits</text>
+    </text>
+  </pageHeader>
+
+  <detail height="158">
+    <line x="0" y="142" width="4800">
+	<pen color="#808080"/>
+    </line>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125"
+	halign="Left"
+	valign="Top">
+	<font name="Times" size="12"/>
+	<var>column(number)</var>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="2300"
+	height="125"
+	halign="Left"
+	valign="Top">
+	<font name="Times" size="12"/>
+	<var>column(name)</var>
+    </text>
+    <text
+	format="money"
+	x="3100"
+	y="0"
+	width="850"
+	height="125"
+	halign="Right"
+	valign="Top">
+	<font name="Times" size="12"/>
+	<var>var(debit_amt)</var>
+    </text>
+    <text
+	format="money"
+	x="3950"
+	y="0"
+	width="850"
+	height="125"
+	halign="Right"
+	valign="Top">
+	<font name="Times" size="12"/>
+	<var>var(credit_amt)</var>
+    </text>
+  </detail>
+
+  <summary height="250">
+    <text
+	x="0"
+	y="0"
+	width="3100"
+	height="192"
+	halign="Left"
+	valign="Top">
+	<font name="Times" size="18" isBold="true"/>
+	<text>Grand Total:</text>
+    </text>
+    <text
+	format="money"
+	x="3100"
+	y="0"
+	width="850"
+	height="192"
+	halign="Right"
+	valign="Center">
+	<font name="Times" size="12" isBold="true"/>
+	<var>var(total_debits)</var>
+    </text>
+    <text
+	format="money"
+	x="3950"
+	y="0"
+	width="850"
+	height="192"
+	halign="Right"
+	valign="Center">
+	<font name="Times" size="12" isBold="true"/>
+	<var>var(total_credits)</var>
+    </text>
+  </summary>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

@@ -1,0 +1,70 @@
+include (../project.def)
+
+TEMPLATE	= lib
+TARGET		= quasar_db
+VERSION		= 1.4
+CONFIG		+= qt staticlib
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../lib
+INCLUDEPATH	+= ../utility;../business;../report;../zlib;../db_driver;.
+DEPENDPATH	= $$INCLUDEPATH
+
+HEADERS=account_select.h item_adjust_select.h card_select.h charge_select.h \
+	cheque_select.h count_select.h customer_select.h data_event.h \
+	dept_select.h discount_select.h employee_select.h \
+	expense_select.h extra_select.h general_select.h gltx_select.h \
+	invoice_select.h item_price_select.h item_select.h location_select.h \
+	order_select.h personal_select.h quasar_client.h quasar_db.h \
+	data_import.h receipt_select.h receive_select.h reconcile_select.h \
+	select.h slip_select.h store_select.h subdept_select.h tax_select.h \
+        tender_select.h term_select.h todo_select.h vendor_select.h \
+        recurring_select.h group_select.h payout_select.h quote_select.h \
+        nosale_select.h shift_select.h withdraw_select.h station_select.h \
+        tender_adjust_select.h customer_type_select.h card_adjust_select.h \
+        tender_count_select.h security_type_select.h order_template_select.h \
+        pos_tx_select.h object_cache.h pat_group_select.h \
+        pat_worksheet_select.h user_select.h label_batch_select.h \
+	price_batch_select.h company_select.h pos_work_select.h license.h \
+	promo_batch_select.h adjust_reason_select.h client_conn.h client_stmt.h
+
+SOURCES=account_db.cpp account_select.cpp item_adjust_db.cpp \
+	item_adjust_select.cpp card_db.cpp card_select.cpp charge_db.cpp \
+	charge_select.cpp cheque_db.cpp cheque_select.cpp count_db.cpp \
+	count_select.cpp customer_db.cpp customer_select.cpp \
+	dept_db.cpp dept_select.cpp discount_db.cpp discount_select.cpp \
+        employee_db.cpp employee_select.cpp expense_db.cpp \
+        expense_select.cpp extra_db.cpp extra_select.cpp general_db.cpp \
+        general_select.cpp gltx_db.cpp gltx_select.cpp invoice_db.cpp \
+        invoice_select.cpp item_db.cpp item_price_db.cpp \
+        item_price_select.cpp item_select.cpp location_db.cpp \
+	location_select.cpp order_db.cpp order_select.cpp personal_db.cpp \
+	personal_select.cpp quasar_account.cpp quasar_card.cpp \
+	quasar_client.cpp quasar_db.cpp quasar_gl.cpp data_import.cpp \
+        quasar_inquiry.cpp quasar_item.cpp quasar_reconcile.cpp \
+        quasar_tax.cpp receipt_db.cpp receipt_select.cpp receive_db.cpp \
+        receive_select.cpp reconcile_db.cpp reconcile_select.cpp \
+        select.cpp slip_db.cpp slip_select.cpp store_db.cpp \
+        store_select.cpp subdept_db.cpp subdept_select.cpp tax_db.cpp \
+        tax_select.cpp tender_db.cpp tender_select.cpp term_db.cpp \
+        term_select.cpp todo_db.cpp todo_select.cpp vendor_db.cpp \
+        vendor_select.cpp recurring_select.cpp recurring_db.cpp \
+        group_select.cpp group_db.cpp payout_select.cpp payout_db.cpp \
+        quote_select.cpp quote_db.cpp nosale_db.cpp nosale_select.cpp \
+        shift_db.cpp shift_select.cpp withdraw_db.cpp withdraw_select.cpp \
+        station_db.cpp station_select.cpp tender_adjust_db.cpp \
+        tender_adjust_select.cpp customer_type_db.cpp \
+        customer_type_select.cpp card_adjust_select.cpp \
+        card_adjust_db.cpp tender_count_select.cpp tender_count_db.cpp \
+        security_type_db.cpp security_type_select.cpp user_db.cpp \
+        user_select.cpp order_template_select.cpp order_template_db.cpp \
+        pos_tx_select.cpp pos_tx_db.cpp object_cache.cpp \
+        pat_group_select.cpp pat_group_db.cpp pat_worksheet_select.cpp \
+        pat_worksheet_db.cpp quasar_pat.cpp company_db.cpp \
+	label_batch_db.cpp label_batch_select.cpp price_batch_db.cpp \
+	price_batch_select.cpp company_select.cpp pos_work_select.cpp \
+	pos_work_db.cpp license.cpp promo_batch_db.cpp \
+	promo_batch_select.cpp adjust_reason_select.cpp \
+	adjust_reason_db.cpp client_conn.cpp client_stmt.cpp
+
+TRANSLATIONS=messages.ts

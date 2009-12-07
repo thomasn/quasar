@@ -1,0 +1,174 @@
+<html>
+<head>
+<TITLE>Company Master</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png"></td>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="setup_system.html"><b>Up: </b>Setup System</a></td>
+<td><a href="company_list.html"><b>Previous: </b>Company List</a></td>
+<td><a href="store_list.html"><b>Next: </b>Store List</a></td>
+</tr>
+</tbody></table>
+
+<hr>
+
+<h1>Company Master</h1>
+<br>
+<img src="images/company_master.png"><br>
+<br>
+
+<p> The company master window is used to define the address, ledger specific
+information, default accounts and rounding rules.
+
+<h2>Name</h2>
+
+<p>The name given to the company.
+
+<h2>Number</h2>
+
+<P>The number assigned to the company.
+
+<h2>Address</h2>
+<br>
+<img src="images/company_master_address.png">
+<br>
+
+<p>This section is used to define the address of the company
+
+<h2>Ledger</h2>
+<br>
+<img src="images/company_master_ledger.png"><br>
+<br>
+
+<p> This section is used to define ledger specific information about your
+company. 
+<dl>
+<dd>
+<ul>
+<li> <b>Default Store</b> - The default store that uses logging in will
+default to.
+<li> <b>Start of Fiscal Year</b> - Enter the first day of your fiscal
+accounting year. Quasar requires this date to properly print financial
+statements. 
+<li> <b>Date Ledger is Closed</b> - Enter the closing date for the
+ledger. Once a date is entered, no transactions affecting the ledger accounts
+may be posted to any date on or prior to the date entered.
+<li> <b>Cash Reconcile Method</b> - Select Station or Employee. If "Station" is
+selected then the cash reconciliation will be balanced by point-of-sale
+station. If "Employee" is selected then the cash reconciliation will be
+balanced by employee/cashier.
+<li> <b>Safe Store</b> - Enter the store where the money is held in the safe
+during cash reconciliation. 
+<li> <b>Safe Station/Employee</b> - Enter station/employee that acts as the
+safe for cash reconciliation purposes.
+<li> <b>Retained Earnings</b> - Link an account to be the retained earnings
+account. The retained earnings account is a special account that displays the
+current profit/loss balance in the equity portion of the balance sheet.
+<li> <b>Historical Balance</b> - Link an account to be the historical balance
+account. Quasar uses this historical balance for offsetting entries when
+posting current customer balances, vendor balances and inventory balances.
+<li> <b>Ledger Transfers</b> - Define an accrual account for ledger
+transfers. When a ledger transfer takes place between two stores the balance
+sheet of each store is impacted. The transfer accrual account is used to
+offset the in/out postings to the ledger. 
+</ul>
+</dl>
+
+<h2>Accounts</h2>
+<br>
+<img src="images/company_master_accounts.png"><br>
+<br>
+
+<p> This section is used to define default accounts to make entry easier in
+Quasar. 
+
+<dl>
+<dd>
+<ul>
+<li> <b>Default Bank</b> - Define the default bank account that will be used
+when creating cheques and paying bills.
+<li> <b>Default Receivables</b> - Define the default receivable account that
+will be used when creating new customers.
+<li> <b>Default Payables</b> - Define the default payable account that will be
+used when creating new vendors. 
+<li> <b>Customers Terms Discounts</b> - Define the default expense account
+that will be used when early payment discounts are given to customers.
+<li> <b>Vendor Terms Discount</b> - Define the default terms discount account
+that will be used to record the income as a result of taking advantage of
+early payment discounts. 
+<li> <b>Container Deposit</b> - Define a container deposit account. From time
+to time it is necessary to purchase and sell items that have container
+deposits. Quasar tracks deposit purchases and deposit sales in the container
+deposit account. 
+<li> <b>Transfers</b> - Define an accrual account for stock transfers. When a
+stock transfer takes place between two stores the balance sheet of each store
+is impacted. The transfer accrual account is used to offset the in/out
+postings to inventory.  
+<li> <b>Physical Inventory</b> - Define a default expense account for item
+adjustments created by physical inventory counts. When an item quantity is
+adjusted, up or down, there is a increase or reduction of the inventory
+value. This change in value is offset by posting to an expense account. 
+<li> <b>Service Charges</b> - Define a default income account for service
+charges that are charged on past due customer invoices.
+<li> <b>Tender Over/Short</b> - Define a default expense account for cash
+discovered as being over/short during the cash reconciliation process.
+</ul>
+</dl>
+
+<h2>Rounding</h2>
+<br>
+<img src="images/company_master_rounding.png"><br>
+<br>
+
+<p> 
+This section is used to set your rounding rules for your company selling
+prices. The rounding rules are used in the item master screen if you enter a
+desired margin, the price will be calculated using the rounding. Also, there
+is a "Round" button on the price batch. When you click on the "Round" button
+all the prices are rounded using the rounding rules.
+
+<p>
+Price rounding rules are entered in the table. There are two columns "Ends In"
+and "Add On". The ends in strings for a price of 7.47 would be "7", or
+"47". So if you said "Ends In 7" and "add on .02" then the selling price would
+round up to 7.49. For a price of 7.47 if you said "Ends in 47" and "add on
+(0.17)" then the selling price would round down to 7.30. You can round up or
+down and you can specify the rounding strings to be as long as required to
+meet your rounding requirements. 
+
+
+<h2>Inactive?</h2>
+
+<p>Toggle on or off. Toggle off to set the company to inactive. Toggle on to
+re-set the company to active. </p>
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="setup_system.html"><b>Up: </b>Setup System</a></td>
+<td><a href="company_list.html"><b>Previous: </b>Company List</a></td>
+<td><a href="store_list.html"><b>Next: </b>Store List</a></td>
+</tr>
+</table>
+
+<br>
+
+</body>
+</html>
+
+
+
+
+
+
+

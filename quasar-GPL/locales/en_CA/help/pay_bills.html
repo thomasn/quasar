@@ -1,0 +1,201 @@
+<html>
+<head>
+<TITLE>Pay Bills</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png"></td>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_purchases.html"><b>Up: </b>Purchases</a></td>
+<td><a href="vendor_payment.html"><b>Previous: </b>Vendor Payment</a></td>
+</tr>
+</tbody></table>
+
+
+<hr>
+
+<H1>Pay Bills</H1>
+<img src="images/pay_bills.png"><br>
+<br>
+
+<p>From the pay bills window you can pay invoices, pay patial invoices
+and take terms from multiple vendors. 
+
+
+<h2>Payment Date</h2>
+
+<p> The date of the bill payments.
+
+<h2>Payment Time</h2>
+
+<p> The time of the bill payments.
+
+<h2>Store</h2>
+
+<p> The store from which the bills are paid.
+
+<h2>Station</h2>
+
+<p> The work station upon which the bills are paid.
+
+<h2>Employee</h2>
+
+<p> The employee paying the bills.
+
+
+<h2>Pay By</h2>
+
+<h3>Cheque</h3>
+<p>
+Toggle on or off. Toggle on if the bills are to be paid by cheque.
+
+<h3>Next Cheque</h3>
+<p>
+Quasar defaults to the next cheque number. You may change the next cheque
+number manually as required. 
+
+<h3>Credit Card</h3>
+<p>
+Toggle on or off. Toggle on if the bills are to be paid by company
+credit card.  
+
+<h3>Account</h3>
+<p> 
+Enter or select the bank account or credit card thet will be credited
+as a result of the payments.
+
+<h3>Current Balance</h3>
+<p>
+The current balance of your bank account or credit card account.
+
+<h2>Show</h2>
+
+Use this section to determine what bills will show on the bills
+table. 
+
+<h3>Show all bills</h3>
+
+Toggle on or off. Toggle on to show all outstanding bills in the bills
+table.
+
+<h3>Show due on/before</h3>
+
+Toggle on or off. Toggle on to show only bills due prior to a specific
+date. Bills are deemed to be due and will be shown if either their due
+date or discount date is on or before the date entered. 
+
+<h2>Discount Account</h2>
+
+<p> Enter the account id, which will be used for the reduction of
+payables, as a result of payment within the vendor terms.  For
+example, if a payable is debited by $5.00 as a result 
+of a terms discount, the off-setting entry will be a credit to a discount
+account.
+
+<h2>Payment Table</h2>
+
+<p> The payment table displays all of the vendor invoices (receivings)
+that have remaining
+balances due. The unpaid receivings are displayed in ascending order
+from the oldest to the newest. 
+
+<dl>
+<dd>
+<ul>
+<li><b>Due Date</b> - The date that the vendor invoice is due.
+<li><b>Vendor</b> - The name of the vendor for the invoice.
+<li><b>Invoice</b> -  The transaction id of the invoice.
+<li><b>Total</b> - The amount of the vendor invoice.
+<li><b>Disc Date</b> - The date by which the invoice must be paid in
+order to receive the early payment discount offered within the vendor terms. 
+<li><b>Due</b> - The total balance due on the invoice.
+<li><b>Payment</b> - The amount of the payment net of terms.
+<li><b>Discount</b> - The amount of the early payment discount taken.
+<li><b>Pay</b> -  Toggle on to pay. Toggle off to remove clear the payment.
+</ul>
+</dl>
+
+<h2>Total Paid</h2>
+<p>
+Displays the total amount of the bills selected for payment.
+
+<h2>Ending Balance</h2>
+<p>
+Quasar calculates what the ending balance of your bank account if
+you pay all of the cheques marked for payment.
+
+<h2>Pay All</h2> 
+<p>
+Select to pay all bills.
+
+<h2>Clear Payments</h2>
+<p>
+Click on the clear payments button to un-select all invoices for
+payment. 
+
+<h2>Invoice Info</h2>
+<img src="images/pay_bills_info.png"><br>
+
+<p> Click on the invoice info button to view specific information
+about an invoice. The "Invoice Information" window will be displayed. The
+invoice information displayed is dependant on the line in payment
+table where the cursor rests. If you move the cursor to a new line in
+the payment table the information in the "Invoice Information" screen
+will change accordinly.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Invoice</b> - The transaction id of the invoices.
+<li> <b>Total</b> - The total of the invoice.
+<li> <b>Paid</b> - The total paid on the invoice.
+<li> <b>Due</b> - The unpaid balance of the invoice.
+<li> <b>Terms</b> - The discount terms for the invoice.
+<li> <b>Invoice Date</b> - The date of the invoice.
+<li> <b>Due Date</b> - The date that the invoice payment is due.
+<li> <b>Discount Date</b> - The date that the invoice must be paid if
+you wish to take the early payment terms.
+<li> <b>Discount</b> - The amount of the terms discount calulated from
+the terms.
+<li> <b>Take Discount</b> - Click on the "Take Discount" button to
+take the early payment discount even though you may have missed the
+discount due date. 
+<li> <b>Taken</b> - The amount of terms discount taken.
+<li> <b>Clear Discount</b> - Click on the clear discount button to
+clear any terms discount taken.
+<li> <b>View Invoice</b> - Click on the "View Invoice" button to view
+the actual vendor invoice.
+</ul>
+</dl>
+
+
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_purchases.html"><b>Up: </b>Purchases</a></td>
+<td><a href="vendor_payment.html"><b>Previous: </b>Vendor Payment</a></td>
+</tr>
+</table>
+
+
+<br>
+
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,594 @@
+<html>
+<head>
+<TITLE>Item Master</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png"></td>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_inventory.html"><b>Up: </b>Inventory</a></td>
+<td><a href="item_list.html"><b>Previous: </b>Item List</a></td>
+<td><a href="item_margin.html"><b>Next: </b>Item Margin</a></td>
+</tr>
+</tbody></table>
+
+
+<hr>
+
+<H1>Item Master</H1>
+<img src="images/item_master.png"><br>
+<br>
+
+<p>
+
+Using this screen you can create an item with a single size, cost and
+price, or you can identify multiple sizes, costs and prices. You can
+link multiple lookup numbers to an item, link specific 
+customers to a price, specific vendors to a cost or even create kits
+made out of other items. You can enter a container deposit, taxes and
+specify if a cost or price includes tax and/or container deposit.
+</p>
+
+<p>
+The speed in which new items are created can be substantially sped up
+by first entering sub-departments containing default data. Sub-departments are created in the sub-department master window. New items
+may be defined as items that will be sold, items that will be
+purchased, items that will be inventoried, or any combination of all
+three. Following is a list of all attributes in the item master
+window:
+</p>
+
+
+<h2>Item Number</h2>
+
+<P>The price lookup id for the item.</p>
+
+<h2>Description</h2>
+
+<p>The description of the item.</p>
+
+
+<h2>Sub-Department</h2>
+
+<p>The item may be linked to a sub-department. When entering a
+sub-department in a new item, the sub-department defaults will be
+brought forward and set in the item. Utilization of sub-departments
+can substantially speed up item entry.</p> 
+
+<h2>Type</h2>
+
+<img src="images/item_master_type.png"><br>
+
+<p>Defines if an item is purchased, sold and inventoried or any
+combination of the three. The accounts required will be displayed
+dependent on the combination selected. In Quasar you can create these types of
+accounts.
+
+
+<h3>Purchased</h3>
+
+<p>Toggle on or off. Toggle on if the item will be purchased through
+Quasar's purchasing and receiving functions.</p>
+
+<h3>Sold</h3>
+
+<p>Toggle on or off. Toggle on if the item will be sold through
+Quasar's sales functions.
+
+<h3>Inventoried</h3>
+
+<p>Toggle on or off. Toggle on if the item will be inventoried through
+Quasar's inventory functions.
+
+<h3>Open Department?</h3>
+
+<p>Toggle on or off if the item is purchased, sold and inventoried. Toggle on
+if you will want Quasar to calculate the COGS(cost of goods sold) and the
+asset reduction, using the target margin, when the item is sold. Toggle off if
+the COGS and asset reduction will be calculated from the average cost of the
+item.
+
+
+<h3>Expense Account</h3>
+
+<p>Defines the account the item is to be expensed to when it is
+purchased. The expense account is required for:
+<dl>
+<dd>
+<ul>
+<li>  items that are purchased only 
+<li>  items that are purchased and sold, but not inventoried
+</ul>
+</dl>
+
+
+<h3>COGS Account</h3>
+
+<p>Defines the cost of goods sold account that will be posted to when
+the item is sold. The cost of goods sold account is required for:
+<dl>
+<dd>
+<ul>
+<li>  items that are purchased, sold and inventoried
+<li>  items that are sold and inventoried, but not purchased
+</ul>
+</dl>
+
+<h3>Income Account</h3>
+
+<p>Defines the income account that will be posted to when an item is
+sold. The income account is required for all items that are sold.
+
+<h3>Asset Account</h3>
+<p>Defines the asset account the will be posted to when an item is
+purchased, added to inventory using the item adjustment window or
+sold. The asset account is required for all items that are inventoried.
+
+<h2>Groups</h2>
+
+<img src="images/item_master_group.png"><br>
+
+<p> Item groups are used to link an item to a price. The purpose is to
+provide the ability to assign a price to multiple items at the same
+time by linking a price to a group. 
+
+<h3>Group Name</h3>
+
+<p> Enter the name of the group(s) that will link the item to a price.
+An item may be linked to multiple item groups. 
+
+<h3>Store</h3>
+
+<p> The current store in which you are working with the item.
+
+
+<h3>Location</h3>
+
+<p> The location of the item in the current store.
+
+<h3>Min</h3>
+
+<p> The minimum on hand quantity. When using the auto order
+function, orders will be generated for all items whose on hand levels
+drop below the minimum quantity.
+
+<h3>Max</h3>
+
+<p> The maximum stock quantity. When using the auto order
+function, orders will be generated to bring the on hand levels up to
+the maximum quantity. Note, that case ordering may bring the on hand
+quantity higher than the max level.
+
+<h3>Discontinued?</h3>
+
+<p> By setting an item to discontinued, it can be sold and inventoried, but
+Quasar will no longer allow you to purchase the item. Use this flag for items
+that will be phased out of your stock selection.
+
+<h3>Stocked</h3>
+
+<p>Toggle on or off. Toggle on if the item is stocked. If the item is
+not stocked it will not display on the item lists for this store.
+
+<h3>On Hand</h3>
+
+<p> Quasar displays the current stock on hand level.
+
+<h3>On Order</h3>
+
+<p> Quasar displays the current stock on order level.
+
+<h2>General</h2>
+
+<p> The general folder contains the general purchasing and selling
+information for an item. More advanced functions can be found in the
+additional folders.<br>
+<br>
+<img src="images/item_master_general.png"><br>
+
+<h3>Purchase Information</h3>
+
+<p>Purchase information is only required for items that are purchased.<br>
+
+<dl>
+<dd>
+<ul>
+<li> <b>Default Size</b> - The default purchasing size for the item. For
+example, if an item is purchased in a case of 12 and sold in
+eaches. Then the default purchasing size would be something like
+"Case" or "12 Pack". 
+<li> <b>Size Qty</b> -  The number of individual selling units in the default 
+purchasing size. For example, if an item is purchased in a case of 12
+and sold in eaches. Then the default size qty will be 12. (12 eachs in
+a case) 
+<li> <b>Cost</b> - The vendor cost of the item.
+<li> <b> Purchase Tax</b> - The purchase tax that will be charged when the
+items are purchased from a vendor.
+<li> <b>Default Vendor</b> - The vendor from who the item is normally
+purchased.  
+<li> <b>Order Number</b> - The vendor order number for the item if
+different from the item number.
+</ul>
+</dl>
+
+
+<h3>Sales Information</h3>
+
+<p>Sales information is only required for items that are sold.<br>
+
+
+<dl>
+<dd>
+<ul>
+<li> <b>Default Size</b> - The default selling size for the item. For
+example, if an item is purchased in a case of 12 and sold in
+eaches. Then the default selling size would be something like "Each"
+or "Single". Note that when setting the default selling size for an
+item that is sold by weight, such as produce, you must enter the
+default size as "KG" in upper case. 
+<li><b>Size Qty</b> - The number of individual selling units in the default
+selling size. For example, if an item is sold in
+eaches. Then the default selling size qty will be 1.
+<li> <b>Price</b> - The selling price of the item.  Note that the 
+margin and profit attributes are affected by any change to the price
+attribute. 
+<li><b>Margin</b> - The gross margin of the item. The margin is either
+calculated or may be entered. Note that the price and profit
+attributes are affected by any change to the margin attribute.
+<li><b>Profit</b> - The dollars profit that will be realized when the
+product is sold. The profit is either calculated or may be
+entered. Note that the price attribute and the margin attribute are
+affected by any change to the profit attribute.  
+<li><b>Target GM</b> - The target gross margin for the item. The target gross
+margin is used by Quasar to calculate suggested selling prices based
+on desired margins.  
+<li><b>Variance</b> - The variance defines the allowed variance between the
+actual gross margin and the target gross margin. Reports can be run to
+identify items 
+whose margin is less than or greater than the allowed variance.
+<li><b>Selling Tax</b> - Tax that will be charged when the item is sold.
+</ul>
+</dl>
+
+<h2>Sizes & Numbers</h2>
+
+<br>
+<img src="images/item_master_size.png"><br>
+
+<h3>Sizes Table</h3>
+<p>
+
+Use the sizes table to define one or more sizes for an item and to
+link the "size quantity" and "weight" to each size. The weight is used
+for calculating the landed cost of an item.  Note - you must be
+consistant with the units of measure used. For example, if you use
+kilograms for one item then use kilograms for all items. In addition 
+
+<dl>
+<dd>
+<ul>
+<li> <b>Size Name</b> - The name of the size.
+<li> <b>Quantity</b> - The quantity of item units in the size.
+<li> <b>Weight</b> - The weight of the size.
+<li> <b>Multiple</b> - If the item must be ordered in specific
+multiples or quantities enter the multiple here. When an auto order is
+generated Quasar will take the multiple into consideration.
+</ul>
+</dl>
+
+<h3>Numbers Table</h3>
+<p>
+Use the numbers table to define one or item numbers that are linked to
+an item. Also use the numbers table to link a specific size to an item
+number. If no specific size is linked to an item number, then Quasar
+will use the default sizes specified in the general folder.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Item Number</b> - Enter the various item numbers that define
+the item. For example, an item may have multiple UPC codes or price
+lookup codes (PLU's).
+<li> <b>Size</b> - The item size that the number is linked to.
+</ul>
+</dl>
+
+
+<h2>Flags</h2>
+
+<br>
+<img src="images/item_master_flag.png"><br>
+
+<p>Use the flag file to define miscellaneous options for the item
+
+<dl>
+<dd>
+<ul>
+<li> <b>Discountable?</b> - Toggle on or off. Toggle off if the item
+may not be discounted at the point-of-sale.
+<li> <b>Qty Enforced?</b> - Toggle on or off. Toggle on if the cashier
+must enter the quantity of the item when selling it at the point-of-sale.
+<li> <b>Qty Decimals?</b> - Toggle on or off. Toggle on if you allow
+this item to be sold in decimal quantities.
+<li> <b>Qty From Price?</b> - Toggle on or off. Toggle on if you require
+the point-of-sale to calculate the quanitity of items sold from the
+total price of the item. For example, when selling fuel, you may 
+enter $20.00 and have Quasar calculate the liters or gallons sold for you.
+<li> <b>Weighed</b> - Toggle on or off. Toggle on if the item needs to
+be weighed at the point-of-sale.
+<li> <b>Cost Includes Tax?</b> - Toggle on or off. Toggle on if the
+cost of the item includes tax. 
+<li> <b>Price Includes Tax?</b> - Toggle on or off. Toggle on if the price of the item includes tax.
+<li> <b>Cost Includes Deposit?</b> - Toggle on or off. Toggle on if
+the cost of the item includes container deposits.
+<li> <b>Price Includes Deposit?</b> - Toggle on or off. Toggle on if
+the price of the item includes container deposits.
+</ul>
+</dl>
+
+<h2>Store</h2>
+<br>
+<img src="images/item_master_store.png"><br>
+
+<p> Use the store file to define item information as it relates to
+each store.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Store</b> The name of the store.
+<li> <b>Location</b> The location in the store in which the item is
+stocked. Entering a location assists in finding the item in the item
+list and reports. More importantly, the  addition of locations provides the
+ability to 
+count physical inventory by stock locations rather than having to
+count the entire store. 
+<li> <b>Stocked?</b> - Toggle on or off. Toggle on if the item is
+stocked in the store. Similar to the active flag. The stocked flag provides an
+mechanism to reduce the size of lookup lists. Non-stocked items do not
+appear on lookup lists by default.
+<li> <b>Min</b> - The minimum on hand quantity. When using the auto
+order function, orders will be generated for all items whose on hand
+levels drop below the minimum quantity.
+<li> <b>Max</b> - The maximum stock quantity. When using the auto order
+function, orders will be generated to bring the on hand levels up to
+the maximum quantity. Note, that case ordering may bring the on hand
+quantity higher than the max level.
+</ul>
+</dl>
+
+
+<h2>Costs & Prices</h2>
+<br>
+<img src="images/item_master_cost.png"><br>
+
+<p>
+Use the costs and prices folder to set the cost and selling price for
+items that have multiple sizes.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Store</b> The store stocking the item.
+<li> <b>Size</b> The size of the item.
+<li> <b>Cost</b> The cost of each size.
+<li> <b>Price</b> The selling of each price.
+<li> <b>Profit</b> The profit on the sale of an item. The selling
+price minus the cost.
+<li> <b>Margin</b> The percentage profit margin on the sale of an
+item.
+<li><b>Target</b> - The target gross margin for the item. The target gross
+margin is used by Quasar to calculate suggested selling prices based
+on desired margins.  
+<li><b>Allow</b> - The allowed variance defines the allowed variance
+between the actual gross margin and the target gross margin. Reports
+can be run to identify items whose margin is less than or greater than
+the allowed variance. 
+</ul>
+</dl>
+
+
+<h2>Vendors</h2>
+<br>
+<img src="images/item_master_vendor.png"><br>
+
+
+<p>
+Use the vendors folder to link a specific order number to a vendor.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Vendor</b> - The name of the vendor(s)
+<li> <b>Order Number</b> - The vendor's order number(s) for the item.
+</ul>
+</dl>
+
+<h2>Kit</h2>
+<br>
+<img src="images/item_master_kit.png"><br>
+
+<p>
+The kit folder provides the mechanism to define a kit. A kit
+is an item created from other items. For example, you may use several
+items(components) to build a bicycle. Once you have defined a kit you can build them using the "Build" button. <bf>NOTE!</BF> The kit tab is
+not available for use unless the purchased toggle is turned off. If the item is
+set to purchased the kit tab is blanked out.    
+
+<h3>Build Quantity</h3>
+
+<p>The build quantity defines the number of kits that can be built with
+the items listed in the table. For example, if you could build two
+widget kits  with the items(components) listed in the table, then the build
+quantity would be "2".
+
+<h3>Build Cost</h3>
+
+<p>
+Quasar calculates the total cost of all items entered in your build
+list. 
+
+<h3>Kit Table</h3>
+
+<p>The build table is used to define:
+
+<dl>
+<dd>
+<ul>
+<li> <b>Components</b> - The components(items) in a kit or kits.
+<li> <b>Description</b> - The description of each component in the kit.
+<li> <b>Size</b> - The size of the component.
+<li> <b>Quantity</b> - The number of each component in the kit(s)
+<li> <b>Cost</b> - The total cost of items in the line.
+</ul>
+</dl>
+
+<h2>Extra Info</h2>
+<br>
+<img src="images/item_master_extra.png"><br>
+
+<p>
+The extra info folder provides the mechanism to define special
+attributes required by a company. While Quasar contains most of the
+inventory attributes common to the majority of businesses, many people
+require the ability to define their own special attributes.
+
+<h3>Attribute Table</h3>
+
+The attribute table is used to define:
+
+<dl>
+<dd>
+<ul>
+<li> <b>Data Name</b> - Quasar displays the name of the extra data
+attributes as pre-defined. 
+<li> <b>Value</b> - Enter the value for the extra data attribute.
+</ul>
+</dl>
+
+<h3>Create Data</h3>
+<br>
+<img src="images/item_master_extra_create.png"><br>
+<p>
+Create an extra data attribute to track information by item. When an
+extra attribute is created, this attribute is created for every item. 
+
+<h3>Delete Data</h3>
+<p>
+Use extreme CAUTION when deleting a data name. The deletion of the
+name deletes the corresponding data value for every item in your database.
+
+<h3>Rename Data</h3>
+<p>
+Use the rename data button to rename a special attribute. A data name
+may be renamed without deleting the data value for each item. 
+
+
+<h2>Container Deposit</h2>
+
+Some items come in containers that require a container deposit. Note -
+Always enter the container deposit by individual selling unit. For
+example, if $0.10 is the container deposit for an item and that item
+comes in a case of 12, enter $0.10 as the container deposit. 
+
+<h2>Opening Inventory</h2>
+
+<p>The opening inventory attributes can only be entered at the time a
+new item is created. Entry, creates an item adjustment journal, posting
+to the inventory asset account with the offsetting entry to the historical
+balance account. A historical balance account must be defined in order
+to utilize this feature.<br>
+<br>
+<img src="images/item_master_opening.png"><br>
+
+<h3>As of</h3>
+
+<p>The date the inventory was on hand as of.
+
+
+<h3>Quantity</h3>
+
+<p>The current on hand level of an item. This is an
+enter once only attribute and may only be entered when the item is
+first being setup. Caution should be taken to
+ensure accuracy. Any adjustments to 
+on hands after the initial setup of the item 
+must be done in the item adjustment window.</p>
+
+
+<h3>Total Cost</h3>
+
+<p>The total cost of the on hand inventory for the item. This is an
+enter once only attribute and may only be entered when the item is
+first being setup. Caution should be taken to ensure accuracy. Any
+adjustments to the total value after the initial setup of an item must
+be done in the item adjustment window.</p>
+
+<h2>Inactive?</h2>
+
+<p> Toggle on or off. Toggle on to set the item to inactive. Inactive
+items may not be purchased or sold. Items with an on order or on hand
+quantity may not be set to inactive. Toggle off to re-set the item to
+active. </p> 
+
+<h2>Prices</h2>
+
+<p>Click on the "Prices" button to display the price list. From the
+price list you can create or edit the item prices.
+
+<h2>Costs</h2>
+
+<p>Click on the "Costs" button to display the cost list. From the cost
+list you can create or edit the item costs.
+
+<h2>Margin</h2>
+
+<p>Click on the "Margin" button to display the item margin screen. The
+item margin screen is used to change the prices of the item based on
+the replacement cost, the average cost or the last landed cost.
+
+
+<h2>Stock</h2>
+
+<p>Click on the "Stock" button to display the stock status for an
+item. 
+
+<h2>Build</h2>
+
+<p>Click on the "Build" button to build one or more kits. Specify the
+component multiples. For example if the components listed in the build
+table created 3
+kits, building 3 multiples of the components will create 9 kits. The
+build process creates an item adjustment which reduces the inventory
+of the components and increases the inventory of the kit.
+</p>
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_inventory.html"><b>Up: </b>Inventory</a></td>
+<td><a href="item_list.html"><b>Previous: </b>Item List</a></td>
+<td><a href="item_margin.html"><b>Next: </b>Item Margin</a></td>
+</tr>
+</table>
+
+
+<br>
+
+</body>
+</html>
+
+
+
+
+
+
+

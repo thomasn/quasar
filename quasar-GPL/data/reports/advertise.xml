@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Advertisement"
+	module="Labels"
+	orientation="Landscape"
+	pageWidth="6600"
+	pageHeight="5100"
+	leftMargin="300"
+	rightMargin="300"
+	topMargin="300"
+	bottomMargin="300">
+
+  <dataSource type="Code">
+	<next>
+		$current_row &lt; 2
+	</next>
+  </dataSource>
+
+  <detail height="4500">
+    <polygon x="75" y="75" width="2750" height="875">
+	<brush style="solid" color="yellow"/>
+	<point x="0" y="0"/>
+	<point x="2750" y="0"/>
+	<point x="2750" y="583"/>
+	<point x="0" y="875"/>
+    </polygon>
+
+    <rectangle x="75" y="75" width="2750" height="4350">
+	<pen width="14" color="red"/>
+    </rectangle>
+
+    <text x="75" y="300" width="2750" height="300" halign="center">
+	<font weight="87" size="30"/>
+	<rotate angle="-6"/>
+	<text>AS</text>
+    </text>
+
+    <text x="75" y="625" width="2750" height="300" halign="center">
+	<font weight="87" size="30"/>
+	<rotate angle="-6"/>
+	<text>ADVERTISED</text>
+    </text>
+
+    <text x="75" y="1040" width="2750" height="266" halign="Center">
+	<pen color="red"/>
+	<font size="24" isItalic="true"/>
+	<rotate angle="-6"/>
+	<text>Limited Time Offer</text>
+    </text>
+
+    <text x="75" y="2416" width="2750" height="730" halign="Center">
+	<font weight="87" size="72"/>
+	<text>$1.99</text>
+    </text>
+    <text x="75" y="1500" width="2750" height="500" halign="Center">
+	<font weight="87" size="24"/>
+	<text>Description</text>
+    </text>
+    <text x="75" y="3750" width="2750" height="300" halign="Center">
+	<font weight="87" size="22"/>
+	<text>Thank you for shopping</text>
+    </text>
+    <text x="75" y="4082" width="2750" height="300" halign="Center">
+	<font weight="87" size="22"/>
+	<text>with us</text>
+    </text>
+  </detail>
+</ReportDefn>

@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Ledger Postings"
+	module="Ledger"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc date_text { } {
+	    global param
+
+	    if { $param(start_date) == "" && $param(end_date) == "" } {
+		return "All Dates"
+	    } elseif { $param(end_date) == "" } {
+		return "Starting at $param(start_date)"
+	    } elseif { $param(start_date) == "" } {
+		return "Ending on $param(end_date)"
+	    } else {
+		return "From $param(start_date) to $param(end_date)"
+	    }
+	}
+
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+
+	proc type_name { type } {
+	    if { $type == 1  } { return "Item Adjustment" }
+	    if { $type == 2  } { return "Cheque" }
+	    if { $type == 6  } { return "Ledger Posting" }
+	    if { $type == 7  } { return "Customer Invoice" }
+	    if { $type == 11 } { return "Customer Payment" }
+	    if { $type == 12 } { return "Vendor Invoice" }
+	    if { $type == 20 } { return "Nosale" }
+	    if { $type == 21 } { return "Payout" }
+	    if { $type == 22 } { return "Customer Return" }
+	    if { $type == 24 } { return "Tender Adjustment" }
+	    if { $type == 38 } { return "Vendor Claim" }
+	    if { $type == 41 } { return "Card Adjustment" }
+	    if { $type == 42 } { return "Withdraw" }
+	    return "Unknown: $type"
+	}
+
+	set column(open_bal) 0
+  ]]></initialize>
+
+  <dataSource type="Query">
+    <code><![CDATA[
+	    if { $param(start_date) != "" } {
+		set open "(select sum(account_change.amount) from
+			account_change where account_change.account_id =
+			account.account_id and account_change.change_date <
+			'$param(start_date)')"
+	    } else {
+		set open "0.0"
+	    }
+
+	    set query "select account.account_id,account.name,account.number,
+		gltx.post_date,gltx.data_type,gltx.number,card.name,gltx.memo,
+		gltx_account.amount,$open from (((gltx_account join gltx on
+		gltx_account.gltx_id = gltx.gltx_id) join account on
+		gltx_account.account_id = account.account_id) left join
+		card on gltx.card_id = card.card_id) where gltx.inactive_on
+		is null"
+
+	    if { $param(account_id) != "" } {
+		append query " and account.account_id = '$param(account_id)'"
+	    }
+	    if { $param(start_date) != "" } {
+		append query " and post_date >= '$param(start_date)'"
+	    }
+	    if { $param(end_date) != "" } {
+		append query " and post_date <= '$param(end_date)'"
+	    }
+
+	    append query " order by account.account_type,account.name,
+		gltx.post_date, gltx.post_time"
+
+	    return $query
+    ]]></code>
+
+    <column>account_id</column>
+    <column>account_name</column>
+    <column>account_number</column>
+    <column>gltx_date</column>
+    <column>gltx_type</column>
+    <column>gltx_number</column>
+    <column>card_name</column>
+    <column>gltx_memo</column>
+    <column>amount</column>
+    <column>open_bal</column>
+  </dataSource>
+
+  <parameter
+	name="account_id"
+	description="Account (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="account"/>
+  <parameter
+	name="start_date"
+	description="Enter the start date:"
+	manditory="false"
+	type="date"/>
+  <parameter
+	name="end_date"
+	description="Enter the end date:"
+	manditory="false"
+	type="date"/>
+
+  <variable
+	name="end_bal"
+	resetType="Group"
+	resetGroup="account">
+	<resetExpr>$column(open_bal)</resetExpr>
+	<calcExpr>
+		[expr $var(end_bal) + $column(amount)]
+	</calcExpr>
+  </variable>
+
+  <group
+	name="account"
+	reprintHeader="true">
+	<expression>$column(account_id)</expression>
+	<header height="275">
+	  <text
+		x="0"
+		y="0"
+		width="4800"
+		height="150"
+		halign="Left"
+		valign="Center">
+		<font name="Times" size="12" isBold="true"/>
+		<var>column(account_name)</var>
+	  </text>
+	  <text
+		x="900"
+		y="150"
+		width="1000"
+		height="125"
+		halign="Left"
+		valign="Top">
+		<font name="Times" size="12"/>
+		<text>Opening Balance</text>
+	  </text>
+	  <text
+		format="money"
+		x="3800"
+		y="150"
+		width="1000"
+		height="125"
+		halign="Right"
+		valign="Top">
+		<font name="Times" size="12"/>
+		<var>column(open_bal)</var>
+	  </text>
+	</header>
+	<footer height="225">
+	  <line x="3800" y="2" width="1000">
+		<pen width="2"/>
+	  </line>
+	  <text
+		x="900"
+		y="5"
+		width="1000"
+		height="125"
+		halign="Left"
+		valign="Top">
+		<font name="Times" size="12"/>
+		<text>Closing Balance</text>
+	  </text>
+	  <text
+		format="money"
+		x="3800"
+		y="5"
+		width="1000"
+		height="125"
+		halign="Right"
+		valign="Top">
+		<font name="Times" size="12"/>
+		<var>var(end_bal)</var>
+	  </text>
+	</footer>
+  </group>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Ledger Postings</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>[date_text]</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="300"
+	y="0"
+	width="600"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Date</text>
+    </text>
+    <text
+	x="900"
+	y="0"
+	width="1000"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Type</text>
+    </text>
+    <text
+	x="1900"
+	y="0"
+	width="600"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Number</text>
+    </text>
+    <text
+	x="2500"
+	y="0"
+	width="1300"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Card/Memo</text>
+    </text>
+    <text
+	x="3800"
+	y="0"
+	width="1000"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Amount</text>
+    </text>
+  </pageHeader>
+
+  <detail height="125">
+    <text
+	x="300"
+	y="0"
+	width="600"
+	height="125"
+	halign="Left"
+	valign="Top">
+	<font name="Times" size="12"/>
+	<var>column(gltx_date)</var>
+    </text>
+    <text
+	x="900"
+	y="0"
+	width="1000"
+	height="125"
+	halign="Left"
+	valign="Top">
+	<font name="Times" size="12"/>
+	<expr>[type_name $column(gltx_type)]</expr>
+    </text>
+    <text
+	x="1900"
+	y="0"
+	width="600"
+	height="125"
+	halign="Left"
+	valign="Top">
+	<font name="Times" size="12"/>
+	<var>column(gltx_number)</var>
+    </text>
+    <text
+	x="2500"
+	y="0"
+	width="1300"
+	height="125"
+	halign="Left"
+	valign="Top">
+	<font name="Times" size="12"/>
+	<expr>
+	    $column(card_name) != "" ? $column(card_name) : $column(gltx_memo)
+	</expr>
+    </text>
+    <text
+	format="money"
+	x="3800"
+	y="0"
+	width="1000"
+	height="125"
+	halign="Right"
+	valign="Top">
+	<font name="Times" size="12"/>
+	<var>column(amount)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

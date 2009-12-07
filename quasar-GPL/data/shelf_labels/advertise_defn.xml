@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE LABEL_DEFN>
+
+<LabelDefn>
+  <name>Advertise</name>
+  <pageWidth>792</pageWidth>
+  <pageHeight>612</pageHeight>
+  <topMargin>36</topMargin>
+  <leftMargin>36</leftMargin>
+  <rows>1</rows>
+  <columns>2</columns>
+  <orientation>landscape</orientation>
+  <labelWidth>348</labelWidth>
+  <labelHeight>540</labelHeight>
+  <hgap>9</hgap>
+  <vgap>9</vgap>
+
+  <rect>
+    <x>9</x> <y>9</y> <width>348</width> <height>530</height>
+    <pen><width>14</width><color>red</color></pen>
+  </rect>
+
+  <polygon>
+    <x>18</x> <y>18</y> <width>72</width> <height>72</height>
+    <brush><color>yellow</color></brush>
+    <point>0,0</point>
+    <point>329,0</point>
+    <point>329,70</point>    
+    <point>0,105</point>
+  </polygon>
+
+  <text>
+    <x>36</x> <y>35</y> <width>60</width> <height>35</height>
+    <font><weight>87</weight><size>40</size></font>
+    <rotate>-6.0</rotate>
+    <text>AS</text>
+  </text>
+
+  <text>
+    <x>45</x> <y>75</y> <width>300</width> <height>35</height>
+    <font><weight>87</weight><size>40</size></font>
+    <rotate>-6.0</rotate>
+    <text>ADVERTISED</text>
+  </text>
+
+  <text>
+    <pen><color>red</color></pen>
+    <x>80</x> <y>125</y> <width>351</width> <height>32</height>
+    <font><italic>Yes</italic><size>24</size></font>
+    <rotate>-6.0</rotate>
+    <text>Limited Time Offer</text>
+  </text>
+
+  <text>
+    <halign>center</halign>
+    <x>18</x> <y>290</y> <width>342</width> <height>88</height>
+    <font><weight>87</weight><size>80</size></font>
+    <text>@price</text>
+  </text>
+
+  <text>
+    <halign>center</halign>
+    <x>40</x> <y>180</y> <width>298</width> <height>60</height>
+    <font><weight>87</weight><size>24</size></font>
+    <text>@description</text>
+  </text>
+
+  <text>
+    <halign>center</halign>
+    <x>18</x> <y>450</y> <width>332</width> <height>36</height>
+    <font><weight>87</weight><size>24</size></font>
+    <text>Thank You for Shopping</text>
+  </text>
+
+  <text>
+    <halign>center</halign>
+    <x>18</x> <y>490</y> <width>332</width> <height>50</height>
+    <font><weight>87</weight><size>24</size></font>
+    <text>With Us</text>
+  </text>
+</LabelDefn>

@@ -1,0 +1,232 @@
+<html>
+<head>
+<TITLE>Vendor Payments</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png"></td>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_purchases.html"><b>Up: </b>Purchases</a></td>
+<td><a href="vendor_invoice.html"><b>Previous: </b>Vendor Invoice</a></td>
+<td><a href="pay_bills.html"><b>Next: </b>Pay Bills</a></td>
+</tr>
+</tbody></table>
+
+
+<hr>
+
+<H1>Vendor Payments</H1>
+<img src="images/vendor_payment.png"><br>
+<br>
+
+
+Utilize this screen to pay the bills owed to an individual vendor or
+ to pay a deposit to a vendor.  Following is a description of the
+ attributes within the vendor payment window: 
+
+<h2>Bank Account</h2>
+
+<p> The ledger account from which the funds for the payment will be
+drawn. 
+
+<h2>Discount Account</h2>
+
+<p> Enter the account id for the reduction of payables due to terms
+discounts. For example, if a payable is debited by $5.00 as a result
+of a terms discount, the off-setting entry will be a credit to a discount
+account.
+
+<h2>Current Balance</h2>
+
+<p> The current balance of the bank account from which the payment is
+being made.
+
+<h2>Ending Balance</h2>
+
+<p> The ending balance of the bank account after the current payment
+is considered.
+
+<h2>Cheque No</h2>
+
+<p> The id number is incremented by Quasar. This may be changed by
+the user. If the cheque number
+entered is the same as an existing cheque number then a warning message will be
+displayed.</p> 
+
+<h2>Reference</h2>
+
+<p> A number that references the cheque.
+
+<h2>Date</h2>
+
+<p>The date for the cheque. The date determines the
+accounting period in which the cheque will be posted.
+
+<h2>Time</h2>
+
+<p> The time that the cheque is created.
+
+<h2>Shift</h2>
+
+<p> The shift that the cheque is linked to through a shift
+close for reporting purposes.
+
+<h2>Store</h2>
+
+<p> Enter the store that the cheque posting will affect.
+
+<h2>Station</h2>
+
+<p> The station (work station) on which the cheque is created.
+
+<h2>Employee</h2>
+
+<p> The employee creating the cheque.
+
+<h2>Memo</h2>
+
+<p>Defines the purpose of the cheque.
+
+<h2>Vendor</h2>
+
+<p> The name of the vendor to whom the payment is being made.
+
+<h2>Balance</h2>
+
+The current balance owed to the vendor.
+
+<h2>Payment Table</h2>
+
+<p> The payment table displays all of the vendor invoices
+that have remaining
+balances due. The unpaid receivings are displayed in ascending order
+from the oldest to the newest. 
+
+<dl>
+<dd>
+<ul>
+<li><b>Due Date</b> - The date that the vendor invoice is due.
+<li><b>Invoice</b> -  The transaction id of the invoice.
+<li><b>Total</b> - The total amount of the invoice.
+<li><b>Disc Date</b> - The date by which the invoice must be paid in
+order to receive the early  payment discount offered within the vendor terms. 
+<li><b>Due</b> - The net amount due on the invoice.
+<li><b>Payment</b> - The payment amount being allocated to the
+vendor invoice.
+<li><b>Discount</b> - The amount of the early payment (terms) discount taken.
+<li><b>Pay</b> Toggle on to pay. Toggle off to remove the invoice from
+the invoice list.
+</ul>
+</dl>
+
+
+<h2>Pay All</h2>
+<p>
+Click on the "Pay All" button to pay all bills owed to the vendor.
+
+<h2>Clear Payments</h2>
+<p>
+Click on the "Clear Payments" button to clear all allocated  payments
+to the vendor. 
+
+
+<h2>Invoice Info</h2>
+<img src="images/vendor_payment_info.png"><br>
+
+<p> Click on the invoice info button to view specific information
+about an invoice. The "Invoice Information" window will be displayed. The
+invoice information displayed is dependant on the line in payment
+table where the cursor rests. If you move the cursor to a new line in
+the payment table the information in the "Invoice Information" screen
+will change accordinly.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Invoice</b> - The transaction id of the invoices.
+<li> <b>Total</b> - The total of the invoice.
+<li> <b>Paid</b> - The total paid on the invoice.
+<li> <b>Due</b> - The unpaid balance of the invoice.
+<li> <b>Terms</b> - The discount terms for the invoice.
+<li> <b>Invoice Date</b> - The date of the invoice.
+<li> <b>Due Date</b> - The date that the invoice payment is due.
+<li> <b>Discount Date</b> - The date that the invoice must be paid if
+you wish to take the early payment terms.
+<li> <b>Discount</b> - The amount of the terms discount calulated from
+the terms.
+<li> <b>Take Discount</b> - Click on the "Take Discount" button to
+take the early payment discount even though you may have missed the
+discount due date. 
+<li> <b>Taken</b> - The amount of terms discount taken.
+<li> <b>Clear Discount</b> - Click on the clear discount button to
+clear any terms discount taken.
+<li> <b>View Invoice</b> - Click on the "View Invoice" button to view
+the actual vendor invoice.
+</ul>
+</dl>
+
+<h2>Payment Total</h2>
+
+<p> The total amount of allocated payments.
+ 
+<h2>Overpay Amount</h2>
+
+<p> Enter an amount to pay the vendor apart from what is owed on
+current vendor invoices. For example, to pay a deposit to a vendor you
+would enter the amount to overpay.
+
+
+<h2>Discount Amount</h2>
+
+<p> The total amount of terms discounts taken as a result of early
+payment. 
+
+
+<h2>Total Amount</h2>
+
+<p> The total of both allocated and non-allocated payments.
+
+<h2>Voided?</h2>
+<p>
+Toggle on or off. Toggle on to void the vendor payment. Toggle off to
+reset the vendor payment to a non-voided state.
+
+<h2>Printed?</h2>
+<p>
+Quasar will set the printed toggle to on when and if the cheque is physically
+printed. 
+
+<h2>Print</h2> 
+<p> Click on the "Print" button to physically print the cheque.
+</p>
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_purchases.html"><b>Up: </b>Purchases</a></td>
+<td><a href="vendor_invoice.html"><b>Previous: </b>Vendor Invoice</a></td>
+<td><a href="pay_bills.html"><b>Next: </b>Pay Bills</a></td>
+</tr>
+</table>
+
+
+<br>
+
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+include (../project.def)
+
+TEMPLATE	= app
+TARGET		= model_editor
+VERSION		= 1.4
+CONFIG		+= qt
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../bin
+INCLUDEPATH	+= ../utility;../widget;.
+DEPENDPATH	= $$INCLUDEPATH
+LIBS		= -lquasar_widget -lquasar_util $$ICU_LIBS
+TARGETDEPS	= ../lib/libquasar_widget.a ../lib/libquasar_util.a
+
+HEADERS=model_main_window.h model_edit.h object_edit.h table_edit.h \
+	column_edit.h index_edit.h constraint_edit.h
+SOURCES=model_editor.cpp model_main_window.cpp model_edit.cpp object_edit.cpp \
+	table_edit.cpp column_edit.cpp index_edit.cpp constraint_edit.cpp
+
+TRANSLATIONS=messages.ts

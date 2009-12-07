@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Out of Stock"
+	module="Inventory"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc select_where { } {
+	    global param
+
+	    set where "item.inactive_on is null and ((select sum(on_hand)
+		from item_change where item_change.item_id = item.item_id
+		and item_change.store_id = '$param(store_id)') = 0 or
+		(select sum(on_hand) from item_change where
+		item_change.item_id = item.item_id and item_change.store_id =
+		'$param(store_id)') is null) and item.inventoried = 'Y'
+		and exists (select stocked from item_store where
+		item_store.item_id = item.item_id and item_store.store_id =
+		'$param(store_id)' and stocked = 'Y')"
+
+	    if { $param(dept_id) != "" } {
+		append where "and item.dept_id = '$param(dept_id)'"
+	    }
+	    if { $param(subdept_id) != "" } {
+		append where "and item.subdept_id = '$param(subdept_id)'"
+	    }
+	    if { $param(group_id) != "" } {
+		append where "and exists (select group_id from item_group
+		    where item_group.item_id = item.item_id and
+		    item_group.group_id = '$param(group_id)')"
+	    }
+	    if { $param(vendor_id) != "" } {
+		append where "and exists (select vendor_id from item_vendor
+		    where item_vendor.item_id = item.item_id and
+		    item_vendor.vendor_id = '$param(vendor_id)')"
+	    }
+
+	    return $where
+	}
+
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+
+	set last_dept ""
+	set last_subdept ""
+  ]]></initialize>
+
+  <dataSource type="Query">
+    <expr>
+	"select dept.name,dept.number,subdept.name,subdept.number,
+	item_plu.number,item.description,item.sell_size from ((item
+	join item_plu on item.item_id = item_plu.item_id and
+	item_plu.seq_num = 0) join dept on item.dept_id = dept.dept_id)
+	join subdept on item.subdept_id = subdept.subdept_id where
+	[select_where] order by dept.number,dept.name,subdept.number,
+	subdept.name,item_plu.number"
+    </expr>
+
+    <column>dept_name</column>
+    <column>dept_number</column>
+    <column>subdept_name</column>
+    <column>subdept_number</column>
+    <column>item_number</column>
+    <column>description</column>
+    <column>size</column>
+  </dataSource>
+
+  <parameter
+	name="store_id"
+	description="Enter the store:"
+	defaultValue="@current_store"
+	type="lookup"
+	dataType="store"/>
+
+  <parameter
+	name="dept_id"
+	description="Enter the department:"
+	manditory="false"
+	type="lookup"
+	dataType="dept"/>
+
+  <parameter
+	name="subdept_id"
+	description="Enter the subdepartment:"
+	manditory="false"
+	type="lookup"
+	dataType="subdept"/>
+
+  <parameter
+	name="group_id"
+	description="Group:"
+	manditory="false"
+	type="lookup"
+	dataType="group"/>
+
+  <parameter
+	name="vendor_id"
+	description="Vendor:"
+	manditory="false"
+	type="lookup"
+	dataType="vendor"/>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Out of Stock</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(dept_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup dept dept_id $param(dept_id) name] Department"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(subdept_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup subdept subdept_id $param(subdept_id) name] Subdepartment"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(group_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup groups group_id $param(group_id) name] Group"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(vendor_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup card card_id $param(vendor_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name] Store"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="790"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Number</text>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="1790"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Description</text>
+    </text>
+    <text
+	x="2600"
+	y="0"
+	width="490"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Size</text>
+    </text>
+  </pageHeader>
+
+  <detail height="180">
+    <printWhen>"$column(dept_name) $column(dept_number)" != $last_dept</printWhen>
+    <afterCode>set last_dept "$column(dept_name) $column(dept_number)"</afterCode>
+    <text
+	x="0"
+	y="50"
+	width="3000"
+	height="125">
+	<font name="Times" size="14" isBold="true"/>
+	<code>if { $column(dept_number) == {} } {
+		return "Department: $column(dept_name)"
+	      } else {
+		return "Department: $column(dept_name) ($column(dept_number))"
+	      }
+	</code>
+    </text>
+  </detail>
+
+  <detail height="180">
+    <printWhen>"$column(subdept_name) $column(subdept_number)" != $last_subdept</printWhen>
+    <afterCode>set last_subdept "$column(subdept_name) $column(subdept_number)"</afterCode>
+    <text
+	x="0"
+	y="50"
+	width="3000"
+	height="125">
+	<font name="Times" size="14" isBold="true"/>
+	<code>if { $column(subdept_number) == {} } {
+		return "Subdepartment: $column(subdept_name)"
+	      } else {
+		return "Subdepartment: $column(subdept_name) ($column(subdept_number))"
+	      }
+	</code>
+    </text>
+  </detail>
+
+  <detail height="130">
+    <text
+	x="0"
+	y="0"
+	width="790"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(item_number)</var>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="1790"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(description)</var>
+    </text>
+    <text
+	x="2600"
+	y="0"
+	width="490"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(size)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

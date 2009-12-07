@@ -1,0 +1,161 @@
+<html>
+<head>
+<TITLE>Tender Master</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png"></td>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="setup_sales.html"><b>Up: </b>Setup Sales</a></td>
+<td><a href="tender_list.html"><b>Previous: </b>Tender List</a></td>
+<td><a href="expense_list.html"><b>Next: </b>Expense List</a></td>
+</tr>
+</tbody></table>
+
+<hr>
+
+<h1>Tender Master</h1>
+<img src="images/tender_master.png"><br>
+<br>
+
+The tender master window is used to define tenders that will be used
+in a customer invoice and at a Quasar point of sale terminal.
+
+<h2>Name</h2>
+
+<p>The name of the tender.
+
+<h2>Type</h2>
+
+There are three types of accounts to select from. 
+
+<dl>
+<dd>
+<ul>
+<li> select "Cash" for cash tenders
+<li> select "Cheque" for cheque tenders
+<li> "Card" is currently not available, select "Cash" for card type tenders
+</dl>
+
+<h2>Limit</h2>
+
+The customers credit limit. Quasar point-of-sale  will not allow a customer to
+charge over their credit limit without a credit override.
+
+<h2>Convert Rate</h2>
+
+<p>The conversion rate required to convert foreign exchange to the
+base currency.
+
+<h2>Menu Number</h2>
+
+<p>Defines the positioning on the Quasar Point-of-Sale menu.
+
+
+<h2>Flags</h2>
+
+<img src="images/tender_master_flags.png">
+
+<p>This section is used to set flags for Quasar Point-of-Sale.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Over Tender</b> - Toggle on or off. Toggle on to allow an over
+tender. Toggle off not to allow the tender to be over tendered. For
+example, at the point of sale, if you do not allow a personal cheque
+to be greater than the amount of the purchase you would set the over
+tender flag to off. 
+<li> <b>Open Drawer</b> - Toggle on or off. Toggle on if the cash
+drawer will open when a transaction is tendered using this
+tender. Toggle off if the cash drawer will not open. 
+<li> <b>Force Amount</b> - Toggle on or off. Toggle on to force the
+cashier to always enter the amount being tendered. Toggle off if the
+cashier is not forced to enter the amount being tendered.
+<li> <b>Second Receipt</b> - Toggle on or off. Toggle on if a second
+receipt is required. For example, many organizations wish to print a
+second receipt for charge type transactions.
+</ul>
+</dl>
+
+
+
+<h2>Accounts</h2>
+
+<img src="images/tender_master_accounts.png">
+
+<p>This section is used to define ledger accounts linked to the tender.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Transaction Account</b> - The ledger account into which
+debits and credits from transactions will be
+posted. 
+<li> <b>Safe Account</b> -  During the cash reconcile process tenders are
+transferred from the station to the safe. Enter the ledger account for
+the safe.
+<li> <b>Bank Account</b> - During the cash reconcile process tenders
+are transferred to the bank. Enter the ledger account for the bank the
+that the tender will be deposited to. 
+</ul>
+</dl>
+
+<h2>Denominations</h2>
+
+<img src="images/tender_master_denominations.png">
+
+<p>Denominations are used to count cash at the point-of-sale during
+the cash reconciliation process. A tender may have multiple
+denominations. For example, Canadian cash has pennies, nickles, dimes,
+quarters, loonies, toonies, etc.... The denominations defined are sent
+to the point-of-sale and create a matrix for counting. For example,
+you would count 7 dimes and Quasar would calculate that this equals 70
+cents or .70 of a dollar.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Name</b> - The name of the denomination. For example, Pennies,
+Nickles, Dimes and Quarters.
+<li> <b>Multiplier</b> -  Defines the value of the denomination. For
+example a Canadian Quarter = .25 of one dollar.
+</ul>
+</dl>
+
+
+
+
+<h2>Inactive?</h2>
+
+<p>Toggle on or off. Toggle on to set the tender to inactive. Toggle
+off to re-set the tender to active.</p>
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="setup_sales.html"><b>Up: </b>Setup Sales</a></td>
+<td><a href="tender_list.html"><b>Previous: </b>Tender List</a></td>
+<td><a href="expense_list.html"><b>Next: </b>Expense List</a></td>
+</tr>
+</table>
+
+<br>
+
+</body>
+</html>
+
+
+
+
+
+
+

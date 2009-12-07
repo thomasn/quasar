@@ -1,0 +1,287 @@
+<html>
+<head>
+<TITLE>Customer Quote</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png">
+<td><a href="index.html">Table of Contents</a>
+<td><a href="commands.html">Quasar Commands</a>
+<td><a href="menu_sales.html"><b>Up: </b>Sales</a>
+<td><a href="quote_list.html"><b>Previous: </b>Quote List</a>
+<td><a href="invoice_list.html"><b>Next: </b>Invoice List</a>
+</tr>
+</tbody></table>
+
+<hr>
+
+<H1>Customer Quote</H1>
+<img src="images/customer_quote.png"><br>
+<br>
+
+<h2>Customer</h2>
+
+<p>The customer to whom the quote is being created.</p>
+
+<h2>Address</h2>
+
+<p>The address for the customer.
+
+
+<h2>Quote No</h2>
+
+<p>Quasar automatically selects the next available quote number. The
+user may over ride the quote number and enter a different number. If the
+number entered is not unique and has been used before Quasar will display a
+warning message at the time of filing the quote.</p>
+
+<h2>Reference #</h2>
+
+<p> Enter a customer reference number if one is provided by the
+customer. For example, the customer may provide you with a purchase
+order number of a job number.
+
+<h2>Type</h2>
+
+<p>Select either item or account. Select item if the sales quote
+will be used to sell or return items. Select account if the sales
+quote will reflect a direct  charge or credit to a ledger account.
+
+<h2>Invoice</h2>
+
+<p>When and if the quote is converted to an invoice, the invoice
+number is displayed. 
+
+<h2>Date</h2>
+
+<p>The quote date.</p>
+
+<h2>Ship Via</h2>
+
+<p> Enter the method of shipping the goods to the customer.
+
+<h2>Terms</h2>
+
+<p>Enter the payment terms for this customer. An existing set of terms
+may be used or a new set of terms may be defined. Payment terms
+entered in the customer master screen will appear here by default. <a
+href="term_master.html">(More)</a>
+
+<h2>Expire Date</h2>
+
+<p>The date the goods were promised to be available and/or to be
+delivered to the customer.</p> 
+
+<h2>Salesperson</h2>
+
+<p>The card id of the employee or salesperson creating the quote.</p>
+
+
+<h2>Store</h2>
+
+<p>Select or change the default store. If a store has been
+defined for the user, then the user's store will display by
+default. If no store has been defined for the user, then the
+default store specified in the "Quasar Configuration" will be
+displayed.
+
+<h2>Item Entry Table</h2>
+
+<img src="images/customer_quote_table.png"><br>
+
+<br> Use this section to enter items on the customer quote.
+
+<p>
+<dl>
+<dd>
+<ul>
+<li><b>Item Number</b> - The item number of the product or products being sold.
+<li> <b>Description</b> - The description of the product or products
+being sold.
+<li> <b>Size</b> - The size of the item.
+<li> <b>Quantity</b> - The quantity of products being sold. A positive
+number entered indicates a product purchase. A negative number entered
+indicates product a return.
+<li><b>Price</b> - The price per selling unit for each product being sold.
+<li><b>Ext Price</b> -  The extended price for the items on the
+line. The extended price is the gross extended price before discounts.
+<li><b>Discount</b> - If the discount is a percent discount then the
+percentage will be displayed. If the discount is a dollar discount,
+then the total dollar amount will be displayed. Line discounts are
+selected in the "Item Info" folder.
+<li><b>Tax</b> - The selling tax code for the item. This is defaulted
+from the data entered in item master window. However, the tax code may
+be changed by the user.
+</ul>
+</dl>
+
+
+<h2>Totals</h2>
+
+<img src="images/customer_quote_total.png"><br>
+
+<p> The totals folder displays the various totals for the customer
+quote:
+
+<dl>
+<dd>
+<ul>
+<li> <b>Item Total</b> - The net item total before discounts and taxes.
+<li> <b>Line Discounts</b> - The total of all line discounts.
+<li> <b>Trans Discounts</b> - The total of all transaction discounts.
+<li> <b>Tax Total</b> - The accumulated total of all taxes.
+<li> <b>Deposit Total</b> - The total of all container deposits.
+<li> <b>Total</b> - The gross total for the customer quote.
+</ul>
+</dl>
+
+<h2>Comments</h2>
+
+<img src="images/customer_quote_comment.png"><br>
+
+<p>Any comments relevant to the invoice. All comments will be printed
+on the hard copy of the customer quote.
+
+<h2>Taxes</h2>
+
+<img src="images/customer_quote_tax.png"><br>
+
+<p> Quasar display a breakdown of the individual taxes.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Tax</b> - The tax id.
+<li> <b>Name</b> - The name of the tax.
+<li> <b>Taxable</b> - The net base amount that a given tax is charged to.
+<li> <b>Tax Amt</b> - The amount of tax allocated to the "Taxable" amount.
+<li> <b>Inc. Taxable</b> - The net base taxable amount including the amount of the tax. (for items with taxes included in the price)
+<li> <b>Inc. Tax Amt</b> - The net amount of tax calculated from the "Inc. Taxable" amount.
+</ul>
+</dl>
+
+<h2>Ship To</h2>
+
+<img src="images/customer_quote_ship.png"><br>
+
+<p> Where products are shipped to a card or address other than
+the customers address the ship to address can be entered here. The
+ship to address is printed on the hard copy of the customer invoice. 
+
+<dl>
+<dd>
+<ul>
+<li> <b>Ship To</b> - Enter or select a card if different
+from the customer.
+<li> <b>Address</b> - Enter the new shipping address.
+</ul>
+</dl>
+
+<h2>Item Info</h2>
+
+<img src="images/customer_quote_item.png"><br>
+
+<p> The item info folder displays specific information about an
+individual item(line) in the invoice. The information displayed will
+pertain to the line in which the cursor is placed. Line discounts are
+taken using the item info folder.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Discountable?</b> - Displays whether or not a discount may be
+taken on an item.
+<li> <b>Include Tax?</b> - Displays if the price of the item includes
+taxes.
+<li> <b>Include Deposit?</b> - Displays if the price of the item
+includes a container deposit.
+<li> <b>Tax</b> - The accumulation of all taxes on the line.
+<li> <b>Deposit</b> - The total of the container deposits on the
+line. 
+<li> <b>Discount</b> - Select the discount for to take a line
+discount.
+<li> <b>Percent</b> - Toggle on or off. Toggle on if the line discount
+will be a percentage discount.
+<li> <b>Dollar</b> - Toggle on or off. Toggle on if the line discount
+will be a dollar discount.
+<li> <b>Line Disc.</b> - Displays the total amount of a line discount.
+<li> <b>Line Total</b> - Displays the gross total for the line.
+<li> <b>Trans Disc.</b> - Displays total amount of transaction
+discounts allocated back to the line.
+</ul>
+</dl>
+
+<h2>Discounts</h2>
+
+<img src="images/customer_quote_discount.png"><br>
+
+<p> The discounts folder is used to define transaction
+discounts. 
+
+<dl>
+<dd>
+<ul>
+<li> <b>Discount</b> - Enter or select the discount id.
+from the customer.
+<li> <b>Percent</b> - Enter a percentage discount. For example "10%"
+off.
+<li> <b>Dollars</b> - Enter a dollar discount. For example, "$1.00"
+off.
+<li> <b>Total</b> - The total of the discount.
+</ul>
+</dl>
+
+
+<h2>Voided?</h2>
+
+<p> Toggle on or off. Toggle off to void the invoice. Toggle on to
+re-set the invoice to non-voided.
+
+<h2>Print</h2>
+
+<p> Click on the print button to print a hard copy of the customer
+invoice.
+
+
+<h2>Invoice</h2>
+
+<p> Click on the "Invoice" button to create a customer invoice. The
+act of creating a customer invoice sets the quote to an inactive
+state.
+</p>
+
+
+<h2>Stock</h2>
+
+<p>
+Click on the "Stock" button to review the stock status of the item in
+the line in which you are working
+</p>
+
+<br>
+
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a>
+<td><a href="commands.html">Quasar Commands</a>
+<td><a href="menu_sales.html"><b>Up: </b>Sales</a>
+<td><a href="quote_list.html"><b>Previous: </b>Quote List</a>
+<td><a href="invoice_list.html"><b>Next: </b>Invoice List</a>
+</tr>
+</table>
+
+
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Customer Statements"
+	module="Card File"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc make_address { name number street street2 city province
+			    country postal phone_num fax_num email
+			    web_page extra } {
+	    set text $name
+	    if { $street != "" } {
+		if { $text != "" } { append text \n }
+		append text $street
+	    }
+	    if { $street2 != "" } {
+		if { $text != "" } { append text \n }
+		append text $street2
+	    }
+	    if { $city != "" || $province != "" } {
+		if { $text != "" } { append text \n }
+		append text $city
+		if { $city != "" && $province != "" } {
+		    append text ", "
+		}
+		append text $province
+	    }
+	    if { $country != "" || $postal != "" } {
+		if { $text != "" } { append text \n }
+		append text $country
+		if { $country != "" && $postal != "" } {
+		    append text ", "
+		}
+		append text $postal
+	    }
+	    if { $extra == "Y" } {
+		if { $phone_num != "" } {
+		    if { $text != "" } { append text \n }
+		    append text "Phone: $phone_num"
+		}
+		if { $fax_num != "" } {
+		    if { $text != "" } { append text \n }
+		    append text "Fax: $fax_num"
+		}
+		if { $email != "" } {
+		    if { $text != "" } { append text \n }
+		    append text "E-mail: $email"
+		}
+		if { $web_page != "" } {
+		    if { $text != "" } { append text \n }
+		    append text "Web Page: $web_page"
+		}
+	    }
+
+	    return $text
+	}
+
+	proc get_address { card_id } {
+	    if { $card_id == "" } {
+		return ""
+	    }
+
+	    set query "select name,number,street,street2,city,
+		    province,country,postal,phone_num,fax_num,email,
+		    web_page from card where card_id = '$card_id'"
+	    select $query {
+		set name $column(1)
+		set number $column(2)
+		set street $column(3)
+		set street2 $column(4)
+		set city $column(5)
+		set province $column(6)
+		set country $column(7)
+		set postal $column(8)
+		set phone_num $column(9)
+		set fax_num $column(10)
+		set email $column(11)
+		set web_page $column(12)
+	    }
+
+	    return [make_address $name $number $street $street2 $city \
+			$province $country $postal $phone_num $fax_num \
+			$email $web_page "N"]
+	}
+
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+
+	proc type_name { type } {
+	    if { $type == 2  } { return "Cheque" }
+	    if { $type == 7  } { return "Invoice" }
+	    if { $type == 11 } { return "Payment" }
+	    if { $type == 22 } { return "Return" }
+	    if { $type == 41 } { return "Adjustment" }
+	    if { $type == 42 } { return "Withdraw" }
+	    return "Unknown type: $type"
+	}
+
+	# Get company address
+	set query "select name,number,street,street2,city,province,country,
+		postal,phone_num,fax_num,email,web_page from company";
+	select $query {
+	    set company_name $column(1)
+	    set company_number $column(2)
+	    set company_street $column(3)
+	    set company_street2 $column(4)
+	    set company_city $column(5)
+	    set company_province $column(6)
+	    set company_country $column(7)
+	    set company_postal $column(8)
+	    set company_phone_num $column(9)
+	    set company_fax_num $column(10)
+	    set company_email $column(11)
+	    set company_web $column(12)
+	}
+
+	# Make the company address
+	set company_addr [make_address "" "" $company_street $company_street2 \
+		$company_city $company_province $company_country \
+		$company_postal $company_phone_num $company_fax_num \
+		$company_email $company_web "Y"]
+
+	# Other variables
+	set page_number 1
+  ]]></initialize>
+
+  <parameter
+	name="stmt_date"
+	description="Enter the statement date:"
+	type="date"/>
+
+  <parameter
+	name="last_date"
+	description="Enter the last stmt date:"
+	type="date"/>
+
+  <parameter
+	name="customer_id"
+	description="Enter the customer:"
+	manditory="false"
+	type="lookup"
+	dataType="customer"/>
+
+  <dataSource type="Code">
+    <initialize><![CDATA[
+	set rows ""
+
+	# Generate where part of SQL select
+	set where "where data_type = 3"
+	if { $param(customer_id) != "" } {
+	    append where " and card_id = '$param(customer_id)'"
+	}
+
+	# Get customers
+	set query "select card_id,number,name,street,street2,city,
+	    province,country,postal,phone_num,fax_num,email,web_page
+	    from card $where order by number,name,card_id"
+	select $query {
+	    set card_id $column(1)
+	    set card_number $column(2)
+	    set name $column(3)
+	    set street $column(4)
+	    set street2 $column(5)
+	    set city $column(6)
+	    set province $column(7)
+	    set country $column(8)
+	    set postal $column(9)
+	    set phone_num $column(10)
+	    set fax_num $column(11)
+	    set email $column(12)
+	    set web_page $column(13)
+
+	    # Get transactions in current period
+	    set tx_rows ""
+	    set query "select gltx.gltx_id,data_type,number,post_date,memo,
+		gltx_card.amount from gltx join gltx_card on gltx.gltx_id =
+		gltx_card.gltx_id where gltx.card_id = '$card_id' and 
+		inactive_on is null and post_date > '$param(last_date)' and
+		post_date <= '$param(stmt_date)' order by post_date,post_time"
+	    select $query {
+		set gltx_id $column(1)
+		set data_type $column(2)
+		set tx_number $column(3)
+		set post_date $column(4)
+		set memo $column(5)
+		set amount $column(6)
+
+		set type [type_name $data_type]
+
+		lappend tx_rows [list $card_id $card_number $name $gltx_id \
+		    $type $tx_number $post_date $memo $amount]
+	    }
+
+	    # Get open balance at start of current period
+	    set query "select sum(gltx_card.amount) from gltx join gltx_card
+		on gltx.gltx_id = gltx_card.gltx_id where gltx.card_id =
+		'$card_id' and gltx.post_date <= '$param(last_date)' and
+		inactive_on is null"
+	    set open_bal 0
+	    select $query {
+	        set open_bal $column(1)
+	    }
+	    if { $open_bal == "" } { set open_bal 0 }
+
+	    # Add to rows if any activity
+	    if { [llength $tx_rows] != 0 || $open_bal != 0 } {
+		lappend rows [list $card_id $card_number $name "" \
+		    "Opening Balance" "" $param(last_date) "" $open_bal]
+
+		set end_bal $open_bal
+		set charge_total 0
+		set payment_total 0
+		foreach row $tx_rows {
+		    lappend rows $row
+
+		    set type [lindex $row 4]
+		    set amount [lindex $row 8]
+
+		    if { $type == "Payment" } {
+			set payment_total [expr $payment_total + $amount]
+		    } else {
+			set charge_total [expr $charge_total + $amount]
+		    }
+		    set end_bal [expr $end_bal + $amount]
+		}
+
+		lappend rows [list $card_id $card_number $name "" \
+		    "Ending Balance" "" $param(stmt_date) "" $end_bal]
+
+		# Store open and close balances
+		set open_bals($card_id) $open_bal
+		set charge_totals($card_id) $charge_total
+		set payment_totals($card_id) $payment_total
+		set end_bals($card_id) $end_bal
+	    }
+	}
+    ]]></initialize>
+    <next><![CDATA[
+	$current_row < [llength $rows]
+    ]]></next>
+    <get>
+	return [lindex [lindex $rows $current_row] $index]
+    </get>
+    <column>card_id</column>
+    <column>card_number</column>
+    <column>card_name</column>
+    <column>gltx_id</column>
+    <column>type</column>
+    <column>tx_number</column>
+    <column>date</column>
+    <column>memo</column>
+    <column>amount</column>
+  </dataSource>
+
+  <group name="customer">
+    <expression>
+	"$column(card_number),$column(card_name),$column(card_id)"
+    </expression>
+    <header height="0">
+	<afterCode>
+	    set card_number $column(card_number)
+	    set card_id $column(card_id)
+	    set card_addr [get_address $card_id]
+	    set open_bal $open_bals($card_id)
+	    set charge_total $charge_totals($card_id)
+	    set payment_total $payment_totals($card_id)
+	    set end_bal $end_bals($card_id)
+	</afterCode>
+    </header>
+    <footer height="0">
+	<newPageAfter>1</newPageAfter>
+	<beforeCode>
+	    set page_number 0
+	</beforeCode>
+    </footer>
+  </group>
+
+  <pageHeader height="2100">
+    <text x="0" y="0" width="2950" height="160">
+	<font name="Helvetica" size="16" isBold="true"/>
+	<var>company_name</var>
+    </text>
+    <text x="0" y="160" width="2950" height="1000" valign="Top">
+	<font name="Helvetica" size="10"/>
+	<var>company_addr</var>
+    </text>
+
+    <text x="3000" y="0" width="1500" height="180">
+	<font name="Times" size="18" isBold="true"/>
+	<text>Customer Statement</text>
+    </text>
+    <text x="3000" y="200" width="900" height="120">
+	<font name="Times" size="12"/>
+	<text>Date:</text>
+    </text>
+    <text x="3900" y="200" width="600" height="120" halign="Right" format="date">
+	<font name="Times" size="12"/>
+	<var>param(stmt_date)</var>
+    </text>
+    <text x="3000" y="320" width="900" height="120">
+	<font name="Times" size="12"/>
+	<text>Page:</text>
+    </text>
+    <text x="3900" y="320" width="600" height="120" halign="Right">
+	<font name="Times" size="12"/>
+	<var>page_number</var>
+    </text>
+    <text x="3000" y="440" width="900" height="120" evalTime="Page">
+	<font name="Times" size="12"/>
+	<expr>$card_number == "" ? "" : "Account Number:"</expr>
+    </text>
+    <text x="3900" y="440" width="600" height="120" halign="Right" evalTime="Page">
+	<font name="Times" size="12"/>
+	<var>card_number</var>
+    </text>
+
+    <rectangle x="0" y="1200" width="2360" height="700"/>
+    <text x="0" y="1200" width="2360" height="115">
+	<font name="Times" size="12" isBold="true"/>
+	<text>Customer:</text>
+    </text>
+    <line x="0" y="1315" width="2360"/>
+    <text x="5" y="1320" width="2350" height="575" evalTime="Page">
+	<font name="Times" size="10"/>
+	<var>card_addr</var>
+    </text>
+
+    <text x="2900" y="1200" width="1000" height="140">
+	<font name="Times" size="14"/>
+	<text>Last Balance:</text>
+    </text>
+    <text x="3900" y="1200" width="800" height="140" halign="Right"
+		evalTime="Page" format="money">
+	<font name="Times" size="14"/>
+	<var>open_bal</var>
+    </text>
+
+    <text x="2900" y="1340" width="1000" height="140">
+	<font name="Times" size="14"/>
+	<text>Payment Received:</text>
+    </text>
+    <text x="3900" y="1340" width="800" height="140" halign="Right"
+		evalTime="Page" format="money">
+	<font name="Times" size="14"/>
+	<var>payment_total</var>
+    </text>
+
+    <text x="2900" y="1480" width="1000" height="140">
+	<font name="Times" size="14"/>
+	<text>New Charges:</text>
+    </text>
+    <text x="3900" y="1480" width="800" height="140" halign="Right"
+		evalTime="Page" format="money">
+	<font name="Times" size="14"/>
+	<var>charge_total</var>
+    </text>
+
+    <text x="2900" y="1620" width="1000" height="280" valign="Bottom">
+	<font name="Times" size="16" isBold="true"/>
+	<text>Total Due:</text>
+    </text>
+    <text x="3900" y="1620" width="800" height="280" halign="Right"
+		valign="Bottom" evalTime="Page" format="money">
+	<font name="Times" size="16" isBold="true"/>
+	<var>end_bal</var>
+    </text>
+
+  </pageHeader>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush mode="solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="600"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Date</text>
+    </text>
+    <text
+	x="600"
+	y="0"
+	width="1000"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Type</text>
+    </text>
+    <text
+	x="1600"
+	y="0"
+	width="600"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Number</text>
+    </text>
+    <text
+	x="2200"
+	y="0"
+	width="1200"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Memo</text>
+    </text>
+    <text
+	x="3400"
+	y="0"
+	width="800"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Amount</text>
+    </text>
+  </pageHeader>
+
+  <detail height="125">
+    <text
+	format="date"
+	x="0"
+	y="0"
+	width="600"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(date)</var>
+    </text>
+    <text
+	x="600"
+	y="0"
+	width="1000"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(type)</var>
+    </text>
+    <text
+	x="1600"
+	y="0"
+	width="600"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(tx_number)</var>
+    </text>
+    <text
+	x="2200"
+	y="0"
+	width="1200"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(memo)</var>
+    </text>
+    <text
+	format="money"
+	x="3400"
+	y="0"
+	width="800"
+	height="125"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<var>column(amount)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="10">
+    <afterCode>incr page_number</afterCode>
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+  </pageFooter>
+
+</ReportDefn>

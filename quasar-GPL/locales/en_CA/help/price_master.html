@@ -1,0 +1,182 @@
+<html>
+<head>
+<TITLE>Price Master</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png"></td>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="setup_inventory.html"><b>Up: </b>Setup Inventory</a></td>
+<td><a href="price_cost_list.html"><b>Previous: </b>Price and Costs</a></td>
+<td><a href="cost_master.html"><b>Next: </b>Cost Master</a></td>
+</tr>
+</tbody></table>
+
+<hr>
+
+<h1>Price Master</h1>
+<img src="images/price_master.png"><br>
+<br>
+
+<p> The price master file is used to link prices to items. Quasar
+provides multiple price types and multiple ways to link prices to
+items. You may establish multiple prices for one item. In that case,
+Quasar reviews all the available pricing for a specific customer and
+gives them the lowest price available at the time.
+
+<h2>Item Selection</h2>
+
+<p> A price can be linked to an individual item, a group of items, a
+sub-department and a specific item size.
+
+<h3>Item</h3>
+
+<p> Toggle on or off. Toggle on to enter a specific item to which the
+price will be linked.
+
+<h3>Item Group</h3>
+
+<p> Toggle on or off. Toggle on to enter an item group. All items
+linked to the group will be linked to the price.
+
+<h3>Sub-department</h3> 
+
+<p> Toggle on or off. Toggle on to enter a specific sub-department. All
+items linked to the sub-department will be linked to the price.
+
+<h3>Size</h3>
+
+<p> Enter the size of the item(s) that the price will be linked to.
+
+<h2>Card Selection</h2>
+
+<p> A price by default is linked to all customers. This default may be
+changed and the price may be linked to a specific customer or a
+specific group of customers.
+
+<h3>Card</h3> 
+
+<p> Toggle on or off. Toggle on to link a price to a specific
+customer. 
+
+<h3>Card Group</h3>
+
+<p> Toggle on or off. Toggle on to link a price to a specific group of
+customers. 
+
+<h2>Store</h2>
+
+<p> If the price is valid only in a specific store, enter that
+store. If blank the price will be valid in all stores.
+
+<h2>Promotion?</h2>
+
+<p> Toggle on or off. Toggle on if the price is a promotional price.
+
+<h2>Discountable?</h2>
+
+<p> Toggle on or off. Toggle on if the price may be further discounted
+at the point of sale.
+
+<h2>Start Date</h2>
+
+<p> Use this attribute in conjunction with the "Stop Date" to define
+a range of dates within which the price will be valid.  If a date is
+entered the price will be valid on or after the date entered. If left
+blank the price will be valid up until the stop date.
+
+<h2>Stop Date</h2>
+
+<p> Use this attribute in conjunction with the "Start Date" to define
+a range of dates within which the price will be valid. If a date is
+entered the price will be valid before or on the date entered. If left
+blank the price will be valid indefinitely
+
+<h2>Day of Week</h2>
+
+<p> The day(s) of the week that a price is valid may be defined
+individually. The day mask format is in this order: Monday, Tuesday,
+Wednesday, Thursday, Friday, Saturday, Sunday. Therefore if you set
+the day mask to be "NNNNNYY" then the price would be valid only on
+Saturday and Sunday.
+
+<h2>Minimum Qty</h2>
+
+<p> The price may be valid only after a minimum qty of the item(s)
+have been purchased. For example the regular price on an item is
+10.00 each. But if you buy twelve of them the price would be 9.00
+each. Enter the minimum quantity of units that a customer must buy to
+receive this price. If zero, the price is valid for any quantity.
+
+<h2>Qty Limit</h2>
+
+<p> You may limit the quantity of items that may be sold at a special
+price. For example, the regular price of an item may be $10.00 each. You can
+put this item on special for $6.00 and limit the quantity that a
+customer may purchase on a single invoice to 2.
+
+<h2>Price Method</h2>
+
+<p> Quasar has multiple pricing methods. 
+
+<h3>Price</h3>
+
+<p> Toggle on or off. Toggle on to enter a single price and/or at/for
+pricing. A single price is simply one item for a single price. For
+example if you enter ".50" then the price of each unit of sale will be
+$0.50. . At/For pricing is a quantity for a price. For
+example, if you enter "3/1.00" the price will be three items for
+$1.00. You may also enter a combination like ".50 3/1.00". In this
+case you would pay $0.50 each or $1.00 for combinations of three.
+
+<h3>Cost Plus</h3>
+
+<p>Toggle on or off. Toggle on to enter a cost plus percentage.
+ Cost plus pricing provides the ability to set the price at your
+cost plus a percentage markup. For example, if you set the cost plus
+ at "10%" and your cost for an item is $1.00, all customers linked
+ to the price would pay $1.10.
+
+<h3>Percent Off</h3>
+
+<p>Toggle on or off. Toggle on to enter a percentage off discount. For
+example, if "10%" is entered here and the price of an item is $1.00
+then the price charged the customer will be (1.00 - 0.10) $0.90.
+
+<h3>Dollar Off</h3>
+
+<p> Toggle on or off. Toggle on to enter a specific dollar discount to
+take off of an item. For example, if you enter "$1.00" here and the
+regular price of the item is $10.00, then the customer will be charged
+(10.00 - 1.00) $9.00 for the item.
+
+ </p>
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="setup_inventory.html"><b>Up: </b>Setup Inventory</a></td>
+<td><a href="price_cost_list.html"><b>Previous: </b>Price and Costs</a></td>
+<td><a href="cost_master.html"><b>Next: </b>Cost Master</a></td>
+</tr>
+</table>
+
+<br>
+
+</body>
+</html>
+
+
+
+
+
+
+

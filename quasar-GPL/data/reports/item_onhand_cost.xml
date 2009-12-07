@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Inventory On Hand at Cost"
+	module="Inventory"
+	orientation="Landscape"
+	pageWidth="6600"
+	pageHeight="5100"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="150"
+	bottomMargin="150">
+
+  <initialize><![CDATA[
+	proc safe_divide { value1 value2 } {
+	    if { $value1 == {} || $value1 == 0 } {
+	        return 0
+	    }
+	    if { $value2 == {} || $value2 == 0 } {
+	        return 0
+	    }
+	    return [expr $value1 / $value2]
+	}
+
+	proc calc_dtc { } {
+	    global column
+	    if { $column(total_cost) == "" } {
+		set val 0
+	    } else {
+		set val $column(total_cost)
+	    }
+	    return $val
+	}
+
+	proc filter_row { } {
+	    global param column
+
+	    if { $param(include_zero) == "yes" } { return 1 }
+	    if { $column(on_hand) != 0 && $column(on_hand) != "" } {
+		return 1
+	    }
+	    if { $column(total_cost) != 0 && $column(total_cost) != "" } {
+		return 1
+	    }
+	    return 0
+	}
+  ]]></initialize>
+
+  <dataSource type="Filter">
+    <expr>[filter_row]</expr>
+
+    <dataSource type="Query">
+      <code><![CDATA[
+	set item_select ""
+
+	if { $param(dept_id) != "" } {
+	    if { $item_select != "" } { append item_select " or " }
+	    append item_select "item.dept_id = '$param(dept_id)'"
+	}
+
+	if { $param(subdept_id) != "" } {
+	    if { $item_select != "" } { append item_select " or " }
+	    append item_select "item.subdept_id = '$param(subdept_id)'"
+	}
+
+	if { $param(location_id) != "" } {
+	    if { $item_select != "" } { append item_select " or " }
+	    if { $param(store_id) == "" } {
+		append item_select "exists (select store_id from item_store where item_store.item_id = item.item_id and item_store.location_id = '$param(location_id)')"
+	    } else {
+		append item_select "exists (select store_id from item_store where item_store.item_id = item.item_id and and item_store.store_id = '$param(store_id)' and item_store.location_id = '$param(location_id)')"
+	    }
+	}
+
+	if { $param(group_id) != "" } {
+	    if { $item_select != "" } { append item_select " or " }
+	    append item_select "exists (select group_id from item_group where item_group.item_id = item.item_id and item_group.group_id = '$param(group_id)')"
+	}
+
+	if { $param(vendor_id) != "" } {
+	    if { $item_select != "" } { append item_select " or " }
+	    append item_select "exists (select vendor_id from item_vendor where item_vendor.item_id = item.item_id and item_vendor.vendor_id = '$param(vendor_id)')"
+	}
+
+	if { $param(item_id) != "" } {
+	    if { $item_select != "" } { append item_select " or " }
+	    append item_select "item.item_id = '$param(item_id)'"
+	}
+
+	if { $param(store_id) == "" } {
+	    set min_select "select sum(min_qty) from item_store where item_store.item_id = item.item_id";
+	    set max_select "select sum(max_qty) from item_store where item_store.item_id = item.item_id";
+	    set oh_select "select sum(on_hand) from item_change where item_change.item_id = item.item_id and change_date <= '$param(date)'"
+	    set cost_select "select sum(total_cost) from item_change where item_change.item_id = item.item_id and change_date <= '$param(date)'"
+	} else {
+	    set min_select "select sum(min_qty) from item_store where item_store.item_id = item.item_id and item_store.store_id = '$param(store_id)'";
+	    set max_select "select sum(max_qty) from item_store where item_store.item_id = item.item_id and item_store.store_id = '$param(store_id)'";
+	    set oh_select "select sum(on_hand) from item_change where item_change.item_id = item.item_id and change_date <= '$param(date)' and store_id = '$param(store_id)'"
+	    set cost_select "select sum(total_cost) from item_change where item_change.item_id = item.item_id and change_date <= '$param(date)' and store_id = '$param(store_id)'"
+	}
+
+	set query "select dept.name,subdept.name,item_plu.number,
+	    item.description,item.sell_size,item_size.qty,($min_select),
+	    ($max_select),($oh_select),($cost_select) from (((item join
+	    item_plu on item.item_id = item_plu.item_id and item_plu.seq_num
+	    = 0) join item_size on item_size.item_id = item.item_id and
+	    item_size.name = item.sell_size) join dept on item.dept_id =
+	    dept.dept_id) join subdept on item.subdept_id = subdept.subdept_id
+	    where item.inventoried = 'Y'"
+
+	if { $item_select != "" } {
+	    append query " and ($item_select)"
+	}
+	return "$query order by dept.name,subdept.name,10"
+      ]]></code>
+      <column>dept_name</column>
+      <column>subdept_name</column>
+      <column>item_number</column>
+      <column>description</column>
+      <column>size_name</column>
+      <column>size_qty</column>
+      <column>min</column>
+      <column>max</column>
+      <column>on_hand</column>
+      <column>total_cost</column>
+    </dataSource>
+  </dataSource>
+
+  <parameter
+	name="date"
+	description="Enter the as/at date:"
+	defaultValue="d"
+	type="date"/>
+  <parameter
+	name="store_id"
+	description="Store (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+  <parameter
+	name="dept_id"
+	description="Department (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="dept"/>
+  <parameter
+	name="subdept_id"
+	description="Subdepartment (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="subdept"/>
+  <parameter
+	name="group_id"
+	description="Group (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="group"/>
+  <parameter
+	name="location_id"
+	description="Location (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="location"/>
+  <parameter
+	name="vendor_id"
+	description="Vendor (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="vendor"/>
+  <parameter
+	name="item_id"
+	description="Item (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="item"/>
+  <parameter
+	name="include_zero"
+	description="Include zero values?"
+	defaultValue="no"
+	type="bool"/>
+
+  <variable
+	name="disp_on_hand"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<calcExpr>[safe_divide $column(on_hand) $column(size_qty)]</calcExpr>
+  </variable>
+  <variable
+	name="disp_avg_cost"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<calcExpr>
+($column(on_hand)==0 || $column(on_hand)=={} || $column(total_cost)=={}) ? 0 : [expr $column(total_cost) * $column(size_qty) / $column(on_hand)]
+	</calcExpr>
+  </variable>
+  <variable
+	name="disp_total_cost"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<calcExpr>
+[calc_dtc]
+	</calcExpr>
+  </variable>
+  <variable
+	name="dt_on_hand"
+	resetType="Group"
+	resetGroup="dept">
+	<sum>$var(disp_on_hand)</sum>
+  </variable>
+  <variable
+	name="st_on_hand"
+	resetType="Group"
+	resetGroup="subdept">
+	<sum>$var(disp_on_hand)</sum>
+  </variable>
+  <variable
+	name="gt_on_hand"
+	resetType="Report">
+	<sum>$var(disp_on_hand)</sum>
+  </variable>
+  <variable
+	name="dt_total_cost"
+	resetType="Group"
+	resetGroup="dept">
+	<sum>$var(disp_total_cost)</sum>
+  </variable>
+  <variable
+	name="st_total_cost"
+	resetType="Group"
+	resetGroup="subdept">
+	<sum>$var(disp_total_cost)</sum>
+  </variable>
+  <variable
+	name="gt_total_cost"
+	resetType="Report">
+	<sum>$var(disp_total_cost)</sum>
+  </variable>
+  <variable
+	name="dt_avg_cost"
+	resetType="Group"
+	resetGroup="dept">
+	<resetExpr>0</resetExpr>
+	<calcExpr>
+$var(dt_on_hand) == 0 ? 0 : [expr $var(dt_total_cost) / $var(dt_on_hand)]
+	</calcExpr>
+  </variable>
+  <variable
+	name="st_avg_cost"
+	resetType="Group"
+	resetGroup="subdept">
+	<resetExpr>0</resetExpr>
+	<calcExpr>
+$var(st_on_hand) == 0 ? 0 : [expr $var(st_total_cost) / $var(st_on_hand)]
+	</calcExpr>
+  </variable>
+  <variable
+	name="gt_avg_cost"
+	resetType="Report">
+	<resetExpr>0</resetExpr>
+	<calcExpr>
+$var(gt_on_hand) == 0 ? 0 : [expr $var(gt_total_cost) / $var(gt_on_hand)]
+	</calcExpr>
+  </variable>
+
+  <group
+	name="dept"
+	reprintHeader="false">
+	<expression>$column(dept_name)</expression>
+	<header height="208">
+	  <text
+		x="0"
+		y="0"
+		width="5000"
+		height="208"
+		halign="Left"
+		valign="Center">
+		<font name="Times" isBold="true" size="18"/>
+		<expr>"Department: $column(dept_name)"</expr>
+	  </text>
+	</header>
+	<footer height="130">
+	  <text
+		x="0"
+		y="5"
+		width="4000"
+		height="125"
+		halign="Right"
+		valign="Center">
+		<font name="Times" isBold="true" size="12"/>
+		<expr>"Total $group(dept):"</expr>
+	  </text>
+	  <line x="4050" y="2" width="580">
+		<pen width="2"/>
+	  </line>
+	  <text
+	  	format="number"
+		x="4050"
+		y="5"
+		width="580"
+		height="125"
+		halign="Right"
+		valign="Center">
+		<font name="Times" isBold="true" size="12"/>
+		<var>var(dt_on_hand)</var>
+	  </text>
+	  <line x="4650" y="2" width="730">
+		<pen width="2"/>
+	  </line>
+	  <text
+	  	format="money"
+		x="4650"
+		y="5"
+		width="730"
+		height="125"
+		halign="Right"
+		valign="Center">
+		<font name="Times" isBold="true" size="12"/>
+		<var>var(dt_avg_cost)</var>
+	  </text>
+	  <line x="5400" y="2" width="880">
+		<pen width="2"/>
+	  </line>
+	  <text
+	  	format="money"
+		x="5400"
+		y="5"
+		width="880"
+		height="125"
+		halign="Right"
+		valign="Center">
+		<font name="Times" isBold="true" size="12"/>
+		<var>var(dt_total_cost)</var>
+	  </text>
+	</footer>
+  </group>
+
+  <group
+	name="subdept"
+	reprintHeader="false">
+	<expression>$column(subdept_name)</expression>
+	<header height="180">
+	  <text
+		x="200"
+		y="0"
+		width="5000"
+		height="180"
+		halign="Left"
+		valign="Center">
+		<font name="Times" isBold="true" size="16"/>
+		<expr>"Subdepartment: $column(subdept_name)"</expr>
+	  </text>
+	</header>
+	<footer height="130">
+	  <line x="4050" y="2" width="580"/>
+	  <text
+		x="0"
+		y="5"
+		width="4000"
+		height="125"
+		halign="Right"
+		valign="Center">
+		<font name="Times" isBold="true" size="12"/>
+		<expr>"Total $group(subdept):"</expr>
+	  </text>
+	  <text
+	  	format="number"
+		x="4050"
+		y="5"
+		width="580"
+		height="125"
+		halign="Right"
+		valign="Center">
+		<font name="Times" isBold="true" size="12"/>
+		<var>var(st_on_hand)</var>
+	  </text>
+	  <line x="4650" y="2" width="730"/>
+	  <text
+	  	format="money"
+		x="4650"
+		y="5"
+		width="730"
+		height="125"
+		halign="Right"
+		valign="Center">
+		<font name="Times" isBold="true" size="12"/>
+		<var>var(st_avg_cost)</var>
+	  </text>
+	  <line x="5400" y="2" width="880"/>
+	  <text
+	  	format="money"
+		x="5400"
+		y="5"
+		width="880"
+		height="125"
+		halign="Right"
+		valign="Center">
+		<font name="Times" isBold="true" size="12"/>
+		<var>var(st_total_cost)</var>
+	  </text>
+	</footer>
+  </group>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Inventory On Hand at Cost</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"As/at $param(date)"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(group_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup groups group_id $param(group_id) name] Group"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(location_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup location location_id $param(location_id) name] Location"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(vendor_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup card card_id $param(vendor_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="6300"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="6300"/>
+    <line x="0" y="116" width="6300"/>
+    <text
+	x="0"
+	y="0"
+	width="1030"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Number</text>
+    </text>
+    <text
+	x="1050"
+	y="0"
+	width="1480"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Description</text>
+    </text>
+    <text
+	x="2550"
+	y="0"
+	width="580"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Size</text>
+    </text>
+    <text
+	x="3150"
+	y="0"
+	width="430"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Min</text>
+    </text>
+    <text
+	x="3600"
+	y="0"
+	width="430"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Max</text>
+    </text>
+    <text
+	x="4050"
+	y="0"
+	width="580"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>On Hand</text>
+    </text>
+    <text
+	x="4650"
+	y="0"
+	width="730"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Avg Cost</text>
+    </text>
+    <text
+	x="5400"
+	y="0"
+	width="880"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Total Cost</text>
+    </text>
+  </pageHeader>
+
+  <detail height="130">
+    <text
+	x="0"
+	y="0"
+	width="1030"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>column(item_number)</var>
+    </text>
+    <text
+	x="1050"
+	y="0"
+	width="1480"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>column(description)</var>
+    </text>
+    <text
+	x="2550"
+	y="0"
+	width="580"
+	height="125"
+	halign="Left"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>column(size_name)</var>
+    </text>
+    <text
+	format="number"
+	x="3150"
+	y="0"
+	width="430"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>column(min)</var>
+    </text>
+    <text
+	format="number"
+	x="3600"
+	y="0"
+	width="430"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>column(max)</var>
+    </text>
+    <text
+	format="number"
+	x="4050"
+	y="0"
+	width="580"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>var(disp_on_hand)</var>
+    </text>
+    <text
+	format="money"
+	x="4650"
+	y="0"
+	width="730"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>var(disp_avg_cost)</var>
+    </text>
+    <text
+	format="money"
+	x="5400"
+	y="0"
+	width="880"
+	height="125"
+	halign="Right"
+	valign="Center">
+	<font name="Times" size="12"/>
+	<var>var(disp_total_cost)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="6300">
+	<pen width="2"/>
+    </line>
+    <text
+	evalTime="Report"
+	x="3150"
+	y="10"
+	width="3150"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+    <text
+	x="0"
+	y="10"
+	width="3150"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+  </pageFooter>
+
+  <summary height="250">
+    <text
+	x="0"
+	y="10"
+	width="4000"
+	height="208"
+	halign="Right"
+	valign="Center">
+	<font name="Times" isBold="true" size="14"/>
+	<expr>"Grand Total:"</expr>
+    </text>
+    <line x="4050" y="2" width="580">
+	<pen width="3"/>
+    </line>
+    <text
+ 	format="number"
+	x="4050"
+	y="10"
+	width="580"
+	height="208"
+	halign="Right"
+	valign="Center">
+	<font name="Times" isBold="true" size="14"/>
+	<var>var(gt_on_hand)</var>
+    </text>
+    <line x="4650" y="2" width="730">
+	<pen width="3"/>
+    </line>
+    <text
+  	format="money"
+	x="4650"
+	y="10"
+	width="730"
+	height="208"
+	halign="Right"
+	valign="Center">
+	<font name="Times" isBold="true" size="14"/>
+	<var>var(gt_avg_cost)</var>
+    </text>
+    <line x="5400" y="2" width="880">
+	<pen width="3"/>
+    </line>
+    <text
+  	format="money"
+	x="5400"
+	y="10"
+	width="880"
+	height="208"
+	halign="Right"
+	valign="Center">
+	<font name="Times" isBold="true" size="14"/>
+	<var>var(gt_total_cost)</var>
+    </text>
+  </summary>
+
+</ReportDefn>

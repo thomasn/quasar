@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Item Voids"
+	module="Sales"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="150"
+	bottomMargin="150">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+  ]]></initialize>
+
+  <dataSource type="Query">
+    <code><![CDATA[
+	set where ""
+	if { $param(store_id) != "" } {
+	    append where "and store_id = '$param(store_id)' "
+	}
+	if { $param(employee_id) != "" } {
+	    append where "and employee_id = '$param(employee_id)' "
+	}
+	if { $param(station_id) != "" } {
+	    append where "and station_id = '$param(station_id)' "
+	}
+
+	return "select gltx.number,post_date,post_time,gltx_item.number,
+	gltx_item.description,item.description,gltx_item.quantity,
+	gltx_item.sale_price from (gltx_item join gltx on gltx.gltx_id =
+	gltx_item.gltx_id) join item on gltx_item.item_id = item.item_id
+	where voided = 'Y' and post_date >= '$param(from)' and
+	post_date <= '$param(to)' $where order by post_date,post_time"
+    ]]></code>
+    <column>gltx_number</column>
+    <column>date</column>
+    <column>time</column>
+    <column>item_number</column>
+    <column>description</column>
+    <column>item_desc</column>
+    <column>quantity</column>
+    <column>sale_price</column>
+  </dataSource>
+
+  <parameter
+	name="from"
+	description="Enter the from date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="to"
+	description="Enter the to date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="employee_id"
+	description="Enter the employee (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="employee"/>
+
+  <parameter
+	name="station_id"
+	description="Enter the station (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="station"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Item Voids</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"From $param(from) to $param(to)"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(employee_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup card card_id $param(employee_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(station_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup station station_id $param(station_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="600"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Number</text>
+    </text>
+    <text
+	x="600"
+	y="0"
+	width="600"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Date</text>
+    </text>
+    <text
+	x="1200"
+	y="0"
+	width="500"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Time</text>
+    </text>
+    <text
+	x="1700"
+	y="0"
+	width="900"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Item</text>
+    </text>
+    <text
+	x="2600"
+	y="0"
+	width="1200"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Description</text>
+    </text>
+    <text
+	x="3800"
+	y="0"
+	width="400"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Qty</text>
+    </text>
+    <text
+	x="4200"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Price</text>
+    </text>
+  </pageHeader>
+
+  <detail height="130">
+    <text
+	x="0"
+	y="0"
+	width="600"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(gltx_number)</var>
+    </text>
+    <text
+	x="600"
+	y="0"
+	width="600"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(date)</var>
+    </text>
+    <text
+	x="1200"
+	y="0"
+	width="500"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(time)</var>
+    </text>
+    <text
+	x="1700"
+	y="0"
+	width="900"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(item_number)</var>
+    </text>
+    <text
+	x="2600"
+	y="0"
+	width="1200"
+	height="125">
+	<font name="Times" size="10"/>
+	<expr>$column(description) == "" ? $column(item_desc) : $column(description)</expr>
+    </text>
+    <text
+	format="number"
+	x="3800"
+	y="0"
+	width="400"
+	height="125"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<var>column(quantity)</var>
+    </text>
+    <text
+	format="money"
+	x="4200"
+	y="0"
+	width="600"
+	height="125"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<var>column(sale_price)</var>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

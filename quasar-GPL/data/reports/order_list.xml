@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Purchase Order List"
+	module="Purchases"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+
+	proc vendor_name { vendor_id } {
+	    set name [lookup card card_id $vendor_id name]
+	    set number [lookup card card_id $vendor_id number]
+	    if { $number != "" } {
+		append name " (#$number)"
+	    }
+	    return $name
+	}
+
+	proc date_text { from to } {
+	    if { $from != "" && $to != "" } {
+		return "From $from to $to"
+	    } elseif { $from != "" } {
+		return "On/after $from"
+	    } else {
+		return "On/before $to"
+	    }
+	}
+
+	proc order_amount { order_id } {
+	    global order_amts
+
+	    if { [info exists order_amts($order_id)] } {
+		return $order_amts($order_id)
+	    }
+
+	    set item_total 0
+	    set query "select sum(ext_base + ext_deposit) from porder_item
+			where order_id = '$order_id'"
+	    select $query {
+		set item_total $column(1)
+		if { $item_total == "" } { set item_total 0 }
+	    }
+
+	    set tax_total 0
+	    set query "select sum(amount + inc_amount) from porder_tax
+			where order_id = '$order_id'"
+	    select $query {
+		set tax_total $column(1)
+		if { $tax_total == "" } { set tax_total 0 }
+	    }
+
+	    set charge_total 0
+	    set query "select sum(base) from porder_charge where
+			order_id = '$order_id' and internal = 'Y'"
+	    select $query {
+		set charge_total $column(1)
+		if { $charge_total == "" } { set charge_total 0 }
+	    }
+
+	    set order_amt [expr $item_total + $tax_total + $charge_total]
+	    set order_amts($order_id) $order_amt
+	    return $order_amt
+	}
+  ]]></initialize>
+
+  <parameter
+	name="vendor_id"
+	description="Vendor:"
+	manditory="false"
+	type="lookup"
+	dataType="vendor"/>
+
+  <parameter
+	name="from"
+	description="From:"
+	manditory="false"
+	type="date"/>
+
+  <parameter
+	name="to"
+	description="To:"
+	manditory="false"
+	type="date"/>
+
+  <parameter
+	name="store_id"
+	description="Store:"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <parameter
+	name="active_only"
+	description="Active Only?"
+	type="bool"/>
+
+  <variable
+	name="group_total"
+	resetType="Group"
+	resetGroup="vendor">
+	<sum>[order_amount $column(order_id)]</sum>
+  </variable>
+
+  <variable
+	name="grand_total"
+	resetType="Report">
+	<sum>[order_amount $column(order_id)]</sum>
+  </variable>
+
+  <dataSource type="Query">
+    <code><![CDATA[
+	set where ""
+	if { $param(from) != "" } {
+	    if { $where != "" } { append where " and " }
+	    append where "order_date >= '$param(from)'"
+	}
+	if { $param(to) != "" } {
+	    if { $where != "" } { append where " and " }
+	    append where "order_date <= '$param(to)'"
+	}
+	if { $param(vendor_id) != "" } {
+	    if { $where != "" } { append where " and " }
+	    append where "vendor_id = '$param(vendor_id)'"
+	}
+	if { $param(store_id) != "" } {
+	    if { $where != "" } { append where " and " }
+	    append where "store_id = '$param(store_id)'"
+	}
+	if { $param(active_only) == "yes" } {
+	    if { $where != "" } { append where " and " }
+	    append where "inactive_on is null"
+	}
+	if { $where != "" } { set where "where $where" }
+
+	return "select vendor_id,order_id,number,order_date from porder
+		$where order by vendor_id,order_date,number"
+    ]]></code>
+    <column>vendor_id</column>
+    <column>order_id</column>
+    <column>number</column>
+    <column>date</column>
+  </dataSource>
+
+  <group name="vendor">
+	<expression>$column(vendor_id)</expression>
+	<header height="200">
+	  <text
+		x="0"
+		y="0"
+		width="4800"
+		height="200">
+		<font name="Times" isBold="true" size="14"/>
+		<expr>"[vendor_name $column(vendor_id)]:"</expr>
+	  </text>
+	</header>
+	<footer height="130">
+	  <text
+		x="0"
+		y="0"
+		width="1600"
+		height="130">
+		<font name="Times" isBold="true" size="12"/>
+		<expr>"Total [lookup card card_id $group(vendor) name]:"</expr>
+	  </text>
+	  <text
+		format="money"
+		x="1600"
+		y="0"
+		width="1200"
+		height="130"
+		halign="Right">
+		<font name="Times" isBold="true" size="12"/>
+		<var>var(group_total)</var>
+	  </text>
+	</footer>
+  </group>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Purchase Order List</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(from) != {} || $param(to) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>[date_text $param(from) $param(to)]</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Number</text>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="800"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Date</text>
+    </text>
+    <text
+	x="1600"
+	y="0"
+	width="1200"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Amount</text>
+    </text>
+  </pageHeader>
+
+  <detail height="120">
+    <rectangle x="0" y="0" width="4800" height="120">
+	<printWhen>$sys(row_number) % 2 == 0</printWhen>
+	<pen style="NoPen"/>
+	<brush color="#F4F4F4"/>
+    </rectangle>
+    <text
+	x="0"
+	y="0"
+	width="800"
+	height="120">
+	<font name="Times" size="10"/>
+	<var>column(number)</var>
+    </text>
+    <text
+	format="date"
+	x="800"
+	y="0"
+	width="800"
+	height="120">
+	<font name="Times" size="10"/>
+	<var>column(date)</var>
+    </text>
+    <text
+	format="money"
+	x="1600"
+	y="0"
+	width="1200"
+	height="120"
+	halign="Right">
+	<font name="Times" size="10"/>
+	<expr>[order_amount $column(order_id)]</expr>
+    </text>
+  </detail>
+
+  <summary height="200">
+    <printWhen>$param(vendor_id) == {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="1600"
+	height="200">
+	<font name="Times" isBold="true" size="14"/>
+	<text>Grand Total:</text>
+    </text>
+    <text
+	format="money"
+	x="1600"
+	y="0"
+	width="1200"
+	height="200"
+	halign="Right">
+	<font name="Times" isBold="true" size="14"/>
+	<var>var(grand_total)</var>
+    </text>
+  </summary>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

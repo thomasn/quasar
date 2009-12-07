@@ -1,0 +1,38 @@
+include (../project.def)
+
+TEMPLATE	= lib
+TARGET		= quasar_obj
+VERSION		= 1.4
+CONFIG		+= qt staticlib
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../lib
+INCLUDEPATH	+= ../utility;../db_driver;.
+DEPENDPATH	= $$INCLUDEPATH
+
+HEADERS=account.h card.h card_adjust.h charge.h cheque.h company.h count.h \
+	customer.h customer_type.h data_object.h dept.h discount.h \
+        employee.h expense.h extra.h general.h gltx.h group.h invoice.h \
+        item.h item_adjust.h item_price.h location.h nosale.h order.h \
+        order_template.h pat_group.h pat_worksheet.h payout.h personal.h \
+        pos_tx.h quasar_include.h quasar_version.h quote.h receipt.h \
+        receive.h reconcile.h recurring.h security_type.h sequence.h \
+        shift.h slip.h station.h store.h subdept.h tax.h tender.h \
+        tender_adjust.h tender_count.h term.h todo.h user.h vendor.h \
+        withdraw.h label_batch.h price_batch.h promo_batch.h pos_work.h \
+        adjust_reason.h
+
+SOURCES=account.cpp card.cpp card_adjust.cpp charge.cpp cheque.cpp \
+	company.cpp count.cpp customer.cpp customer_type.cpp \
+        data_object.cpp dept.cpp discount.cpp employee.cpp expense.cpp \
+        extra.cpp general.cpp gltx.cpp group.cpp invoice.cpp item.cpp \
+        item_adjust.cpp item_price.cpp location.cpp nosale.cpp order.cpp \
+        order_template.cpp pat_group.cpp pat_worksheet.cpp payout.cpp \
+        personal.cpp pos_tx.cpp quote.cpp receipt.cpp receive.cpp \
+        reconcile.cpp recurring.cpp security_type.cpp sequence.cpp \
+        shift.cpp slip.cpp station.cpp store.cpp subdept.cpp tax.cpp \
+        tender.cpp tender_adjust.cpp tender_count.cpp term.cpp todo.cpp \
+        user.cpp vendor.cpp withdraw.cpp label_batch.cpp price_batch.cpp \
+        promo_batch.cpp pos_work.cpp adjust_reason.cpp
+
+TRANSLATIONS=messages.ts

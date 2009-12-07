@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE LABEL_DEFN>
+
+<LabelDefn>
+  <name>QuickBooks Compatible</name>
+  <pageWidth>612</pageWidth>
+  <pageHeight>792</pageHeight>
+  <topMargin>0</topMargin>
+  <leftMargin>0</leftMargin>
+  <rows>1</rows>
+  <columns>1</columns>
+  <orientation>portrait</orientation>
+  <labelWidth>612</labelWidth>
+  <labelHeight>792</labelHeight>
+
+  <text>
+    <x>504</x> <y>72</y> <width>80</width> <height>28</height>
+    <font><family>Courier</family><size>10</size></font>
+    <halign>right</halign>
+    <text>@date</text>
+  </text>
+
+  <text>
+    <x>72</x> <y>108</y> <width>410</width> <height>28</height>
+    <font><family>Courier</family><size>10</size></font>
+    <halign>left</halign>
+    <text>@name</text>
+  </text>
+
+  <text>
+    <x>504</x> <y>108</y> <width>80</width> <height>28</height>
+    <font><family>Courier</family><size>10</size></font>
+    <halign>right</halign>
+    <text>@amount</text>
+  </text>
+
+  <text>
+    <x>22</x> <y>144</y> <width>526</width> <height>28</height>
+    <font><family>Courier</family><size>10</size></font>
+    <halign>left</halign>
+    <text>@text</text>
+  </text>
+
+  <text>
+    <x>72</x> <y>198</y> <width>234</width> <height>60</height>
+    <font><family>Courier</family><size>10</size></font>
+    <halign>left</halign>
+    <text>@address</text>
+  </text>
+
+  <text>
+    <x>72</x> <y>288</y> <width>368</width> <height>180</height>
+    <font><family>Courier</family><size>8</size></font>
+    <halign>left</halign>
+    <text>@detailLeft</text>
+  </text>
+
+  <text>
+    <x>440</x> <y>288</y> <width>100</width> <height>180</height>
+    <font><family>Courier</family><size>8</size></font>
+    <halign>right</halign>
+    <text>@detailRight</text>
+  </text>
+
+  <text>
+    <x>72</x> <y>540</y> <width>368</width> <height>180</height>
+    <font><family>Courier</family><size>8</size></font>
+    <halign>left</halign>
+    <text>@detailLeft</text>
+  </text>
+
+  <text>
+    <x>440</x> <y>540</y> <width>100</width> <height>180</height>
+    <font><family>Courier</family><size>8</size></font>
+    <halign>right</halign>
+    <text>@detailRight</text>
+  </text>
+</LabelDefn>

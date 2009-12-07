@@ -1,0 +1,39 @@
+Release Notes for Quasar 1.4.6:
+-------------------------------
+
+Quasar 1.4.6 is a bug fix release only.  The changes are:
+
+	- fixed a bug with SQL statement execution that was making
+	  some areas of Quasar much slower.
+
+	- fixed a bug in the Sybase driver so that it handles
+	  auto commit properly now.
+
+	- made the vendor invoice, customer invoice, purchase order,
+	  and customer quote screens faster.
+
+	- fixed bug in Quasar POS that prevented proper recovery from
+	  a bad shutdown.
+
+	- fixed a small chance of having two quasar_posd servers running
+	  at once.
+
+	- fixed compile of fixed.h on some systems.
+
+	- added XML for importing customer invoices.
+
+	- fixed sales history screen date calculations.
+
+	- fixed AM/PM time problem.
+
+	- customer statement was showing voided transactions.
+
+	- invoice paid total was wrong in some cases.
+
+	- date not formatted properly on customer invoice and statement.
+
+	- price batch was bringing in items that are inactive.
+
+	- allow 10 digit invoice numbers in POS.
+
+	- set terms in invoices from POS based on customer default.

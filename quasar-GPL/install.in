@@ -1,0 +1,211 @@
+#!/bin/sh
+#
+# Copyright (C) 1998-2004 Linux Canada Inc.  All rights reserved.
+#
+# This file is part of Quasar Accounting
+#
+# This file may be distributed and/or modified under the terms of the
+# GNU General Public License version 2 as published by the Free Software
+# Foundation and appearing in the file LICENSE.GPL included in the
+# packaging of this file.
+#
+# Licensees holding a valid Quasar Commercial License may use this file
+# in accordance with the Quasar Commercial License Agreement provided
+# with the Software in the LICENSE.COMMERCIAL file.
+#
+# This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
+# WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+#
+# See http://www.linuxcanada.com or email sales@linuxcanada.com for
+# information about Quasar Accounting support and maintenance options.
+#
+# Contact sales@linuxcanada.com if any conditions of this licensing are
+# not clear to you.
+
+# Programs
+INSTALL=/usr/bin/install
+
+# Install locations
+TOP_DIR=/opt/quasar
+CONFIG_DIR=$TOP_DIR/config
+PROGRAM_DIR=$TOP_DIR/bin
+SERVER_DIR=$TOP_DIR/bin
+DATA_DIR=$TOP_DIR/data
+BACKUP_DIR=$TOP_DIR/backup
+IMPORT_DIR=$TOP_DIR/import
+DB_DIR=$TOP_DIR/databases
+DRIVER_DIR=$TOP_DIR/drivers
+LOCALE_DIR=$TOP_DIR/locales
+SETUP_DIR=$TOP_DIR/setup
+DOC_DIR=$TOP_DIR
+POS_DATA_DIR=$TOP_DIR/pos_data
+
+# Version with prefix for install command
+CONFIG_DIR_P=$PREFIX$CONFIG_DIR
+PROGRAM_DIR_P=$PREFIX$PROGRAM_DIR
+SERVER_DIR_P=$PREFIX$SERVER_DIR
+DATA_DIR_P=$PREFIX$DATA_DIR
+BACKUP_DIR_P=$PREFIX$BACKUP_DIR
+IMPORT_DIR_P=$PREFIX$IMPORT_DIR
+DB_DIR_P=$PREFIX$DB_DIR
+DRIVER_DIR_P=$PREFIX$DRIVER_DIR
+LOCALE_DIR_P=$PREFIX$LOCALE_DIR
+SETUP_DIR_P=$PREFIX$SETUP_DIR
+DOC_DIR_P=$PREFIX$DOC_DIR
+POS_DATA_DIR_P=$PREFIX$POS_DATA_DIR
+
+function install_all ()
+{
+    install_server
+    install_client
+}
+
+function install_server()
+{
+    # Install files
+    $INSTALL -d $CONFIG_DIR_P
+    $INSTALL -d $PROGRAM_DIR_P
+    $INSTALL -d $SERVER_DIR_P
+    $INSTALL -d $DATA_DIR_P
+    $INSTALL -d $DATA_DIR_P/cheque_fmts
+    $INSTALL -d $DATA_DIR_P/companies
+    $INSTALL -d $DATA_DIR_P/handheld
+    $INSTALL -d $DATA_DIR_P/models
+    $INSTALL -d $DATA_DIR_P/reports
+    $INSTALL -d $DATA_DIR_P/screens
+    $INSTALL -d $DATA_DIR_P/shelf_labels
+    $INSTALL -d $DRIVER_DIR_P
+    $INSTALL -d $BACKUP_DIR_P
+    $INSTALL -d $IMPORT_DIR_P
+    $INSTALL -d $SETUP_DIR_P
+    $INSTALL -d -m 0777 $DB_DIR_P
+    $INSTALL -s bin/quasar_setup $SERVER_DIR_P
+    $INSTALL -s bin/quasard $SERVER_DIR_P
+    $INSTALL -s bin/quasar_clientd $SERVER_DIR_P
+    $INSTALL -s bin/quasar_import $SERVER_DIR_P
+    $INSTALL -s bin/quasar_report $SERVER_DIR_P
+    $INSTALL -m 0664 data/cheque_fmts/*.xml $DATA_DIR_P/cheque_fmts
+    $INSTALL -m 0664 data/handheld/handheld.hex $DATA_DIR_P/handheld
+    $INSTALL -m 0664 data/models/*.xml $DATA_DIR_P/models
+    $INSTALL -m 0664 data/reports/*.xml $DATA_DIR_P/reports
+    $INSTALL -m 0664 data/screens/*.xml $DATA_DIR_P/screens
+    $INSTALL -m 0664 data/shelf_labels/*.xml $DATA_DIR_P/shelf_labels
+    $INSTALL -m 0664 import/*.xml $IMPORT_DIR_P
+    $INSTALL -m 0664 setup/quasar_setup.xpm $SETUP_DIR_P
+    $INSTALL -m 0664 Readme.txt $DOC_DIR_P
+    $INSTALL -m 0664 Release_143.txt $DOC_DIR_P
+    $INSTALL -m 0664 Release_144.txt $DOC_DIR_P
+    $INSTALL -m 0664 Release_145.txt $DOC_DIR_P
+    $INSTALL -m 0664 Release_146.txt $DOC_DIR_P
+    $INSTALL -m 0664 Release_147.txt $DOC_DIR_P
+
+    # Generate server.cfg file
+    echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE ServerConfig>\n<ServerConfig>\n  <port>0</port>\n  <systemId>0</systemId>\n  <dataDir>$DATA_DIR</dataDir>\n  <driverDir>$DRIVER_DIR</driverDir>\n  <backupDir>$BACKUP_DIR</backupDir>\n  <importDir>$IMPORT_DIR</importDir>\n  <adminPassword>admin</adminPassword>\n</ServerConfig>" >$CONFIG_DIR_P/server.cfg
+    chmod 640 $CONFIG_DIR_P/server.cfg
+
+    # PostgreSQL driver
+    if [ "@BUILD_POSTGRESQL@" == "yes" ]; then
+    $INSTALL -m 0775 drivers/libpostgresql_driver.so $DRIVER_DIR_P
+    echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE PostgresqlConfig>\n<PostgresqlConfig>\n <hostname>localhost</hostname>\n <port>5432</port>\n <library></library>\n <dbaUsername>quasar_dba</dbaUsername>\n <dbaPassword></dbaPassword>\n <username>quasar</username>\n <password></password>\n <charSet>UNICODE</charSet>\n</PostgresqlConfig>" >$CONFIG_DIR_P/postgresql.cfg
+    chmod 640 $CONFIG_DIR_P/postgresql.cfg
+    fi
+
+    # Firebird driver
+    if [ "@BUILD_FIREBIRD@" == "yes" ]; then
+    $INSTALL -m 0775 drivers/libfirebird_driver.so $DRIVER_DIR_P
+    echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE FirebirdConfig>\n<FirebirdConfig>\n <hostname>localhost</hostname>\n <port>3050</port>\n <library>/opt/firebird/lib/libfbclient.so</library>\n <installDir>@FIREBIRD_DIR@</installDir>\n <dbaPassword></dbaPassword>\n <username></username>\n <password></password>\n <databaseDir>$DB_DIR</databaseDir>\n <blockSize>4096</blockSize>\n <charSet>ISO8859_1</charSet>\n</FirebirdConfig>" >$CONFIG_DIR_P/firebird.cfg
+    chmod 640 $CONFIG_DIR_P/firebird.cfg
+    fi
+
+
+    # Add group and user and setup permissions
+    if [ "$UID" == "0" ]; then
+	groupadd quasar >/dev/null 2>/dev/null
+	useradd -g quasar -d $TOP_DIR -s /bin/bash -c "Quasar" quasar 2>/dev/null
+	chgrp -R quasar $CONFIG_DIR
+	chgrp -R quasar $DATA_DIR
+
+	if [ ! -e /var/log/quasar ]; then
+	    mkdir /var/log/quasar
+	fi
+	chown quasar /var/log/quasar
+	chgrp quasar /var/log/quasar
+    fi
+
+    # Add inetd or xinetd entry for server
+    if [ -e /etc/init.d/xinetd ]; then
+	$INSTALL -m 0664 -D setup/quasar.xinetd $PREFIX/etc/xinetd.d/quasar
+	if [ "$UID" == "0" ]; then
+	    /etc/init.d/xinetd restart
+	    if [ -x /sbin/chkconfig ]; then
+		/sbin/chkconfig xinetd on
+	    elif [ -x /sbin/rc-update ]; then
+		/sbin/rc-update add xinetd default
+	    fi
+	fi
+    elif [ -e /etc/inetd.conf ]; then
+	if [ ! $(grep -q quasar /etc/services) ]; then
+	    echo -e "quasar\t\t3599/tcp" >>/etc/services
+	fi
+	if [ ! $(grep -q quasar /etc/inetd.conf) ]; then
+	    echo -e "quasar\t\tstream\ttcp\tnowait\tquasar.quasar\t/opt/quasar/bin/quasar_clientd" >>/etc/inetd.conf
+	    /etc/init.d/inetd restart
+	fi
+    else
+	echo "ERROR: can't install server process using xinetd or inetd"
+	echo "       you will need to setup quasard to run at boot time"
+    fi
+}
+
+function install_client ()
+{
+    $INSTALL -d $CONFIG_DIR_P
+    $INSTALL -d $PROGRAM_DIR_P
+    $INSTALL -d $SERVER_DIR_P
+    $INSTALL -d $LOCALE_DIR_P
+    $INSTALL -d $LOCALE_DIR_P/en_CA
+    $INSTALL -d $LOCALE_DIR_P/en_CA/help
+    $INSTALL -d $LOCALE_DIR_P/en_CA/help/images
+    $INSTALL -d $SETUP_DIR_P
+    $INSTALL -s bin/quasar $PROGRAM_DIR_P
+    $INSTALL -s bin/quasar_setup $SERVER_DIR_P
+    $INSTALL -m 0664 locales/en_CA/messages.qm $LOCALE_DIR_P/en_CA
+    $INSTALL -m 0664 locales/en_CA/messages.ts $LOCALE_DIR_P/en_CA
+    $INSTALL -m 0664 locales/en_CA/help/*.html $LOCALE_DIR_P/en_CA/help
+    $INSTALL -m 0664 locales/en_CA/help/images/*.png $LOCALE_DIR_P/en_CA/help/images
+    $INSTALL -m 0664 Readme.txt $DOC_DIR_P
+    $INSTALL -m 0664 Release_143.txt $DOC_DIR_P
+    $INSTALL -m 0664 Release_144.txt $DOC_DIR_P
+    $INSTALL -m 0664 Release_145.txt $DOC_DIR_P
+    $INSTALL -m 0664 Release_146.txt $DOC_DIR_P
+    $INSTALL -m 0664 Release_147.txt $DOC_DIR_P
+    $INSTALL -m 0664 setup/quasar_client.xpm $SETUP_DIR_P
+    $INSTALL -m 0664 setup/quasar_setup.xpm $SETUP_DIR_P
+
+    # Generate client.cfg file
+    echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE ClientConfig>\n<ClientConfig>\n  <localeDir>$LOCALE_DIR</localeDir>\n  <stationNumber>1</stationNumber>\n</ClientConfig>" >$CONFIG_DIR_P/client.cfg
+    chmod 644 $CONFIG_DIR_P/client.cfg
+
+    # Add group and user
+    if [ "$UID" == "0" ]; then
+	groupadd quasar >/dev/null 2>/dev/null
+	useradd -g quasar -d $TOP_DIR -s /bin/bash -c "Quasar" quasar 2>/dev/null
+	chgrp -R quasar $CONFIG_DIR
+    fi
+
+}
+
+
+if [ -z "$@" ]; then
+    install_all
+else
+    for type in "$@"; do
+	case $type in
+	all)			install_all ;;
+	server)			install_server ;;
+	client)			install_client ;;
+	*)			echo "Error: unknown install type $type" ;;
+	esac
+    done
+fi
+

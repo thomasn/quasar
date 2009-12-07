@@ -1,0 +1,456 @@
+<html>
+<head>
+<TITLE>Vendor Invoice</TITLE>
+
+</HEAD>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<table border=5 cellspacing=4 cellpadding=5>
+<tbody>
+<tr>
+<td><img src="images/help_icon.png"></td>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_purchases.html"><b>Up: </b>Purchases</a></td>
+<td><a href="receive_list.html"><b>Previous: </b>Vendor Invoice List</a></td>
+<td><a href="vendor_payment.html"><b>Next: </b>Vendor Payments</a></td>
+</tr>
+</tbody></table>
+
+
+<hr>
+
+<H1>Vendor Invoice</H1>
+<img src="images/vendor_invoice.png"><br>
+<br>
+
+<p>
+Use the vendor invoice window to enter a vendor bill into Quasar. The
+vendor invoice updates item on hands and values, payables and ledger
+accounts. 
+<p>
+Use the search feature to find items in large invoices. Just click on the
+"Search" button on the right and search by item or description.
+
+<h2>Invoice No</h2>
+
+<p> The invoice number is incremented by Quasar. This may be changed by
+the user. If the invoice number entered is the same as an existing
+invoice number then a warning message will be displayed.</p>  
+
+<h2>Reference</h2>
+
+<p> A number that references the vendor invoice. 
+
+<h2>Date</h2>
+
+<p>The date for the vendor invoice. The date determines the
+accounting period in which the vendor invoice will be posted.
+
+<h2>Time</h2>
+
+<p> The time that the vendor invoice is created.
+
+<h2>Shift</h2>
+
+<p> The shift that the vendor invoice is linked to through a shift
+close.
+
+<h2>Store</h2>
+
+<p>Select or change the default store. If a store has been
+defined for the user, then the user's store will display by
+default. If no store has been defined for the user, then the
+default store specified in the "Quasar Configuration" will be
+displayed.
+
+
+<h2>Station</h2>
+
+<p> The station (work station) on which the vendor invoice is created.
+
+
+<h2>Employee</h2>
+
+<p> The employee creating the vendor invoice.
+
+<h2>Vendor</h2>
+<p>
+Select or enter the vendor for the vendor invoice.
+
+<h2>Address</h2>
+
+<p> The address of the vendor.
+
+<h2>Terms</h2>
+
+<p> Enter the payment terms for this vendor. An
+existing set of terms may be used or a new set of terms may be
+defined. Payment terms entered in the vendor master screen or purchase
+order will appear here by default. <a href="term_master.html">(More)</a>
+
+<h2>Ship Via</h2>
+
+<p> Enter the shipping method.
+
+<h2>Vendor's Date</h2> 
+<p>
+Enter the vendor's invoice date as
+displayed on the hard copy of their invoice. 
+
+<h2>Type</h2>
+
+<p>Select either item or account. Select item if the vendor invoice
+will be used to purchase or return items. Select account if the vendor
+invoice will reflect a direct  charge or credit to a ledger account.
+
+<h2>Memo</h2>
+
+<p>Defines the vendor invoice.
+
+<h2>Item Entry Table</h2>
+<br>
+<img src="images/vendor_invoice_table.png"><br>
+<p>
+Enter the items, quantity and cost of the items on the vendor invoice.
+Note, the items can be imported from the purchase order by clicking on
+the "Orders" button, and/or they can be imported by clicking on the
+"Receive" button.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Item Number</b> - The item number of the item invoiced.
+<li> <b>Description</b> - The description of the item invoiced.
+<li> <b>Size</b> - The size of the item invoiced.
+<li> <b>Quantity</b> - The quantity of units (size) invoiced.
+<li> <b>Cost</b> - The vendor cost for the item being invoiced.
+<li> <b>Ext Cost</b> - The extended cost of the line.
+<li> <b>Tax</b> - The tax code defining the taxes that are applicable.
+</ul>
+</dl>
+
+<h2>Totals</h2>
+<br>
+<img src="images/vendor_invoice_total.png"><br>
+<p>
+The totals folder displays the various totals for the vendor invoice.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Item Total</b> - The sub-total of all items prior to charges,
+taxes and container deposits.
+<li> <b>Charge Total</b> - The total of all internal charges applied
+to all items. An internal charge is a charge that is included on
+the vendor invoice. For example, A franchiser may charge a franchise
+a service charge.
+<li> <b>Size</b> - The size of the item invoiced.
+<li> <b>Quantity</b> - The quantity of units (size) invoiced.
+<li> <b>Tax Total</b> - The total of all taxes on the invoice.
+<li> <b>Deposit Total</b> - The total of all container deposits
+applicable on the invoice.
+<li> <b>Qty Total</b> - The total number of items on the invoice.
+<li> <b>Total</b> - The total of all items, taxes, charges and
+container deposits on the invoice.
+<li> <b>Paid</b> - The amount paid to the vendor on this vendor invoice.
+<li> <b>Due</b> - The balance due the vendor. (total amount
+minus paid) 
+</ul>
+</dl>
+
+
+<h2>Comments</h2>
+<br>
+<img src="images/vendor_invoice_comment.png"><br>
+
+<p> 
+Enter comments that are specific to the invoice.
+
+
+<h2>Taxes</h2>
+<br>
+<img src="images/vendor_invoice_tax.png"><br>
+<p>
+Displays the individual taxes and tax totals applicable to the invoice.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Tax</b> The identification of the tax.
+<li> <b>Name</b> The name of the tax.
+<li> <b>Taxable</b> - The net base amount that a given tax is charged to.
+<li> <b>Tax Amt</b> - The amount of tax allocated to the "Taxable" amount.
+<li> <b>Inc. Taxable</b> - The net base taxable amount including the amount of the tax. (for items with taxes included in the price)
+<li> <b>Inc. Tax Amt</b> - The net amount of tax calculated from the "Inc. Taxable" amount.
+</ul>
+</dl>
+
+<h2>Charges</h2>
+<br>
+<img src="images/vendor_invoice_charge.png"><br>
+
+<p> 
+Use the charges folder to define internal and external charges that
+will affect the invoice.
+
+<h3>Internal Charges Table</h3>
+<p>
+Use the internal charges table to define internal charges affecting
+the order. Internal charges will be included on the vendor invoice and
+added to payables. An
+example of an internal charge is where a franchiser bills a franchise
+a service fee.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Internal Charge</b> - Enter or select the internal charge to
+apply.
+<li> <b>Amount</b> - The amount of the internal charge on the
+order. This may be calculated or entered.
+<li> <b>Tax</b> - Displays the tax code applicable to the charge.
+</ul>
+</dl>
+
+<h3>External Charge Table</b>
+
+<p> Use the external charge table to define charges that will increase
+the landed cost of the item. External charges will not print on the
+hard copy of the invoice nor will they impact vendor payables. The
+purpose of defining external charges on an invoice is to 
+provide the ability to calculate the landed cost of each item. An
+example of an external charge is freight from a third party carrier.
+
+<p> An external charge that allocates back to items will in fact
+increase the inventory value of each item and increases the inventory
+ledger account. The offsetting entry is made to the accrual account
+specified in the charges master.
+
+
+<dl>
+<dd>
+<ul>
+<li> <b>External Charge</b> - Enter or select the external charge to
+apply.
+<li> <b>Amount</b> - The amount of the external charge.  This may be
+calculated or entered. 
+<li> <b>Tax</b> - Displays the tax code applicable to the charge.
+</ul>
+</dl>
+
+<h2>Ship To</h2>
+<br>
+<img src="images/vendor_invoice_ship.png"><br>
+
+<p>
+Where products are shipped to a card or address other than
+the company or store address the ship to address can be entered in the
+ship to folder. The
+ship to address is printed on the hard copy of the vendor invoice. 
+
+<h2>Item Info</h2> 
+<br>
+<img src="images/vendor_invoice_item.png"><br>
+
+<p>
+The item info folder displays specific information on the line where
+your cursor resides in the item entry table. 
+
+<dl>
+<dd>
+<ul>
+<li> <b>Ordered</b> - Displays the total quantity of items ordered on
+the purchase order(s)
+<li> <b>Include Tax</b> - Toggle on or off. Toggle on if the cost of
+the item includes tax.
+<li> <b>Include Deposit</b> - Toggle on or off. Toggle on if the cost
+of the item includes the container deposit.
+<li> <b>Tax</b> - Displays the total amount of the tax for the item.
+<li> <b>Deposit</b> - Displays the total amount of the container
+deposit for the item.
+<li> <b>Line Cost</b> - Displays the total vendor cost for the item.
+<li> <b>Internal Charge</b> - Displays the total amount of internal charges
+allocated to the item.
+<li> <b>External Charge</b> - Displays the total amount of the
+external charge allocated to the item.
+</ul>
+</dl>
+
+
+
+<h2>Orders</h2>
+
+Use the orders folder to import the items from a purchase order. This
+saves having to enter items manually.
+
+<dl>
+<dd>
+<ul>
+<li> <b>Number</b> - The purchase order number for orders you wish to
+import. If an order 
+number is entered Quasar will display the "Import Order
+Items" window.<br>
+<br>
+<img src="images/vendor_invoice_import.png"><br>
+<br>
+<p>The prompt will ask if you wish to copy the items as listed in the
+purchase order. </p>
+
+<h3>Default received to remaining</h3>
+<p>Toggle on or off. Toggle on to default the quantity being received
+to the remaining quantity as calculated from the purchase  
+order. Toggle off to leave the received quantities blank.
+
+<li> <b>Date</b> - The date of the purchase order being imported to
+the vendor invoice. 
+</ul>
+</dl>
+
+
+<h2>Voided?</h2>
+
+<p>Toggle on or off. Toggle on to void the vendor invoice. Toggle off to
+re-set the vendor invoice to a non-voided state. 
+
+<h2>Search</h2>
+<br>
+<img src="images/vendor_invoice_search.png"><br>
+<p>
+Click on the "Search"  button to search for items in large orders. You can
+search by item or by description. 
+
+
+<h2>Print</h2>
+
+<p>Click on the "Print" button to print a copy of the vendor invoice
+to the printer.
+
+<h2>Payment</h2>
+
+<p> Click on the "Payment" button to make a vendor payment and/or
+allocate a payment or return to an invoice. Clicking on "Payment" will
+cause the "Vendor Invoice Payments" window to be displayed. This window will
+display all transactions that can be allocated to the invoice.
+</p>
+
+<h2>History</h2>
+
+<p>
+Click on the "History" button to display the sales history for the
+item in the line where your cursor resides. As you move from one item to
+another the sales history will refresh and display the history for the
+current item.
+
+<h2>Claim</h2>
+<p>
+Toggle on or off. Toggle on to create a vendor claim.
+
+
+<h1>Vendor Invoice Payments</h1>
+
+<br>
+<img src="images/vendor_invoice_payments.png"><br>
+<br>
+<p>
+If there are no transactions that can be allocated towards the payment of
+the invoice the body of the window will be blank. If there is a return
+or a credit that can be allocated to the invoice the details will be
+dispayed in the body of the window.</p>
+
+<img src="images/vendor_invoice_payments_detail.png">
+<br>
+
+<p>
+
+<h3>Invoice Number</h3>
+
+<p>
+The invoice number for the invoice that you are paying or allocating a
+return or payment too. Note! you may also allocate an invoice to a
+return.
+
+<h3>Date</h3>
+
+<p>
+The date of the invoice.
+
+<h3>Total</h3>
+<p>
+The Total amount of the invoice. 
+
+<h3>Paid</h3>
+<p>
+The amount of the invoice that has previously been paid.
+
+<h3>Memo</h3>
+<p>
+
+The memo for the invoice. This memo displays on the journal
+transaction for the invoice.
+<p>
+
+<h3>Vendor</h3>
+<p>
+The vendor who has invoiced you.
+
+<h3>Balance</h3>
+<p>
+The current balance of the vendor payable account.
+
+<h3>Auto Allocate</h3>
+<p>
+Click on the "Auto Allocate" button to automatically allocate to the
+invoice. 
+
+<dl>
+<dd>
+<ul>
+<li> <b>Type</b> - The type of transaction. For example, Invoice or Payment.
+<li> <b>Number</b> - The number of the transaction.
+<li> <b>Date</b> - The date of the transaction.
+<li> <b>Total</b> - The total amount of the transaction.
+<li> <b>Remaining</b> - The remaining amount of the transaction that
+may be allocated. 
+<li> <b>Amount</b> - The amount of the transaction that you wish to
+allocate to the invoice.
+<li> <b>Pay</b> - Toggle on or off. Toggle on to allocate the total
+amount of the transaction to the invoice. 
+</ul>
+</dl>
+
+<h3>Quick Payment</h3>
+
+<p>
+Click on the "Quick Payment" button to create a payment for the
+invoice using the "Vendor Payment" window.
+</p>
+
+
+<br>
+
+
+<hr> 
+<table>
+<tr>
+<td><a href="index.html">Table of Contents</a></td>
+<td><a href="commands.html">Quasar Commands</a></td>
+<td><a href="menu_purchases.html"><b>Up: </b>Purchases</a></td>
+<td><a href="receive_list.html"><b>Previous: </b>Vendor Invoice List</a></td>
+<td><a href="vendor_payment.html"><b>Next: </b>Vendor Payments</a></td></tr>
+</table>
+
+
+<br>
+
+</body>
+</html>
+
+
+
+
+
+
+
+

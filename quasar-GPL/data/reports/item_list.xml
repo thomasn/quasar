@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Item List"
+	module="Inventory"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc make_price { unit_price for_qty for_price } {
+	    if { $for_qty == 0 } {
+		return [oconv money $unit_price]
+	    }
+
+	    if { $unit_price != 0 } {
+		set text "[oconv money $unit_price] "
+	    } else {
+		set text ""
+	    }
+
+	    append text "[oconv number $for_qty]/[oconv money $for_price]"
+	    return $text
+	}
+
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+  ]]></initialize>
+
+  <dataSource type="Query">
+    <expr>
+	"select item_plu.number,item.description,item.sell_size,
+	unit_price,for_price_qty,for_price from (item join item_plu
+	on item.item_id = item_plu.item_id and item_plu.seq_num = 0)
+	join item_cost on item_cost.item_id = item.item_id and
+	item_cost.store_id = '$param(store_id)' and item_cost.size_name =
+	item.sell_size where item.inactive_on is null and exists (select
+	stocked from item_store where item_store.item_id = item.item_id
+	and item_store.store_id = '$param(store_id)' and stocked = 'Y')
+	order by item_plu.number"
+    </expr>
+
+    <column>item_number</column>
+    <column>description</column>
+    <column>size</column>
+    <column>unit_price</column>
+    <column>for_qty</column>
+    <column>for_price</column>
+  </dataSource>
+
+  <parameter
+	name="store_id"
+	description="Enter the store:"
+	defaultValue="@current_store"
+	type="lookup"
+	dataType="store"/>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Item List</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name] Store"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush style="Solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="790"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Number</text>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="1590"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Description</text>
+    </text>
+    <text
+	x="2400"
+	y="0"
+	width="490"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Size</text>
+    </text>
+    <text
+	x="2900"
+	y="0"
+	width="590"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Price</text>
+    </text>
+  </pageHeader>
+
+  <detail height="130">
+    <text
+	x="0"
+	y="0"
+	width="790"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(item_number)</var>
+    </text>
+    <text
+	x="800"
+	y="0"
+	width="1590"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(description)</var>
+    </text>
+    <text
+	x="2400"
+	y="0"
+	width="490"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(size)</var>
+    </text>
+    <text
+	x="2900"
+	y="0"
+	width="590"
+	height="125"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<expr>[make_price $column(unit_price) $column(for_qty) $column(for_price)]</expr>
+    </text>
+  </detail>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+  </pageFooter>
+
+</ReportDefn>

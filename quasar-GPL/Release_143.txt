@@ -1,0 +1,112 @@
+Release Notes for Quasar 1.4.3:
+-------------------------------
+
+Quasar 1.4.3 is released as a follow up to the last public release of
+version 1.4.1 (version 1.4.2 was used internally but had some problems
+so it was never publicly released).  With the new version we have
+concentrated on increased I18N support and ease of installation as well
+as some new features and some bug fixes.  Here is a summary of what has
+been done since 1.4.1:
+
+
+1. Complete I18N Support:
+
+Quasar has been switched to use the ICU library from IBM which provides
+date, time, number, percent, and currency formatting and parsing for
+pretty much all the locales in the world.  This replaces the existing
+code we had developed which was planned to provide this level of
+abilities but wasn't there yet.  This is a significant change in how
+Quasar deals with data so any feedback on problems (or kudos!) would
+be appreciated.
+
+Along with the switch to ICU, each database driver has been reviewed in
+relationship to I18N character sets and collation sequences and Quasar
+can now take advantage of the abilities of each database type supported.
+We've tested Quasar on Sybase and PostgreSQL for storage of Norwegian,
+Japanese, Inuktitut, French, and English text and feel that it should be
+possible to support almost any character set in the world.  The emphasis
+is on using Unicode where possible which works well with Sybase and
+PostgreSQL but the Firebird database is lacking in this area and has
+limited support for collations and code sets.
+
+
+2. Database Driver Re-Write:
+
+The database driver architecture of Quasar has been re-written as a general
+cleanup, for enhanced I18N support, and also to make it easier to install
+Quasar.  The configuration of the drivers is easier now and each driver
+has a Test button in the configuration screen which will try to verify
+all the configuration data and give warnings or errors indicating problems
+with the configuration.
+
+Another large change has been to make it so that the actual database
+connection is done on the server side rather than by the client.  This
+means the client doesn't need to have any part of the database installed
+and when you want to update the database version, you can do so just on
+the server.  It also means the Windows client will work with PostgreSQL
+which was hard to get to work in the past (though its easier now with
+PostgreSQL version 8.0).  This change should make installation and setup
+easier on the clients since all that is needed there is the "quasar" client
+program and the localized help files.
+
+The PostgreSQL driver in Quasar 1.4.3 also now supports versions of
+PostgreSQL earlier than 7.4 so it should handle most or all of the
+versions of PostgreSQL that ship with recent Linux distributions.
+
+
+3. Reports:
+
+Some new features have been added to the report generator.  You can now
+specify to start a new page before or after a report band so this allows
+you to have a report where each group starts on a new page.  The image
+handling is also easier now with automatic smooth scaling of the image so
+you just need to specify the image filename (or the data) and a place and
+size and Quasar does the rest.
+
+Some new reports have also been added to Quasar.  The physical inventory
+section has been switched over to using the report generator rather than
+the old reporting system which allows you to modify the reports if you
+want.
+
+Some reports have also been fixed.  The balance sheet and profit and loss
+now handle the case where only some of your accounts have numbers.  Some
+inventory reports that were ignoring the stocked flags were also fixed
+and reports that were not including all the selection criteria in the
+title have had that added.
+
+The multi-column features of the report generator has been removed since
+it was not used in any Quasar reports and it was incomplete.  It will be
+evaluated over time to see if something needs to be added back for this
+(especially in future when shelf label printing is moved to the new
+report generator) but for now its out.
+
+
+4. New Features:
+
+Quasar can now round prices for you automatically.  You specify the rules
+for rounding prices (for example if the price ends in "3" add .02 to it)
+and when Quasar calculates a price for you (either in the item master
+screen or in the price batch), it will be rounded according to your
+rules.
+
+The phone and fax number fields in Quasar are wider now to allow for the
+long numbers used in some countries and we've added a second phone number
+to keep track of a cell phone number.
+
+Quasar will also now handle A4 paper sizes better.  Even though the
+report definitions in Quasar are Letter sized, the reporting engine will
+now adjust things to fit A4 sized paper if thats what you choose and
+Quasar will also keep track of this preference for using A4 paper and
+it will be the default on future print dialogs.
+
+
+5. Bug Fixes:
+
+We've found and fixed the problem with compiling Quasar using gcc 3.4 so
+we can now release Quasar packages for Fedora Core 3 and Mandrake 10.1.
+We also increased the password field size so that the same size if used
+throughout Quasar.  The backup/restore has been fixed to use UTF-8 for
+character encoding so non-ascii data is no longer lost and we fixed a
+problem in the Point-of-Sale when calculating tax on large prices.  We
+fixed some problems with account type customer invoices involving tax
+included pricing.

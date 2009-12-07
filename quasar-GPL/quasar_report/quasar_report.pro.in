@@ -1,0 +1,20 @@
+include (../project.def)
+
+TEMPLATE	= app
+TARGET		= quasar_report
+VERSION		= 1.4
+CONFIG		+= qt
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../bin
+INCLUDEPATH	+= ../repgen;../utility;../database;../gui;../business;../db_driver;.
+DEPENDPATH	= $$INCLUDEPATH
+
+LIBS		= -lquasar_gui -lquasar_db -lquasar_obj -lquasar_driver \
+		  -lquasar_repgen -lquasar_widget -lquasar_util $$TCL_LIB \
+		  $$ICU_LIBS
+TARGETDEPS	= ../lib/libquasar_gui.a ../lib/libquasar_db.a \
+		  ../lib/libquasar_driver.a ../lib/libquasar_widget.a \
+                  ../lib/libquasar_repgen.a ../lib/libquasar_util.a
+
+SOURCES=quasar_report.cpp

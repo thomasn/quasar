@@ -1,0 +1,2703 @@
+<!DOCTYPE IMPORT><IMPORT>
+<companyUpdate>
+  <oldNumber>1</oldNumber>
+  <name>Sample Company</name>
+  <street>101 Demonstration Valley</street>
+  <street2>East Parkway</street2>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-5555</phone>
+  <fax>555-5556</fax> 
+  <email>demo@anyweb.com</email>
+  <webPage>www.demo.com</webPage>
+  <rounding endsIn="1" addAmt="-.03"/>
+  <rounding endsIn="2" addAmt=".03"/>
+  <rounding endsIn="3" addAmt=".02"/>
+  <rounding endsIn="4" addAmt=".01"/>
+  <rounding endsIn="5" addAmt=".00"/>
+  <rounding endsIn="6" addAmt=".02"/>
+  <rounding endsIn="7" addAmt=".01"/>
+  <rounding endsIn="8" addAmt=".00"/>
+  <rounding endsIn="9" addAmt="-.01"/>
+  <rounding endsIn="0" addAmt="-.02"/>
+</companyUpdate>
+
+<group>
+  <name>Profit A</name>
+  <type>0</type>
+  <description>Profit and Loss A</description>
+</group>
+<group>
+  <name>Profit BCD</name>
+  <type>0</type>
+  <description>Profit and Loss BCD</description>
+</group>
+<group>
+  <name>Gold</name>
+  <type>1</type>
+  <description>Gold Customer Card</description>
+</group>
+<group>
+  <name>Silver</name>
+  <type>1</type>
+  <description>Silver Customer Card</description>
+</group>
+<group>
+  <name>Bronze</name>
+  <type>1</type>
+  <description>Bronze Customer Card</description>
+</group>
+<group>
+  <name>Blue</name>
+  <type>2</type>
+  <description>Blue Rebate</description>
+</group>
+<group>
+  <name>Art</name>
+  <type>2</type>
+  <description>Art Purchases</description>
+</group>
+<group>
+  <name>Widget</name>
+  <type>3</type>
+  <description>Widget Tools</description>
+</group>
+<group>
+  <name>Soup</name>
+  <type>3</type>
+  <description>Canned Soup</description>
+</group>
+<group>
+  <name>Pop</name>
+  <type>3</type>
+  <description>Pop (12 Packs)</description>
+</group>
+<group>
+  <name>Beer</name>
+  <type>3</type>
+  <description>Beer</description>
+</group>
+
+
+<account>
+  <name>Cash On Hand - Stations</name>
+  <number>1000</number>
+  <type>0</type>
+</account>
+<account>
+  <name>Cash On Hand - Safe</name>
+  <number>1010</number>
+  <type>0</type>
+</account>
+<account>
+  <name>Chequing</name>
+  <number>1020</number>
+  <type>0</type>
+  <link>bank</link>
+</account>
+<account>
+  <name>Savings</name>
+  <number>1030</number>
+  <type>0</type>
+</account>
+<account>
+  <name>US Chequing</name>
+  <number>1040</number>
+  <type>0</type>
+</account>
+<account>
+  <name>Bank of Montreal</name>
+  <number>1050</number>
+  <type>0</type>
+</account>
+<account>
+  <name>Accounts Receivable</name>
+  <number>1110</number>
+  <type>1</type>
+  <link>customer</link>
+</account>
+<account>
+  <name>AR Equity</name>
+  <number>1120</number>
+  <type>1</type>
+</account>
+<account>
+  <name>AR Credit</name>
+  <number>1130</number>
+  <type>1</type>
+</account>
+
+<account>
+  <name>Inventory - A</name>
+  <number>1210</number>
+  <type>2</type>
+</account>
+<account>
+  <name>Inventory - B</name>
+  <number>1220</number>
+  <type>2</type>
+</account>
+<account>
+  <name>Inventory - C</name>
+  <number>1230</number>
+  <type>2</type>
+</account>
+<account>
+  <name>Inventory - D</name>
+  <number>1240</number>
+  <type>2</type>
+</account>
+<account>
+  <name>Container Deposit</name>
+  <number>1280</number>
+  <type>2</type>
+  <link>deposit</link>
+</account>
+<account>
+  <name>Investments - Short Term</name>
+  <number>1310</number>
+  <type>3</type>
+</account>
+<account>
+  <name>Prepaid Expenses</name>
+  <number>1320</number>
+  <type>3</type>
+</account>
+<account>
+  <name>Undeposited Funds</name>
+  <number>1330</number>
+  <type>3</type>
+</account>
+<account>
+  <name>Buildings and Land</name>
+  <number>1410</number>
+  <type>4</type>
+</account>
+<account>
+  <name>Computer Software</name>
+  <number>1420</number>
+  <type>4</type>
+</account>
+<account>
+  <name>Furniture and Equipment</name>
+  <number>1430</number>
+  <type>4</type>
+</account>
+<account>
+  <name>Vehicles</name>
+  <number>1440</number>
+  <type>4</type>
+</account>
+<account>
+  <name>Accounts Payable</name>
+  <number>2010</number>
+  <type>6</type>
+  <link>vendor</link>
+</account>
+<account>
+  <name>AP Purchase</name>
+  <number>2020</number>
+  <type>6</type>
+</account>
+<account>
+  <name>American Express</name>
+  <number>2110</number>
+  <type>7</type>
+</account>
+<account>
+  <name>MasterCard</name>
+  <number>2120</number>
+  <type>7</type>
+</account>
+<account>
+  <name>Visa</name>
+  <number>2130</number>
+  <type>7</type>
+</account>
+<account>
+  <name>Direct Deposit Liabilities</name>
+  <number>2210</number>
+  <type>8</type>
+</account>
+<account>
+  <name>Federal Tax Payable</name>
+  <number>2220</number>
+  <type>8</type>
+</account>
+<account>
+  <name>GST Payable</name>
+  <number>2300</number>
+  <type>8</type>
+  <header>Yes</header>
+</account>
+<account>
+  <name>GST Collected</name>
+  <number>2310</number>
+  <type>8</type>
+  <parent>GST Payable</parent>
+</account>
+<account>
+  <name>GST Paid</name>
+  <number>2320</number>
+  <type>8</type>
+  <parent>GST Payable</parent>
+</account>
+<account>
+  <name>PST Payable</name>
+  <number>2350</number>
+  <type>8</type>
+  <header>Yes</header>
+</account>
+<account>
+  <name>PST Collected</name>
+  <number>2360</number>
+  <type>8</type>
+  <parent>PST Payable</parent>
+</account>
+<account>
+  <name>PST Paid</name>
+  <number>2370</number>
+  <type>8</type>
+  <parent>PST Payable</parent>
+</account>
+<account>
+  <name>Payroll Liabilities</name>
+  <number>2410</number>
+  <type>8</type>
+</account>
+<account>
+  <name>Transfer Accurals</name>
+  <number>2450</number>
+  <type>8</type>
+  <link>transfer</link>
+</account>
+<account>
+  <name>Ledger Transfer Accrual</name>
+  <number>2460</number>
+  <type>8</type>
+  <link>split</link>
+</account>
+
+<account>
+  <name>Bank Loans</name>
+  <number>2510</number>
+  <type>9</type>
+</account>
+<account>
+  <name>Retained Earnings</name>
+  <number>3010</number>
+  <type>10</type>
+  <retained>Yes</retained>
+</account>
+<account>
+  <name>Historical Balance</name>
+  <number>3020</number>
+  <type>10</type>
+  <historical>Yes</historical>
+</account>
+<account>
+  <name>Owners Contribution</name>
+  <number>3030</number>
+  <type>10</type>
+</account>
+<account>
+  <name>Owners Draw</name>
+  <number>3040</number>
+  <type>10</type>
+</account>
+<account>
+  <name>Share Capitol</name>
+  <number>3050</number>
+  <type>10</type>
+</account>
+<account>
+  <name>Sales</name>
+  <number>4000</number>
+  <header>Yes</header>
+  <type>11</type>
+</account>
+<account>
+  <name>Sales - A</name>
+  <number>4010</number>
+  <parent>Sales</parent>
+  <type>11</type>
+  <group>Profit A</group>
+</account>
+<account>
+  <name>Sales - B</name>
+  <number>4020</number>
+  <parent>Sales</parent>
+  <type>11</type>
+  <group>Profit BCD</group>
+</account>
+<account>
+  <name>Sales - C</name>
+  <number>4030</number>
+  <parent>Sales</parent>
+  <type>11</type>
+  <group>Profit BCD</group>
+</account>
+<account>
+  <name>Sales - D</name>
+  <number>4040</number>
+  <parent>Sales</parent>
+  <type>11</type>
+  <group>Profit BCD</group>
+</account>
+<account>
+  <name>Cost of Sales - A</name>
+  <number>5010</number>
+  <type>12</type>
+  <group>Profit A</group>
+</account>
+<account>
+  <name>Cost of Sales - B</name>
+  <number>5020</number>
+  <type>12</type>
+  <group>Profit BCD</group>
+</account>
+<account>
+  <name>Cost of Sales - C</name>
+  <number>5030</number>
+  <type>12</type>
+  <group>Profit BCD</group>
+</account>
+<account>
+  <name>Cost of Sales - D</name>
+  <number>5040</number>
+  <type>12</type>
+  <group>Profit BCD</group>
+</account>
+
+<account>
+  <name>Advertising</name>
+  <number>6005</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Bad Debts</name>
+  <number>6010</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Bank Charges</name>
+  <number>6020</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Board of Directors</name>
+  <number>6030</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Cash Over/Short</name>
+  <number>6040</number>
+  <type>13</type>
+  <link>over_short</link>
+</account>
+<account>
+  <name>Communication</name>
+  <number>6050</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Courier and Postage</name>
+  <number>6060</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Data Processing</name>
+  <number>6070</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Depreciation</name>
+  <number>6080</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Discounts</name>
+  <number>6085</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Freight and Delivery</name>
+  <number>6090</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Freight Accrual</name>
+  <number>6100</number>
+  <type>13</type>
+</account>
+
+<account>
+  <name>Insurance</name>
+  <number>6110</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Interest and Finance Charges</name>
+  <number>6120</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Leases</name>
+  <number>6130</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Miscellaneous</name>
+  <number>6140</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Office Supplies</name>
+  <number>6150</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Professional Fees</name>
+  <number>6200</number>
+  <type>13</type>
+  <header>Yes</header>
+</account>
+<account>
+  <name>Accounting</name>
+  <number>6210</number>
+  <type>13</type>
+  <parent>Professional Fees</parent>
+</account>
+<account>
+  <name>Consulting Fees</name>
+  <number>6220</number>
+  <type>13</type>
+  <parent>Professional Fees</parent>
+</account>
+<account>
+  <name>Legal Fees</name>
+  <number>6230</number>
+  <type>13</type>
+  <parent>Professional Fees</parent>
+</account>
+<account>
+  <name>Physical Over/Short</name>
+  <number>6310</number>
+  <type>13</type>
+  <link>physical</link>
+</account>
+<account>
+  <name>Rent</name>
+  <number>6410</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Staff Expenses</name>
+  <number>6500</number>
+  <type>13</type>
+  <header>Yes</header>
+</account>
+<account>
+  <name>Salaries and Wages</name>
+  <number>6510</number>
+  <type>13</type>
+  <parent>Staff Expenses</parent>
+</account>
+<account>
+  <name>Employee Benefits</name>
+  <number>6520</number>
+  <type>13</type>
+  <parent>Staff Expenses</parent>
+</account>
+<account>
+  <name>Recruitment Costs</name>
+  <number>6530</number>
+  <type>13</type>
+  <parent>Staff Expenses</parent>
+</account>
+<account>
+  <name>Union Fees</name>
+  <number>6540</number>
+  <type>13</type>
+  <parent>Staff Expenses</parent>
+</account>
+<account>
+  <name>Repairs and Maintenance</name>
+  <number>6600</number>
+  <type>13</type>
+  <header>Yes</header>
+</account>
+<account>
+  <name>Building Repairs</name>
+  <number>6610</number>
+  <type>13</type>
+  <parent>Repairs and Maintenance</parent>
+</account>
+<account>
+  <name>Computer Repairs</name>
+  <number>6620</number>
+  <type>13</type>
+  <parent>Repairs and Maintenance</parent>
+</account>
+<account>
+  <name>Equipment Repairs</name>
+  <number>6630</number>
+  <type>13</type>
+  <parent>Repairs and Maintenance</parent>
+</account>
+<account>
+  <name>Taxes and Licenses</name>
+  <number>6710</number>
+  <type>13</type>
+</account>
+<account>
+  <name>Terms Expense</name>
+  <number>6720</number>
+  <type>13</type>
+  <link>customer_terms</link>
+</account>
+<account>
+  <name>Utilities</name>
+  <number>6800</number>
+  <type>13</type>
+  <header>Yes</header>
+</account>
+<account>
+  <name>Gas and Electric</name>
+  <number>6810</number>
+  <type>13</type>
+  <parent>Utilities</parent>
+</account>
+<account>
+  <name>Water</name>
+  <number>6820</number>
+  <type>13</type>
+  <parent>Utilities</parent>
+</account>
+<account>
+  <name>Vehicle Expense</name>
+  <number>6900</number>
+  <type>13</type>
+  <header>Yes</header>
+</account>
+<account>
+  <name>Fuel</name>
+  <number>6910</number>
+  <type>13</type>
+  <parent>Vehicle Expense</parent>
+</account>
+<account>
+  <name>Insurance and Licenses</name>
+  <number>6920</number>
+  <type>13</type>
+  <parent>Vehicle Expense</parent>
+</account>
+<account>
+  <name>Repairs and Service</name>
+  <number>6930</number>
+  <type>13</type>
+  <parent>Vehicle Expense</parent>
+</account>
+<account>
+  <name>Bad Debt Recovery</name>
+  <number>8010</number>
+  <type>14</type>
+</account>
+<account>
+  <name>Foreign Exchange</name>
+  <number>8020</number>
+  <type>14</type>
+</account>
+<account>
+  <name>Government Grants</name>
+  <number>8030</number>
+  <type>14</type>
+</account>
+<account>
+  <name>Interest Income</name>
+  <number>8040</number>
+  <type>14</type>
+</account>
+<account>
+  <name>Rental Income</name>
+  <number>8050</number>
+  <type>14</type>
+</account>
+<account>
+  <name>Service Fees</name>
+  <number>8060</number>
+  <type>14</type>
+  <link>charge</link>
+</account>
+<account>
+  <name>Sundry Income</name>
+  <number>8070</number>
+  <type>14</type>
+</account>
+<account>
+  <name>Terms Income</name>
+  <number>8080</number>
+  <type>14</type>
+  <link>vendor_terms</link>
+</account>
+<account>
+  <name>Other Expense</name>
+  <number>9010</number>
+  <type>15</type>
+</account>
+
+<storeUpdate>
+  <oldNumber>1</oldNumber>
+  <link>safe</link>
+</storeUpdate>
+
+<store>
+  <name>Hotel</name>
+  <number>2</number>
+  <canSell>Yes</canSell>  
+  <company>1</company>
+</store>  
+<store>
+  <name>Warehouse</name>
+  <number>3</number>
+  <canSell>No</canSell>
+  <company>1</company>
+</store>
+
+<station>
+  <name>Safe</name>
+  <number>999</number>
+  <link>safe</link>
+</station>
+
+<station>
+  <name>POS 1</name>
+  <number>1</number>
+</station>
+
+<station>
+  <name>POS 2</name>
+  <number>2</number>
+</station>
+
+<station>
+  <name>POS 3</name>
+  <number>3</number>
+</station>
+
+
+
+
+<tax>
+  <name>GST</name>
+  <description>Goods and Services</description>
+  <number>1234567</number>
+  <rate>7</rate>
+  <collected>GST Collected</collected>
+  <paid>GST Paid</paid>
+</tax>
+<tax>
+  <name>PST</name>
+  <description>Provincial Tax</description>
+  <number>7654321</number>
+  <rate>7</rate>
+  <taxOnTax>GST</taxOnTax>
+  <collected>PST Collected</collected>
+  <paid>PST Paid</paid>
+</tax>
+<tax>
+  <name>Both</name>
+  <description>GST and PST</description>
+  <group>GST</group>
+  <group>PST</group>
+</tax>
+
+<discount>
+  <name>Seniors</name>
+  <type>transaction</type>
+  <account>Discounts</account>
+  <method>percent</method>
+  <amount>10</amount>
+</discount>
+<discount>
+  <name>Managers</name>
+  <type>both</type>
+  <method>percent</method>
+  <amount>10</amount>
+</discount>
+<discount>
+  <name>Cashiers</name>
+  <type>line</type>
+  <account>Discounts</account>
+  <method>percent</method>
+  <amount>10</amount>
+</discount>
+
+<charge>
+  <name>Franchise Fee</name>
+  <account>Freight Accrual</account>
+  <tax>GST</tax>
+  <amount>10</amount>
+  <calcMethod>cost</calcMethod>
+  <allocMethod>cost</allocMethod>
+</charge>
+<charge>
+  <name>Regular Freight</name>
+  <account>Freight Accrual</account>
+  <amount>.25</amount>
+  <calcMethod>weight</calcMethod>
+  <allocMethod>weight</allocMethod>
+</charge>
+
+
+<term>
+  <discountDays>10</discountDays>
+  <dueDays>30</dueDays>
+  <discount>2</discount>
+</term>
+<term>
+  <dueDays>30</dueDays>
+</term>
+<term>
+  <dueDays>60</dueDays>
+</term>
+<term>
+  <cod>Yes</cod>
+</term>
+
+
+<tender>
+  <name>Cash</name>
+  <type>cash</type>
+  <limit>10000</limit>
+  <rate>1.0</rate>
+  <overTender>Yes</overTender>
+  <openDrawer>Yes</openDrawer>
+  <forceAmount>Yes</forceAmount>
+  <secondReceipt>No</secondReceipt>
+  <account>1000</account>
+  <safe>1010</safe>
+  <bank>1020</bank>
+  <menuNumber>1</menuNumber>
+  <denomination multiplier=".01">Penny</denomination>
+  <denomination multiplier=".05">Nickel</denomination>
+  <denomination multiplier=".1">Dime</denomination>
+  <denomination multiplier=".25">Quarter</denomination>
+  <denomination multiplier=".50">Fifty Cents</denomination>
+  <denomination multiplier="1">One $</denomination>
+  <denomination multiplier="2">Two $</denomination>
+  <denomination multiplier="5">Five $</denomination>
+  <denomination multiplier="10">Ten $</denomination>
+  <denomination multiplier="20">Twenty $</denomination>
+  <denomination multiplier="50">Fify $</denomination>
+  <denomination multiplier="100">Hundred $</denomination>
+</tender>
+<tender>
+  <name>Cheque</name>
+  <type>cheque</type>
+  <limit>10000</limit>
+  <rate>1.0</rate>
+  <overTender>No</overTender>
+  <openDrawer>No</openDrawer>
+  <forceAmount>Yes</forceAmount>
+  <secondReceipt>No</secondReceipt>
+  <account>1000</account>  
+  <safe>1010</safe>
+  <bank>1020</bank>
+  <menuNumber>2</menuNumber>
+</tender>
+<tender>
+  <name>Visa</name>
+  <type>cheque</type>
+  <limit>10000</limit>
+  <rate>1.0</rate>
+  <overTender>No</overTender>
+  <openDrawer>No</openDrawer>
+  <forceAmount>Yes</forceAmount>
+  <secondReceipt>Yes</secondReceipt>
+  <account>1000</account>
+  <safe>1010</safe>
+  <bank>1020</bank>  
+  <menuNumber>3</menuNumber>
+</tender>
+<tender>
+  <name>MasterCard</name>
+  <type>cheque</type>
+  <limit>10000</limit>
+  <rate>1.0</rate>
+  <overTender>No</overTender>
+  <openDrawer>No</openDrawer>
+  <forceAmount>Yes</forceAmount>
+  <secondReceipt>Yes</secondReceipt>
+  <account>1000</account>
+  <safe>1010</safe>
+  <bank>1050</bank> 
+  <menuNumber>4</menuNumber>
+</tender>
+<tender>
+  <name>Debit</name>
+  <type>cheque</type>
+  <limit>10000</limit>
+  <rate>1.0</rate>
+  <overTender>Yes</overTender>
+  <openDrawer>No</openDrawer>
+  <forceAmount>Yes</forceAmount>
+  <secondReceipt>No</secondReceipt>
+  <account>1000</account>  
+  <safe>1010</safe>
+  <bank>1020</bank> 
+  <menuNumber>5</menuNumber>
+</tender>
+<tender>
+  <name>US Cash</name>
+  <type>cash</type>
+  <limit>10000</limit>
+  <rate>1.5</rate>
+  <overTender>Yes</overTender>
+  <openDrawer>Yes</openDrawer>
+  <forceAmount>Yes</forceAmount>
+  <secondReceipt>No</secondReceipt>
+  <account>1000</account>
+  <safe>1010</safe>
+  <bank>1040</bank>  
+  <menuNumber>6</menuNumber>
+</tender>
+
+<expense>
+  <name>Supplies (taxable)</name>
+  <number>1</number>
+  <tax>GST</tax>
+  <account>Office Supplies</account>
+</expense>
+<expense>
+  <name>Supplies (no-tax)</name>
+  <number>2</number>
+  <account>Office Supplies</account>
+</expense>
+
+<customerType>
+  <name>Commercial</name>
+  <account>Accounts Receivable</account>
+  <terms>Net 60</terms>
+  <creditLimit>.00</creditLimit>
+  <serviceCharge>18</serviceCharge>
+  <canCharge>Yes</canCharge>
+  <canWithdraw>No</canWithdraw>
+  <canPayment>Yes</canPayment>
+  <checkWithdrawBalance>Yes</checkWithdrawBalance>
+</customerType>
+
+<customerType>
+  <name>Regular</name>
+  <account>Accounts Receivable</account>
+  <terms>Net 30</terms>
+  <creditLimit>.00</creditLimit>
+  <serviceCharge>24</serviceCharge>
+  <canCharge>Yes</canCharge>
+  <canWithdraw>No</canWithdraw>
+  <canPayment>Yes</canPayment>
+  <checkWithdrawBalance>Yes</checkWithdrawBalance>
+</customerType>
+
+<customerType>
+  <name>Credit</name>
+  <account>AR Credit</account>
+  <terms>Net 30</terms>
+  <creditLimit>.00</creditLimit>
+  <serviceCharge>24</serviceCharge>
+  <canCharge>Yes</canCharge>
+  <canWithdraw>Yes</canWithdraw>
+  <canPayment>Yes</canPayment>
+  <checkWithdrawBalance>Yes</checkWithdrawBalance>
+</customerType>
+
+<customerType>
+  <name>Equity</name>
+  <account>AR Equity</account>
+  <terms>Net 30</terms>
+  <creditLimit>.00</creditLimit>
+  <serviceCharge>24</serviceCharge>
+  <canCharge>Yes</canCharge>
+  <canWithdraw>No</canWithdraw>
+  <canPayment>Yes</canPayment>
+  <checkWithdrawBalance>Yes</checkWithdrawBalance>
+</customerType>
+
+<extra>
+  <name>Date of Birth</name>
+  <table>Customer</table>
+</extra>
+
+<customer>
+  <lastName>Joe's Contracting</lastName>
+  <company>Yes</company>
+  <number>1000</number>
+  <street>101 Construction Blvd.</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-1000</phone>
+  <fax>555-1001</fax>
+  <email>joe@anyweb.com</email>
+  <webPage>www.joe.com</webPage>
+  <contact>Joe Builder</contact>
+  <type>Commercial</type>
+  <account>Accounts Receivable</account>
+  <terms>Net 60</terms>
+  <creditLimit>10000</creditLimit>
+  <canCharge>Yes</canCharge>
+  <group>Gold</group>
+</customer>
+
+<customer>
+  <lastName>Joe's Contracting</lastName>
+  <company>Yes</company>
+  <number>1001</number>
+  <street>101 Construction Blvd.</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-1000</phone>
+  <fax>555-1001</fax>
+  <email>joe@anyweb.com</email>
+  <webPage>www.joe.com</webPage>
+  <contact>Joe Builder</contact>
+  <type>Equity</type>
+  <account>AR Equity</account>
+  <terms>Net 60</terms>
+  <creditLimit>10000</creditLimit>
+  <canCharge>Yes</canCharge>
+  <group>Gold</group>
+</customer>
+
+<customer>
+  <lastName>Joe's Contracting</lastName>
+  <company>Yes</company>
+  <number>1002</number>
+  <street>101 Construction Blvd.</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-1000</phone>
+  <fax>555-1001</fax>
+  <email>joe@anyweb.com</email>
+  <webPage>www.joe.com</webPage>
+  <contact>Joe Builder</contact>
+  <type>Credit</type>
+  <account>AR Credit</account>
+  <terms>Net 60</terms>
+  <creditLimit>10000</creditLimit>
+  <canCharge>Yes</canCharge>
+  <group>Gold</group>
+</customer>
+
+
+<customer>
+  <firstName>Sally</firstName>
+  <lastName>Nopay</lastName>
+  <company>No</company>
+  <number>2000</number>
+  <street>201 Hidden Valley Road</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-2000</phone>
+  <fax>555-2001</fax>
+  <email>sally@anyweb.com</email>
+  <webPage>www.sally.com</webPage>
+  <type>Regular</type>
+  <account>Accounts Receivable</account>
+  <terms>Net 30</terms>
+  <taxExempt>PST</taxExempt>
+  <creditLimit>1000</creditLimit>
+  <canCharge>No</canCharge>
+  <group>Silver</group>
+  <extra name="Date of Birth">03 June 1981</extra>
+</customer>
+
+<customer>
+  <firstName>Sally</firstName>
+  <lastName>Nopay</lastName>
+  <company>No</company>
+  <number>2001</number>
+  <street>201 Hidden Valley Road</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-2000</phone>
+  <fax>555-2001</fax>
+  <email>sally@anyweb.com</email>
+  <webPage>www.sally.com</webPage>
+  <type>Equity</type>
+  <account>AR Equity</account>
+  <terms>Net 30</terms>
+  <taxExempt>PST</taxExempt>
+  <creditLimit>1000</creditLimit>
+  <canCharge>No</canCharge>
+  <group>Silver</group>
+  <extra name="Date of Birth">03 June 1981</extra>
+</customer>
+
+<customer>
+  <firstName>Sally</firstName>
+  <lastName>Nopay</lastName>
+  <company>No</company>
+  <number>2002</number>
+  <street>201 Hidden Valley Road</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-2000</phone>
+  <fax>555-2001</fax>
+  <email>sally@anyweb.com</email>
+  <webPage>www.sally.com</webPage>
+  <type>Credit</type>
+  <account>AR Credit</account>
+  <terms>Net 30</terms>
+  <taxExempt>PST</taxExempt>
+  <creditLimit>1000</creditLimit>
+  <canCharge>No</canCharge>
+  <group>Silver</group>
+  <extra name="Date of Birth">03 June 1981</extra>
+</customer>
+
+<customer>
+  <firstName>Sammy</firstName>
+  <lastName>Slowpay</lastName>
+  <company>No</company>
+  <number>3000</number>
+  <street>301 Hard Times Lane</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-3000</phone>
+  <fax>555-3001</fax>
+  <email>sammy@anyweb.com</email>
+  <webPage>www.sammy.com</webPage>
+  <type>Regular</type>
+  <account>Accounts Receivable</account>
+  <terms>Net 30</terms>
+  <creditLimit>1000</creditLimit>
+  <canCharge>Yes</canCharge>
+  <group>Bronze</group>
+  <extra name="Date of Birth">21 April 1953</extra>
+</customer>
+
+<customer>
+  <firstName>Sammy</firstName>
+  <lastName>Slowpay</lastName>
+  <company>No</company>
+  <number>3001</number>
+  <street>301 Hard Times Lane</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-3000</phone>
+  <fax>555-3001</fax>
+  <email>sammy@anyweb.com</email>
+  <webPage>www.sammy.com</webPage>
+  <type>Equity</type>
+  <account>AR Equity</account>
+  <terms>Net 30</terms>
+  <creditLimit>1000</creditLimit>
+  <canCharge>Yes</canCharge>
+  <group>Bronze</group>
+  <extra name="Date of Birth">21 April 1953</extra>
+</customer>
+
+<customer>
+  <firstName>Sammy</firstName>
+  <lastName>Slowpay</lastName>
+  <company>No</company>
+  <number>3002</number>
+  <street>301 Hard Times Lane</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-3000</phone>
+  <fax>555-3001</fax>
+  <email>sammy@anyweb.com</email>
+  <webPage>www.sammy.com</webPage>
+  <type>Credit</type>
+  <account>AR Credit</account>
+  <terms>Net 30</terms>
+  <creditLimit>1000</creditLimit>
+  <canCharge>Yes</canCharge>
+  <group>Bronze</group>
+  <extra name="Date of Birth">21 April 1953</extra>
+</customer>
+
+
+<vendor>
+  <lastName>Joe's Contracting</lastName>
+  <company>Yes</company>
+  <number>10001</number>
+  <street>101 Construction Blvd.</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-1000</phone>
+  <fax>555-1001</fax>
+  <email>joe@anyweb.com</email>
+  <webPage>www.joe.com</webPage>
+  <contact>Joe Builder</contact>
+  <account>AP Purchase</account>
+  <terms>2% 10 Net 30</terms>
+  <group>Art</group>
+</vendor>
+
+<vendor>
+  <lastName>Sally Nopay</lastName>
+  <company>Yes</company>
+  <number>20001</number>
+  <street>201 Hidden Valley Road</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-2000</phone>
+  <fax>555-2001</fax>
+  <email>sally@anyweb.com</email>
+  <webPage>www.sally.com</webPage>
+  <account>AP Purchase</account>
+  <terms>2% 10 Net 30</terms>
+  <group>Art</group>
+</vendor>
+
+<vendor>
+  <firstName>Sammy</firstName>
+  <lastName>Slowpay</lastName>
+  <company>No</company>
+  <number>30001</number>
+  <street>301 Hard Times Lane</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-3000</phone>
+  <fax>555-3001</fax>
+  <email>sammy@anyweb.com</email>
+  <webPage>www.sammy.com</webPage>
+  <account>AP Purchase</account>
+  <terms>2% 10 Net 30</terms>
+  <group>Art</group>
+</vendor>
+
+
+<vendor>
+  <lastName>Big Vendor</lastName>
+  <company>Yes</company>
+  <number>10000</number>
+  <street>401 Industrial Park</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-4000</phone>
+  <fax>555-4001</fax>
+  <email>big@anyweb.com</email>
+  <webPage>www.big.com</webPage>
+  <contact>Allan Big</contact>
+  <account>Accounts Payable</account>
+  <terms>2% 10 Net 30</terms>
+  <group>Blue</group>
+</vendor>
+
+<vendor>
+  <lastName>Best Vendor</lastName>
+  <company>Yes</company>
+  <number>20000</number>
+  <street>501 Industrial Park</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-5000</phone>
+  <fax>555-5001</fax>
+  <email>best@anyweb.com</email>
+  <webPage>www.best.com</webPage>
+  <contact>Carol Best</contact>
+  <account>Accounts Payable</account>
+  <terms>Net 30</terms>
+</vendor>
+
+<vendor>
+  <lastName>Small Vendor</lastName>
+  <company>Yes</company>
+  <number>30000</number>
+  <street>601 Industrial Park</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-6000</phone>
+  <fax>555-6001</fax>
+  <email>small@anyweb.com</email>
+  <webPage>www.small.com</webPage>
+  <contact>Peter Small</contact>
+  <account>Accounts Payable</account>
+  <terms>Net 30</terms>
+</vendor>
+
+<employee>
+  <firstName>Sarah</firstName>
+  <lastName>Workoholic</lastName>
+  <company>No</company>
+  <number>100</number>
+  <street>701 Urban Terrace</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-7000</phone>
+  <fax>555-7001</fax>
+  <email>sarah@anyweb.com</email>
+  <webPage>www.sarah.com</webPage>
+  <posPassword>100</posPassword>
+  <posLevel>1</posLevel>
+</employee>
+
+<employee>
+  <firstName>Johnny</firstName>
+  <lastName>Onthespot</lastName>
+  <company>No</company>
+  <number>200</number>
+  <street>801 Urban Terrace</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-8000</phone>
+  <fax>555-8001</fax>
+  <email>johnny@anyweb.com</email>
+  <webPage>www.johnny.com</webPage>
+  <posPassword>200</posPassword>
+  <posLevel>2</posLevel>
+</employee>
+
+<employee>
+  <firstName>Bill</firstName>
+  <lastName>Bossman</lastName>
+  <company>No</company>
+  <number>300</number>
+  <street>901 Urban Terrace</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-9000</phone>
+  <fax>555-9001</fax>
+  <email>bill@anyweb.com</email>
+  <webPage>www.bill.com</webPage>
+  <posPassword>300</posPassword>
+  <posLevel>3</posLevel>
+</employee>
+
+<personal>
+  <firstName>Suzan</firstName>
+  <lastName>MyBuddy</lastName>
+  <company>No</company>
+  <street>951 Urban Terrace</street>
+  <city>Anycity</city>
+  <province>Anyprov</province>
+  <country>Canada</country>
+  <postal>T0M 1X0</postal>
+  <phone>555-9500</phone>
+  <fax>555-9501</fax>
+  <email>suzan@anyweb.com</email>
+  <webPage>www.suzan.com</webPage>
+</personal>
+
+<securityType>
+  <name>Testing</name>
+  <rule view="yes" create="yes" update="no" delete="no">All</rule> 
+  <rule view="yes">CustomerInvoice</rule>
+</securityType>
+
+<user>
+  <name>bill</name>
+  <password>123</password>
+  <screen>testing.xml</screen>
+  <securityType>Testing</securityType>
+  <employee>Bossman, Bill</employee>
+  <store>Default</store>
+</user>
+
+<patgroup>
+  <name>Joe's Contracting</name>
+  <number>1000</number>
+  <customer>1000</customer>
+  <customer>1001</customer>
+  <customer>1002</customer>
+  <vendor>10001</vendor>
+  <equity_card>1001</equity_card>
+  <credit_card>1002</credit_card>
+</patgroup>
+
+<patgroup>
+  <name>Sally Nopay</name>
+  <number>2000</number>
+  <customer>2000</customer>
+  <customer>2001</customer>
+  <customer>2002</customer>
+  <vendor>20001</vendor>
+  <equity_card>2001</equity_card>
+  <credit_card>2002</credit_card>
+</patgroup>
+
+<patgroup>
+  <name>Sammy Slowpay</name>
+  <number>3000</number>
+  <customer>3000</customer>
+  <customer>3001</customer>
+  <customer>3002</customer>
+  <vendor>30001</vendor>
+  <equity_card>3001</equity_card>
+  <credit_card>3002</credit_card>
+</patgroup>
+
+<dept>
+  <number>100</number>
+  <name>Hardware</name>
+</dept>
+
+<dept>
+  <number>200</number>
+  <name>Grocery</name>
+</dept>
+
+<dept>
+  <number>300</number>
+  <name>Liquor</name>
+</dept>
+
+<dept>
+  <number>400</number>
+  <name>Labour</name>
+</dept>
+
+<dept>
+  <number>500</number>
+  <name>Packages</name>
+</dept>
+
+<dept>
+  <number>600</number>
+  <name>Petroleum</name>
+</dept>
+
+<subdept>
+  <number>1000</number>
+  <name>Hand Tools</name>
+  <dept>Hardware</dept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+  <assetAccount>Inventory - A</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <targetGM>40</targetGM>
+  <allowedVariance>2</allowedVariance>
+</subdept>
+
+
+<subdept>
+  <number>2000</number>
+  <name>Canned Food</name>
+  <dept>Grocery</dept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <expenseAccount>Cost of Sales - B</expenseAccount>
+  <incomeAccount>Sales - B</incomeAccount>
+  <assetAccount>Inventory - B</assetAccount>
+  <sellTax>GST</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <targetGM>30</targetGM>
+  <allowedVariance>2</allowedVariance>
+</subdept>
+
+<subdept>
+  <number>2100</number>
+  <name>Pop</name>
+  <dept>Grocery</dept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <expenseAccount>Cost of Sales - B</expenseAccount>
+  <incomeAccount>Sales - B</incomeAccount>
+  <assetAccount>Inventory - B</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <targetGM>30</targetGM>
+  <allowedVariance>2</allowedVariance>
+</subdept>
+
+<subdept>
+  <number>2200</number>
+  <name>Produce</name>
+  <dept>Grocery</dept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <expenseAccount>Cost of Sales - B</expenseAccount>
+  <incomeAccount>Sales - B</incomeAccount>
+  <assetAccount>Inventory - B</assetAccount>
+  <targetGM>30</targetGM>
+  <allowedVariance>2</allowedVariance>
+</subdept>
+
+<subdept>
+  <number>3000</number>
+  <name>Beer</name>
+  <dept>Liquor</dept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <expenseAccount>Cost of Sales - C</expenseAccount>
+  <incomeAccount>Sales - C</incomeAccount>
+  <assetAccount>Inventory - C</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <targetGM>25</targetGM>
+  <allowedVariance>2</allowedVariance>
+</subdept>
+
+<subdept>
+  <number>4000</number>
+  <name>Consulting</name>
+  <dept>Labour</dept>
+  <purchased>No</purchased>
+  <sold>Yes</sold>
+  <inventoried>No</inventoried>
+  <incomeAccount>Sales - D</incomeAccount>
+  <sellTax>Both</sellTax>
+</subdept>
+
+<subdept>
+  <number>5000</number>
+  <name>Kits</name>
+  <dept>Packages</dept>
+  <purchased>No</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <expenseAccount>Cost of Sales - D</expenseAccount>
+  <incomeAccount>Sales - D</incomeAccount>
+  <assetAccount>Inventory - D</assetAccount>
+  <sellTax>Both</sellTax>
+</subdept>
+
+<subdept>
+  <number>6000</number>
+  <name>Fuel</name>
+  <dept>Petroleum</dept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+  <assetAccount>Inventory - A</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <targetGM>30</targetGM>
+  <allowedVariance>2</allowedVariance>
+</subdept>
+
+
+<location>
+  <store>Default</store>
+  <section>Tools</section>
+  <fixture>Aisle4</fixture>
+  <bin>10</bin>
+</location>
+
+<location>
+  <store>Default</store>
+  <section>Grocery</section>
+  <fixture>Aisle6</fixture>
+  <bin>20</bin>
+</location>
+
+<location>
+  <store>Default</store>
+  <section>Pop</section>
+  <fixture>Aisle7</fixture>
+  <bin>12</bin>
+</location>
+
+<location>
+  <store>Hotel</store>
+  <section>Cooler</section>
+  <fixture>Pallet</fixture>
+  <bin>6</bin>
+</location>
+
+<location>
+  <store>Warehouse</store>
+  <section>Storage</section>
+  <fixture>Rack</fixture>
+  <bin>22</bin>
+</location>
+
+<item>
+  <description>Glue For Kits</description>
+  <dept>Hardware</dept>
+  <subdept>Hand Tools</subdept>
+  <purchased>Yes</purchased>
+  <sold>No</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Each</purchaseSize>
+  <assetAccount>Inventory - A</assetAccount>
+  <purchaseTax>GST</purchaseTax>
+  <size qty="1">Each</size>
+  <cost>30.00</cost>
+  <number>906</number>
+  <stocked store="Default">Yes</stocked>
+  <targetGM>40</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Widget</group>
+  <externalId>5028</externalId>
+</item>
+
+<item>
+  <description>Green Widget</description>
+  <dept>Hardware</dept>
+  <subdept>Hand Tools</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Each</purchaseSize>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+  <assetAccount>Inventory - A</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1" weight=".15" multiple="6">Each</size>
+  <number>101</number>
+  <vendor number="101101">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Tools,Aisle4,10</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost>1.00</cost>
+  <price>2.00</price>
+  <targetGM>40</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Widget</group>
+  <min store="Default">12</min>
+  <min store="Hotel">6</min>
+  <max store="Default">24</max>
+  <max store="Hotel">12</max>
+  <externalId>5001</externalId>
+</item>
+
+<item>
+  <description>Red Widget</description>
+  <dept>Hardware</dept>
+  <subdept>Hand Tools</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Each</purchaseSize>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+  <assetAccount>Inventory - A</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1" weight=".15" multiple="6">Each</size>
+  <number>102</number>
+  <vendor number="102102">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Tools,Aisle4,10</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost>1.00</cost>
+  <price>2.00</price>
+  <targetGM>40</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Widget</group>
+  <min store="Default">12</min>
+  <min store="Hotel">6</min>
+  <max store="Default">24</max>
+  <max store="Hotel">12</max>
+  <externalId>5002</externalId>
+</item>
+
+<item>
+  <description>Blue Widget</description>
+  <dept>Hardware</dept>
+  <subdept>Hand Tools</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Each</purchaseSize>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+  <assetAccount>Inventory - A</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1" weight=".15" multiple="6">Each</size>
+  <number>103</number>
+  <vendor number="103103">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Tools,Aisle4,10</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost>1.00</cost>
+  <price>2.00</price>
+  <targetGM>40</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Widget</group>
+  <min store="Default">12</min>
+  <min store="Hotel">6</min>
+  <max store="Default">24</max>
+  <max store="Hotel">12</max>
+  <externalId>5003</externalId>
+</item>
+
+<item>
+  <description>Yellow Widget</description>
+  <dept>Hardware</dept>
+  <subdept>Hand Tools</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Each</purchaseSize>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+  <assetAccount>Inventory - A</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1" weight=".15" multiple="6">Each</size>
+  <number>104</number>
+  <vendor number="104104">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Tools,Aisle4,10</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost>1.00</cost>
+  <price>2.00</price>
+  <targetGM>40</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Widget</group>
+  <min store="Default">12</min>
+  <min store="Hotel">6</min>
+  <max store="Default">24</max>
+  <max store="Hotel">12</max>
+  <externalId>5004</externalId>
+</item>
+
+<item>
+  <description>White Widget</description>
+  <dept>Hardware</dept>
+  <subdept>Hand Tools</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Each</purchaseSize>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+  <assetAccount>Inventory - A</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1" weight=".15" multiple="6">Each</size>
+  <number>105</number>
+  <vendor number="105105">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Tools,Aisle4,10</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost>1.00</cost>
+  <price>2.00 3/5.65</price>
+  <targetGM>40</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Widget</group>
+  <min store="Default">12</min>
+  <min store="Hotel">6</min>
+  <max store="Default">24</max>
+  <max store="Hotel">12</max>
+  <externalId>5005</externalId>
+</item>
+
+<item>
+  <description>Chicken Soup</description>
+  <dept>Grocery</dept>
+  <subdept>Canned Food</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Case</purchaseSize>
+  <expenseAccount>Cost of Sales - B</expenseAccount>
+  <incomeAccount>Sales - B</incomeAccount>
+  <assetAccount>Inventory - B</assetAccount>
+  <sellTax>GST</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1">Each</size>
+  <size qty="24" weight="2" multiple="1">Case</size>
+  <number>201</number>
+  <number size="Case">2011</number>
+  <vendor number="201201">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Grocery,Aisle6,20</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost size="Case">12.00</cost>
+  <price size="Each">.95</price>
+  <price size="Case">16.95</price>
+  <targetGM>30</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Soup</group>
+  <min store="Default">36</min>
+  <min store="Hotel">12</min>
+  <max store="Default">60</max>
+  <max store="Hotel">36</max>
+  <externalId>5006</externalId>
+</item>
+
+<item>
+  <description>Beef Soup</description>
+  <dept>Grocery</dept>
+  <subdept>Canned Food</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Case</purchaseSize>
+  <expenseAccount>Cost of Sales - B</expenseAccount>
+  <incomeAccount>Sales - B</incomeAccount>
+  <assetAccount>Inventory - B</assetAccount>
+  <sellTax>GST</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1">Each</size>
+  <size qty="24" weight="2" multiple="1">Case</size>
+  <number>202</number>
+  <number size="Case">2022</number>
+  <vendor number="202202">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Grocery,Aisle6,20</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost size="Case">12.00</cost>
+  <price size="Each">.95</price>
+  <price size="Case">16.95</price>
+  <targetGM>30</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Soup</group>
+  <min store="Default">36</min>
+  <min store="Hotel">12</min>
+  <max store="Default">60</max>
+  <max store="Hotel">36</max>
+  <externalId>5007</externalId>
+</item>
+
+<item>
+  <description>Mushroom Soup</description>
+  <dept>Grocery</dept>
+  <subdept>Canned Food</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Case</purchaseSize>
+  <expenseAccount>Cost of Sales - B</expenseAccount>
+  <incomeAccount>Sales - B</incomeAccount>
+  <assetAccount>Inventory - B</assetAccount>
+  <sellTax>GST</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1">Each</size>
+  <size qty="24" weight="2" multiple="1">Case</size>
+  <number>203</number>
+  <number size="Case">2033</number>
+  <vendor number="203203">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Grocery,Aisle6,20</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost size="Case">12.00</cost>
+  <price size="Each">.95</price>
+  <price size="Case">16.95</price>
+  <targetGM>30</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Soup</group>
+  <min store="Default">36</min>
+  <min store="Hotel">12</min>
+  <max store="Default">60</max>
+  <max store="Hotel">36</max>
+  <externalId>5008</externalId>
+</item>
+
+<item>
+  <description>Special Cola</description>
+  <dept>Grocery</dept>
+  <subdept>Pop</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>12 Pack</sellSize>
+  <purchaseSize>12 Pack</purchaseSize>
+  <expenseAccount>Cost of Sales - B</expenseAccount>
+  <incomeAccount>Sales - B</incomeAccount>
+  <assetAccount>Inventory - B</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <deposit>.05</deposit>
+  <costIncTax>No</costIncTax>
+  <costIncDep>Yes</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>Yes</priceIncDep>
+  <size qty="1">Each</size>
+  <size qty="12" weight="1" multiple="1">12 Pack</size>
+  <number>301</number>
+  <number size="Each">3011</number>
+  <vendor number="301301">Best Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Pop,Aisle7,12</location>
+  <location store="Hotel">Cooler,Pallet,6</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost size="12 Pack">3.00</cost>
+  <price store="Default" size="Each">.75</price>
+  <price store="Default" size="12 Pack">4.50</price>
+  <price store="Hotel" size="Each">.95</price>
+  <price store="Hotel" size="12 Pack">6.50</price>
+  <targetGM store="Default">30</targetGM>
+  <targetGM store="Hotel">50</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Pop</group>
+  <min store="Default">120</min>
+  <min store="Hotel">60</min>
+  <max store="Default">720</max>
+  <max store="Hotel">240</max>
+  <externalId>5009</externalId>
+</item>
+
+<item>
+  <description>Special Orange</description>
+  <dept>Grocery</dept>
+  <subdept>Pop</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>12 Pack</sellSize>
+  <purchaseSize>12 Pack</purchaseSize>
+  <expenseAccount>Cost of Sales - B</expenseAccount>
+  <incomeAccount>Sales - B</incomeAccount>
+  <assetAccount>Inventory - B</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <deposit>.05</deposit>
+  <costIncTax>No</costIncTax>
+  <costIncDep>Yes</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>Yes</priceIncDep>
+  <size qty="1">Each</size>
+  <size qty="12" weight="1" multiple="1">12 Pack</size>
+  <number>302</number>
+  <number size="Each">3022</number>
+  <vendor number="302302">Best Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Pop,Aisle7,12</location>
+  <location store="Hotel">Cooler,Pallet,6</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost size="12 Pack">3.00</cost>
+  <price store="Default" size="Each">.75</price>
+  <price store="Default" size="12 Pack">4.50</price>
+  <price store="Hotel" size="Each">.95</price>
+  <price store="Hotel" size="12 Pack">6.50</price>
+  <targetGM store="Default">30</targetGM>
+  <targetGM store="Hotel">50</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Pop</group>
+  <min store="Default">120</min>
+  <min store="Hotel">60</min>
+  <max store="Default">720</max>
+  <max store="Hotel">240</max>
+  <externalId>5010</externalId>
+</item>
+
+<item>
+  <description>Special Lime</description>
+  <dept>Grocery</dept>
+  <subdept>Pop</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>12 Pack</sellSize>
+  <purchaseSize>12 Pack</purchaseSize>
+  <expenseAccount>Cost of Sales - B</expenseAccount>
+  <incomeAccount>Sales - B</incomeAccount>
+  <assetAccount>Inventory - B</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <deposit>.05</deposit>
+  <costIncTax>No</costIncTax>
+  <costIncDep>Yes</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>Yes</priceIncDep>
+  <size qty="1">Each</size>
+  <size qty="12" weight="1" multiple="1">12 Pack</size>
+  <number>303</number>
+  <number size="Each">3033</number>
+  <vendor number="303303">Best Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Pop,Aisle7,12</location>
+  <location store="Hotel">Cooler,Pallet,6</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost size="12 Pack">3.00</cost>
+  <price store="Default" size="Each">.75</price>
+  <price store="Default" size="12 Pack">4.50</price>
+  <price store="Hotel" size="Each">.95</price>
+  <price store="Hotel" size="12 Pack">6.50</price>
+  <targetGM store="Default">30</targetGM>
+  <targetGM store="Hotel">50</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Pop</group>
+  <min store="Default">120</min>
+  <min store="Hotel">60</min>
+  <max store="Default">720</max>
+  <max store="Hotel">240</max>
+  <externalId>5011</externalId>
+</item>
+
+<item>
+  <description>Suds Beer</description>
+  <dept>Liquor</dept>
+  <subdept>Beer</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>12 Pack</sellSize>
+  <purchaseSize>12 Pack</purchaseSize>
+  <expenseAccount>Cost of Sales - C</expenseAccount>
+  <incomeAccount>Sales - C</incomeAccount>
+  <assetAccount>Inventory - C</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <deposit>.05</deposit>
+  <costIncTax>Yes</costIncTax>
+  <costIncDep>Yes</costIncDep>
+  <priceIncTax>Yes</priceIncTax>
+  <priceIncDep>Yes</priceIncDep>
+  <size qty="1">Each</size>
+  <size qty="12" weight="1" multiple="1">12 Pack</size>
+  <number>401</number>
+  <number size="Each">4011</number> 
+ <vendor number="401401">Small Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Pop,Aisle7,12</location>
+  <location store="Hotel">Cooler,Pallet,6</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost size="12 Pack">18.00</cost>
+  <price size="12 Pack">24.50</price>
+  <price size="Each">4.50</price>
+  <targetGM store="Default">30</targetGM>
+  <targetGM store="Hotel">30</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Beer</group>
+  <min store="Default">120</min>
+  <min store="Hotel">60</min>
+  <max store="Default">720</max>
+  <max store="Hotel">240</max>
+  <externalId>5012</externalId>
+</item>
+
+<item>
+  <description>Suds Light Beer</description>
+  <dept>Liquor</dept>
+  <subdept>Beer</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>12 Pack</sellSize>
+  <purchaseSize>12 Pack</purchaseSize>
+  <expenseAccount>Cost of Sales - C</expenseAccount>
+  <incomeAccount>Sales - C</incomeAccount>
+  <assetAccount>Inventory - C</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <deposit>.05</deposit>
+  <costIncTax>Yes</costIncTax>
+  <costIncDep>Yes</costIncDep>
+  <priceIncTax>Yes</priceIncTax>
+  <priceIncDep>Yes</priceIncDep>
+  <size qty="1">Each</size>
+  <size qty="12" weight="1" multiple="1">12 Pack</size>
+  <number>402</number>
+  <number size="Each">4022</number>
+  <vendor number="402402">Small Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Pop,Aisle7,12</location>
+  <location store="Hotel">Cooler,Pallet,6</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost size="12 Pack">18.00</cost>
+  <price size="12 Pack">24.50</price>
+  <price size="Each">4.50</price>
+  <targetGM store="Default">30</targetGM>
+  <targetGM store="Hotel">30</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Beer</group>
+  <min store="Default">120</min>
+  <min store="Hotel">60</min>
+  <max store="Default">720</max>
+  <max store="Hotel">240</max>
+  <externalId>5013</externalId>
+</item>
+
+<item>
+  <description>Suds Dark Beer</description>
+  <dept>Liquor</dept>
+  <subdept>Beer</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>12 Pack</sellSize>
+  <purchaseSize>12 Pack</purchaseSize>
+  <expenseAccount>Cost of Sales - C</expenseAccount>
+  <incomeAccount>Sales - C</incomeAccount>
+  <assetAccount>Inventory - C</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <deposit>.05</deposit>
+  <costIncTax>Yes</costIncTax>
+  <costIncDep>Yes</costIncDep>
+  <priceIncTax>Yes</priceIncTax>
+  <priceIncDep>Yes</priceIncDep>
+  <size qty="1">Each</size>
+  <size qty="12" weight="1" multiple="1">12 Pack</size>
+  <number>403</number>
+  <number size="Each">4033</number>
+  <vendor number="403403">Small Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <location store="Default">Pop,Aisle7,12</location>
+  <location store="Hotel">Cooler,Pallet,6</location>
+  <location store="Warehouse">Storage,Rack,22</location>
+  <cost size="12 Pack">18.00</cost>
+  <price size="12 Pack">24.50</price>
+  <price size="Each">4.50</price>
+  <targetGM store="Default">30</targetGM>
+  <targetGM store="Hotel">30</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Beer</group>
+  <min store="Default">120</min>
+  <min store="Hotel">60</min>
+  <max store="Default">720</max>
+  <max store="Hotel">240</max>
+  <externalId>5014</externalId>
+</item>
+
+
+<item>
+  <description>Consulting</description>
+  <dept>Labour</dept>
+  <subdept>Consulting</subdept>
+  <purchased>No</purchased>
+  <sold>Yes</sold>
+  <inventoried>No</inventoried>
+  <sellSize>Hour</sellSize>
+  <incomeAccount>Sales - D</incomeAccount>
+  <sellTax>Both</sellTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1">Hour</size>
+  <number>501</number>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <price size="Hour">100.00</price>
+  <externalId>5015</externalId>
+</item>
+
+<item>
+  <description>Shop Labour and Repairs</description>
+  <dept>Labour</dept>
+  <subdept>Consulting</subdept>
+  <purchased>No</purchased>
+  <sold>Yes</sold>
+  <inventoried>No</inventoried>
+  <sellSize>Hour</sellSize>
+  <incomeAccount>Sales - D</incomeAccount>
+  <sellTax>Both</sellTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1">Hour</size>
+  <number>502</number>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <price size="Hour">100.00</price>
+  <externalId>5016</externalId>
+</item>
+
+<item>
+  <description>Software Support</description>
+  <dept>Labour</dept>
+  <subdept>Consulting</subdept>
+  <purchased>No</purchased>
+  <sold>Yes</sold>
+  <inventoried>No</inventoried>
+  <sellSize>Hour</sellSize>
+  <incomeAccount>Sales - D</incomeAccount>
+  <sellTax>Both</sellTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1">Hour</size>
+  <number>503</number>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <price size="Hour">100.00</price>
+  <externalId>5017</externalId>
+</item>
+
+<item>
+  <description>Widget Package</description>
+  <dept>Packages</dept>
+  <subdept>Kits</subdept>
+  <purchased>No</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Kit</sellSize>
+  <expenseAccount>Cost of Sales - D</expenseAccount>
+  <incomeAccount>Sales - D</incomeAccount>
+  <assetAccount>Inventory - D</assetAccount>
+  <sellTax>Both</sellTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <number>601</number>
+  <size qty="1">Kit</size>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">Yes</stocked>
+  <stocked store="Warehouse">Yes</stocked>
+  <price>9.95</price>
+  <component size="Each" qty="5">101</component>
+  <component size="Each" qty="5">102</component>
+  <component size="Each" qty="5">103</component>
+  <component size="Each" qty="1">906</component>
+  <buildQty>3</buildQty>
+  <externalId>5018</externalId>
+</item>
+
+<item>
+  <description>Bananas</description>
+  <dept>Grocery</dept>
+  <subdept>Produce</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>KG</sellSize>
+  <purchaseSize>KG</purchaseSize>
+  <expenseAccount>Cost of Sales - B</expenseAccount>
+  <incomeAccount>Sales - B</incomeAccount>
+  <assetAccount>Inventory - B</assetAccount>
+  <discountable>Yes</discountable>
+  <qtyEnforced>Yes</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>Yes</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1" weight="1">KG</size>
+  <number>701</number>
+  <vendor number="701701">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">No</stocked>
+  <stocked store="Warehouse">No</stocked>
+  <location store="Default">Grocery,Aisle6,20</location>
+  <cost>.30</cost>
+  <price>.49</price>
+  <targetGM>30</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <min store="Default">20</min>
+  <max store="Default">40</max>
+  <externalId>5019</externalId>
+</item>
+
+<item>
+  <description>Golden Delicious Apples</description>
+  <dept>Grocery</dept>
+  <subdept>Produce</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>KG</sellSize>
+  <purchaseSize>KG</purchaseSize>
+  <expenseAccount>Cost of Sales - B</expenseAccount>
+  <incomeAccount>Sales - B</incomeAccount>
+  <assetAccount>Inventory - B</assetAccount>
+  <discountable>Yes</discountable>
+  <qtyEnforced>Yes</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>Yes</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1" weight="1">KG</size>
+  <number>702</number>
+  <vendor number="702702">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <stocked store="Hotel">No</stocked>
+  <stocked store="Warehouse">No</stocked>
+  <location store="Default">Grocery,Aisle6,20</location>
+  <cost>.60</cost>
+  <price>.99</price>
+  <targetGM>30</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <min store="Default">20</min>
+  <max store="Default">40</max>
+  <externalId>5020</externalId>
+</item>
+
+
+<item>
+  <description>Regular Gas</description>
+  <dept>Petroleum</dept>
+  <subdept>Fuel</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Litre</sellSize>
+  <purchaseSize>Litre</purchaseSize>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+  <assetAccount>Inventory - A</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>No</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>Yes</qtyDecimals>
+  <qtyFromPrice>Yes</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>Yes</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1">Litre</size>
+  <number>801</number>
+  <vendor number="801801">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <cost>.554</cost>
+  <price>.689</price>
+  <targetGM>10</targetGM>
+  <allowedVariance>1</allowedVariance>
+  <min store="Default">1000</min>
+  <max store="Default">10000</max>
+  <externalId>5021</externalId>
+</item>
+
+<item>
+  <description>Diesel Fuel</description>
+  <dept>Petroleum</dept>
+  <subdept>Fuel</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Litre</sellSize>
+  <purchaseSize>Litre</purchaseSize>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+  <assetAccount>Inventory - A</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>No</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>Yes</qtyDecimals>
+  <qtyFromPrice>Yes</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>Yes</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1">Litre</size>
+  <number>802</number>
+  <vendor number="802802">Big Vendor</vendor>
+  <stocked store="Default">Yes</stocked>
+  <cost>.458</cost>
+  <price>.559</price>
+  <targetGM>10</targetGM>
+  <allowedVariance>1</allowedVariance>
+  <min store="Default">1000</min>
+  <max store="Default">10000</max>
+  <externalId>5022</externalId>
+</item>
+
+<item>
+  <description>Detergent (Store Use)</description>
+  <dept>100</dept>
+  <subdept>1000</subdept>
+  <purchased>Yes</purchased>
+  <sold>No</sold>
+  <inventoried>No</inventoried>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Each</purchaseSize>
+  <expenseAccount>Office Supplies</expenseAccount>
+  <purchaseTax>GST</purchaseTax>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <size qty="1">Each</size>
+  <cost>40.00</cost>
+  <number>901</number>
+  <stocked store="Default">Yes</stocked>
+  <externalId>5023</externalId>
+</item>
+
+
+<item>
+  <description>Open Department Hardware</description>
+  <dept>100</dept>
+  <subdept>1000</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <openDept>Yes</openDept>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Each</purchaseSize>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+  <assetAccount>Inventory - A</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>No</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1">Each</size>
+  <number>902</number>
+  <stocked store="Default">Yes</stocked>
+  <targetGM>40</targetGM>
+  <allowedVariance>1</allowedVariance>
+  <externalId>5024</externalId>
+</item>
+
+<item>
+  <description>External Repair (Expensed)</description>
+  <dept>100</dept>
+  <subdept>1000</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>No</inventoried>
+  <openDept>No</openDept>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Each</purchaseSize>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+    <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>No</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1">Each</size>
+  <number>903</number>
+  <stocked store="Default">Yes</stocked>
+  <targetGM>40</targetGM>
+  <allowedVariance>1</allowedVariance>
+  <externalId>5025</externalId>
+</item>
+
+<item>
+  <description>Open Dept (Not Retail Acct)</description>
+  <dept>Hardware</dept>
+  <subdept>Hand Tools</subdept>
+  <purchased>Yes</purchased>
+  <sold>Yes</sold>
+  <inventoried>Yes</inventoried>
+  <sellSize>Each</sellSize>
+  <purchaseSize>Each</purchaseSize>
+  <expenseAccount>Cost of Sales - A</expenseAccount>
+  <incomeAccount>Sales - A</incomeAccount>
+  <assetAccount>Inventory - A</assetAccount>
+  <sellTax>Both</sellTax>
+  <purchaseTax>GST</purchaseTax>
+  <discountable>Yes</discountable>
+  <qtyEnforced>No</qtyEnforced>
+  <qtyDecimals>No</qtyDecimals>
+  <qtyFromPrice>No</qtyFromPrice>
+  <weighed>No</weighed>
+  <costIncTax>No</costIncTax>
+  <costIncDep>No</costIncDep>
+  <priceIncTax>No</priceIncTax>
+  <priceIncDep>No</priceIncDep>
+  <size qty="1">Each</size>
+  <number>904</number>
+  <stocked store="Default">Yes</stocked>
+  <targetGM>40</targetGM>
+  <allowedVariance>2</allowedVariance>
+  <group>Widget</group>
+  <externalId>5026</externalId>
+</item>
+
+<item>
+  <description>Partial Kit</description>
+  <dept>Hardware</dept>
+  <subdept>Hand Tools</subdept>
+  <purchased>No</purchased>
+  <sold>No</sold>
+  <inventoried>Yes</inventoried>
+  <assetAccount>Inventory - A</assetAccount>
+  <size qty="1">Each</size>
+  <number>905</number>
+  <stocked store="Default">Yes</stocked>
+  <externalId>5027</externalId>
+</item>
+
+<adjustReason>
+  <name>Physical</name>
+  <number>1</number>
+  <account>Physical Over/Short</account>
+  <externalId>6001</externalId>
+</adjustReason>
+<adjustReason>
+  <name>Spoilage</name>
+  <number>2</number>
+  <account>Physical Over/Short</account>
+  <externalId>6002</externalId>
+</adjustReason>
+<adjustReason>
+  <name>Theft</name>
+  <number>3</number>
+  <account>Physical Over/Short</account>
+  <externalId>6003</externalId>
+</adjustReason>
+<adjustReason>
+  <name>Advertising</name>
+  <number>4</number>
+  <account>Advertising</account>
+  <externalId>6004</externalId>
+</adjustReason>
+
+
+<orderTemplate>
+  <name>Big Vendor</name>
+  <vendor>Big Vendor</vendor>
+  <item>101101</item>
+  <item>102102</item>
+  <item>103103</item>
+  <item>104104</item>
+  <item>105105</item>
+  <item size="Case">201201</item>
+  <item size="Case">202202</item>
+  <item size="Case">203203</item>
+  <charge internal="No">Regular Freight</charge>
+  <charge internal="Yes">Franchise Fee</charge>
+</orderTemplate>
+
+<orderTemplate>
+  <name>Best Vendor</name>
+  <vendor>Best Vendor</vendor>
+  <item size="12 Pack">301301</item>
+  <item size="12 Pack">302302</item>
+  <item size="12 Pack">303303</item> 
+</orderTemplate>
+
+<orderTemplate>
+  <name>Small Vendor</name>
+  <vendor>Small Vendor</vendor>
+  <item size="12 Pack">401401</item>
+  <item size="12 Pack">402402</item>
+  <item size="12 Pack">403403</item>
+</orderTemplate>
+
+<labelBatch>
+<number>#</number>
+<description>Sample Label Batch</description>
+<store>Default</store>
+<type>Large Shelf Labels</type>
+<item size="Each" price="2.20" count="4">101</item>
+<item size="Each" price="2.20" count="6">102</item>
+<item size="Each" price="2.20" count="8">103</item>
+</labelBatch>
+
+<priceBatch>
+<number>#</number>
+<description>Sample Price Batch</description>
+<store>Default</store>
+<item size="Each" price="2.20">101</item>
+<item size="Each" price="2.20">102</item>
+<item size="Each" price="2.20">103</item>
+</priceBatch>
+
+<price>
+<itemGroup>Soup</itemGroup>
+<size>Each</size>
+<promotion>Yes</promotion>
+<discountable>No</discountable>
+<qtyLimit>6</qtyLimit>
+<price>.80 3/1.99</price>
+</price>
+
+</IMPORT>

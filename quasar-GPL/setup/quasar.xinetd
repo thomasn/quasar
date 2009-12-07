@@ -1,0 +1,16 @@
+service quasar
+{
+	type = UNLISTED
+	flags = KEEPALIVE
+	socket_type = stream
+	port = 3599
+	wait = no
+	user = quasar
+	group = quasar
+	instances = UNLIMITED
+	server = /opt/quasar/bin/quasar_clientd
+#	server_args = -debug
+	log_on_success += USERID
+	log_on_failure += USERID
+	disable = no
+}

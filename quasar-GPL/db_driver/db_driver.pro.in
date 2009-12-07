@@ -1,0 +1,15 @@
+include (../project.def)
+
+TEMPLATE	= lib
+TARGET		= quasar_driver
+VERSION		= 1.4
+CONFIG		+= qt staticlib
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../lib
+INCLUDEPATH	+= ../utility;.
+DEPENDPATH	= $$INCLUDEPATH
+
+HEADERS=db_driver.h conn.h stmt.h sql_stmt.h
+SOURCES=db_driver.cpp conn.cpp stmt.cpp sql_stmt.cpp
+TRANSLATIONS=messages.ts

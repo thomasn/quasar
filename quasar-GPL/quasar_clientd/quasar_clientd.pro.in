@@ -1,0 +1,31 @@
+include (../project.def)
+
+TEMPLATE	= app
+TARGET		= quasar_clientd
+VERSION		= 1.4
+CONFIG		+= qt
+MOC_DIR		= objs
+OBJECTS_DIR	= objs
+DESTDIR		= ../bin
+INCLUDEPATH	+= ../business;../utility;../database;../db_driver;.
+DEPENDPATH	= $$INCLUDEPATH
+
+# Linux setup
+linux-g++ {
+LIBS		= -lquasar_db -lquasar_driver -lquasar_obj -lquasar_util \
+		  $$TCL_LIB $$ICU_LIBS
+TARGETDEPS	= ../lib/libquasar_db.a ../lib/libquasar_driver.a \
+		  ../lib/libquasar_obj.a ../lib/libquasar_util.a
+}
+
+# Windows setup
+win32 {
+LIBS		= ..\lib\quasar_db.lib ..\lib\quasar_driver.lib \
+		  ..\lib\quasar_obj.lib ..\lib\quasar_util.lib \
+		  $$TCL_LIB
+TARGETDEPS	= ..\lib\quasar_db.lib ..\lib\quasar_driver.lib \
+		  ..\lib\quasar_obj.lib ..\lib\quasar_util.lib
+}
+
+HEADERS=command_processor.h worker_thread.h
+SOURCES=quasar_clientd.cpp command_processor.cpp worker_thread.cpp

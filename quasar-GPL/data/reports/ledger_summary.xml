@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReportDefn
+	name="Ledger Posting Summary"
+	module="Ledger"
+	orientation="Portrait"
+	pageWidth="5100"
+	pageHeight="6600"
+	leftMargin="150"
+	rightMargin="150"
+	topMargin="300"
+	bottomMargin="300">
+
+  <initialize><![CDATA[
+	proc lookup { table id_col id col } {
+	    set value ""
+	    set query "select $col from $table where $id_col = '$id'"
+	    select $query {
+		set value $column(1)
+	    }
+	    return $value
+	}
+  ]]></initialize>
+
+  <dataSource type="Query">
+    <code><![CDATA[
+	set where ""
+	if { $param(store_id) != "" } {
+	    append where "and store_id = '$param(store_id)'"
+	}
+
+	return "select account.number,account.name,sum(gltx_account.amount)
+	from (gltx_account join gltx on gltx_account.gltx_id = gltx.gltx_id)
+	join account on gltx_account.account_id = account.account_id
+	where gltx.inactive_on is null and gltx.post_date >= '$param(from)'
+	and gltx.post_date <= '$param(to)' $where group by account.number,
+	account.name having sum(gltx_account.amount) != 0 order by
+	account.number"
+    ]]></code>
+    <column>number</column>
+    <column>name</column>
+    <column>amount</column>
+  </dataSource>
+
+  <parameter
+	name="from"
+	description="Enter the from date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="to"
+	description="Enter the to date:"
+	defaultValue="d"
+	type="date"/>
+
+  <parameter
+	name="store_id"
+	description="Enter the store (blank for all):"
+	manditory="false"
+	type="lookup"
+	dataType="store"/>
+
+  <variable
+	name="total"
+	resetType="Report">
+	<sum>$column(amount)</sum>
+  </variable>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="300">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="300"
+	halign="Center">
+	<font name="Times" size="30" isBold="true"/>
+	<text>Ledger Posting Summary</text>
+    </text>
+  </title>
+
+  <title height="150">
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"From $param(from) to $param(to)"</expr>
+    </text>
+  </title>
+
+  <title height="150">
+    <printWhen>$param(store_id) != {}</printWhen>
+    <text
+	x="0"
+	y="0"
+	width="4800"
+	height="150"
+	halign="Center">
+	<font name="Times" size="14" isBold="true"/>
+	<expr>"[lookup store store_id $param(store_id) name]"</expr>
+    </text>
+  </title>
+
+  <title height="2">
+    <line x="0" y="0" width="4800">
+	<pen width="2"/>
+    </line>
+  </title>
+
+  <title height="100">
+  </title>
+
+  <pageHeader height="125">
+    <rectangle
+	x="0"
+	y="0"
+	width="4800"
+	height="125">
+	<pen style="NoPen"/>
+	<brush mode="solid" color="#808080"/>
+    </rectangle>
+    <line x="0" y="0" width="4800"/>
+    <line x="0" y="116" width="4800"/>
+    <text
+	x="0"
+	y="0"
+	width="1000"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Account</text>
+    </text>
+    <text
+	x="1000"
+	y="0"
+	width="2800"
+	height="125">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Description</text>
+    </text>
+    <text
+	x="3800"
+	y="0"
+	width="1000"
+	height="125"
+	halign="Right">
+	<pen color="#FFFFFF"/>
+	<font name="Times" size="12"/>
+	<text>Amount</text>
+    </text>
+  </pageHeader>
+
+  <detail height="125">
+    <text
+	x="0"
+	y="0"
+	width="1000"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(number)</var>
+    </text>
+    <text
+	x="1000"
+	y="0"
+	width="2800"
+	height="125">
+	<font name="Times" size="12"/>
+	<var>column(name)</var>
+    </text>
+    <text
+	format="money"
+	x="3800"
+	y="0"
+	width="1000"
+	height="125"
+	halign="Right">
+	<font name="Times" size="12"/>
+	<var>column(amount)</var>
+    </text>
+  </detail>
+
+  <summary height="250">
+    <text
+	x="1000"
+	y="0"
+	width="2800"
+	height="250">
+	<font name="Times" isBold="true" size="14"/>
+	<text>Total Filed</text>
+    </text>
+    <text
+	format="money"
+	x="3800"
+	y="0"
+	width="1000"
+	height="250"
+	halign="Right">
+	<font name="Times" isBold="true" size="14"/>
+	<var>var(total)</var>
+    </text>
+  </summary>
+
+  <pageFooter height="170">
+    <line x="0" y="5" width="4800">
+	<pen width="2"/>
+    </line>
+    <text
+	evalTime="Report"
+	x="2400"
+	y="10"
+	width="2400"
+	height="160"
+	halign="Right">
+	<font name="Helvetica" size="10"/>
+	<expr>"Page $sys(page_number) of $sys(page_count)"</expr>
+    </text>
+    <text
+	x="0"
+	y="10"
+	width="2400"
+	height="160">
+	<font name="Helvetica" size="10"/>
+	<expr>[clock format [clock seconds]]</expr>
+    </text>
+  </pageFooter>
+</ReportDefn>
